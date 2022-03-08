@@ -6,6 +6,11 @@ import java.security.spec.InvalidKeySpecException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+/**
+ * 
+ * @author Scrub
+ *
+ */
 public class PasswordHelper {
 	private static final int ITERATION_COUNT = 10000;
 	

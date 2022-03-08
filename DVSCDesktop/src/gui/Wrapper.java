@@ -4,6 +4,11 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 
+/**
+ * 
+ * @author Scrub
+ *
+ */
 @SuppressWarnings("serial")
 public class Wrapper extends JPanel {
 

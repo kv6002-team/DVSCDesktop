@@ -8,7 +8,11 @@ import javax.swing.JFrame;
 
 import security.AuthenticationManager;
 import security.SecurityManager;
-
+/**
+ * 
+ * @author Scrub
+ *
+ */
 @SuppressWarnings("serial")
 public class ApplicationWindow extends JFrame {
 

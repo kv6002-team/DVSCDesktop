@@ -1,5 +1,10 @@
 package security;
 
+/**
+ * 
+ * @author Scrub
+ *
+ */
 public class AuthenticationManager {
 	
 	

@@ -1,7 +1,11 @@
 package gui;
 
 import javax.swing.JPanel;
-
+/**
+ * 
+ * @author Scrub
+ *
+ */
 public class testPanel extends JPanel {
 
 	/**

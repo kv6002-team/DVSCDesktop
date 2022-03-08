@@ -10,7 +10,11 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-
+/**
+ * 
+ * @author Scrub
+ *
+ */
 @SuppressWarnings("serial")
 public class AuthenticationPanel extends JPanel {
 	private JTextField txt_UsernameField;
