@@ -20,7 +20,7 @@ public class Wrapper extends JPanel {
 		
 		JTabbedPane tab_MainTabPane = new JTabbedPane(JTabbedPane.TOP);
 		add(tab_MainTabPane);
-		tab_MainTabPane.addTab("Test", null, new testPanel(), null);
+		tab_MainTabPane.addTab(CRUDPanel.tabName, null, new CRUDPanel(), null);
 	}
 
 }

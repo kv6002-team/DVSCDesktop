@@ -1,13 +1,360 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.CRUDPanel">
-  <grid id="27dc6" row-count="1" column-count="1" layout-manager="GridBagLayout">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="pnl_CRUDPanel" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
-      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+      <xy x="20" y="20" width="813" height="449"/>
     </constraints>
-    <properties/>
+    <properties>
+      <maximumSize width="-1" height="-1"/>
+      <minimumSize width="-1" height="-1"/>
+      <preferredSize width="640" height="480"/>
+    </properties>
     <border type="none"/>
-    <children/>
+    <children>
+      <grid id="90d11" binding="pnl_garageList" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <maximumSize width="-1" height="-1"/>
+          <minimumSize width="-1" height="-1"/>
+          <preferredSize width="-1" height="-1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="1fd1f" class="javax.swing.JLabel" binding="lbl_garageList">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <font size="14" style="1"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <text value="Garages"/>
+            </properties>
+          </component>
+          <scrollpane id="3e83e" binding="scrl_garageList">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="d8633" class="javax.swing.JList" binding="lst_garages">
+                <constraints/>
+                <properties>
+                  <model>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                    <item value="Garage"/>
+                  </model>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <component id="9426f" class="javax.swing.JButton" binding="btn_addGarage">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="1.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <minimumSize width="96" height="30"/>
+          <preferredSize width="96" height="30"/>
+          <text value="Add Garage"/>
+        </properties>
+      </component>
+      <grid id="c6dab" binding="pnl_garageInfo" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="30.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <alignmentX value="0.5"/>
+          <minimumSize width="514" height="228"/>
+          <preferredSize width="-1" height="-1"/>
+        </properties>
+        <border type="line">
+          <color color="-16777216"/>
+        </border>
+        <children>
+          <component id="77d49" class="javax.swing.JLabel" binding="lbl_garageInfo">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="7" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font size="22" style="1"/>
+              <text value="Garage Information"/>
+            </properties>
+          </component>
+          <component id="3e228" class="javax.swing.JLabel" binding="lbl_garageName">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <maximumSize width="72" height="16"/>
+              <minimumSize width="72" height="16"/>
+              <text value="Garage Name"/>
+            </properties>
+          </component>
+          <component id="67287" class="javax.swing.JTextField" binding="txt_garageName">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="2.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="56a02" class="javax.swing.JLabel" binding="lbl_garageEmail">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Garage Email"/>
+            </properties>
+          </component>
+          <component id="7123" class="javax.swing.JTextField" binding="txt_garageEmail">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="2.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <hspacer id="30c64">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="1992e">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="0.0"/>
+            </constraints>
+          </hspacer>
+          <component id="c260" class="javax.swing.JLabel" binding="lbl_contactNum">
+            <constraints>
+              <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Contact Number"/>
+            </properties>
+          </component>
+          <component id="732d" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+            <constraints>
+              <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="2.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="b75b5" class="javax.swing.JLabel" binding="lbl_yearPaid">
+            <constraints>
+              <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Year Paid"/>
+            </properties>
+          </component>
+          <component id="adb76" class="javax.swing.JCheckBox" binding="checkBox1" default-binding="true">
+            <constraints>
+              <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="2.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <label value=""/>
+              <text value=""/>
+            </properties>
+          </component>
+          <hspacer id="fb0a0">
+            <constraints>
+              <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </hspacer>
+          <component id="b0bfc" class="javax.swing.JButton" binding="btn_deleteGarage">
+            <constraints>
+              <grid row="3" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="0.5"/>
+            </constraints>
+            <properties>
+              <text value="Delete Garage"/>
+            </properties>
+          </component>
+          <grid id="f0db" binding="pnl_instrumentList" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="eb232" class="javax.swing.JLabel" binding="lbl_instrumentList">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <font size="14" style="1"/>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <text value="Instruments"/>
+                </properties>
+              </component>
+              <scrollpane id="5ff20" binding="scrl_instrumentList">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="69e49" class="javax.swing.JList" binding="lst_instruments">
+                    <constraints/>
+                    <properties>
+                      <model>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                        <item value="Instrument"/>
+                      </model>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
+          <component id="566e1" class="javax.swing.JButton" binding="addInstrumentButton" default-binding="true">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <text value="Add Instrument"/>
+            </properties>
+          </component>
+          <grid id="3e144" binding="pnl_instrumentInfo" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="4" column="3" row-span="2" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="73d2e" class="javax.swing.JLabel" binding="lbl_instumentInfo">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <font size="22" style="1"/>
+                  <text value="Instrument Information"/>
+                </properties>
+              </component>
+              <hspacer id="e2759">
+                <constraints>
+                  <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+              </hspacer>
+              <component id="80114" class="javax.swing.JLabel" binding="lbl_serialNum">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties>
+                  <text value="Serial Number"/>
+                </properties>
+              </component>
+              <component id="4a8a8" class="javax.swing.JLabel" binding="lbl_calibrationDate">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties>
+                  <text value="Calibration Date"/>
+                </properties>
+              </component>
+              <component id="15083" class="javax.swing.JTextField" binding="txt_serialNum">
+                <constraints>
+                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <gridbag weightx="2.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="e9864" class="org.jdatepicker.impl.JDatePickerImpl" binding="JDatePickerImpl1" custom-create="true" default-binding="true">
+                <constraints>
+                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="68fb3" class="javax.swing.JButton" binding="btn_deleteInstrument">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <label value="Delete Instrument"/>
+                  <text value="Delete Instrument"/>
+                </properties>
+              </component>
+              <vspacer id="44d0">
+                <constraints>
+                  <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="1.0"/>
+                </constraints>
+              </vspacer>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
   </grid>
 </form>
