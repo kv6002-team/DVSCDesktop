@@ -28,16 +28,7 @@ public class SecurityManager {
 	 * Checks the the connection to the Clients server, ensuring that the application has a connection.
 	 */
 	public static boolean checkConnection() {
-		int timeout = 1000; // Time the connection waits before throwing an Error
-		int port = 80; // Port that the Socket will try to connect to (80: HTTP / 443: HTTPS etc)
-		
-		try (Socket socket = new Socket()){
-			socket.connect(new InetSocketAddress(hostname, port), timeout);
-			return true;
-		}catch(IOException ex) {
-			System.out.println(ex.toString());
-			return false;
-		}	
+		return ConnectionValidator.testConntectionHTTPS(hostname);
 	}
 	
 	public static void testSystemSecurity() {
