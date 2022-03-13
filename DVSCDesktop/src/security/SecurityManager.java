@@ -1,8 +1,5 @@
 package security;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
 
 import gui.AlertDialog;
