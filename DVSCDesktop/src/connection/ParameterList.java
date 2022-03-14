@@ -65,6 +65,6 @@ public class ParameterList {
 			}
 		}
 		output = String.join("&", outputArray);
-		return "?" + output;
+		return (outputArray.size() > 0) ? "?" + output : "";
 	}
 }

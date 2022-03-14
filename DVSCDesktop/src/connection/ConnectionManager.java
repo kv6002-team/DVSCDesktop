@@ -1,19 +1,17 @@
 package connection;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import javax.net.ssl.HttpsURLConnection;
-
+import javax.net.ssl.SSLContext;
 
 public class ConnectionManager {
-	private ConnectionManager instance;
+	private static final boolean DEV_MODE = true;
+	private static ConnectionManager instance;
 	private String url;
 	
 	ConnectionManager(String url){
@@ -23,9 +21,9 @@ public class ConnectionManager {
 	/**
 	 * Singleton
 	 * @param url
-	 * @return
+	 * @return ConnectionManager
 	 */
-	public ConnectionManager getInstance(String url) {
+	public static ConnectionManager getInstance(String url) {
 		if(instance == null) instance = new ConnectionManager(url);
 		return instance;
 	}
@@ -33,89 +31,92 @@ public class ConnectionManager {
 	/**
 	 * Creates a URL
 	 * @param url
-	 * @return
+	 * @return HttpsURLConnection
+	 * @throws Exception 
 	 */
-	private HttpsURLConnection getConnection(String url) {
-		HttpsURLConnection connection = null;
-		URL https_url = null;
-		try {
-			https_url = new URL(url);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		try {
-			connection = (HttpsURLConnection) https_url.openConnection();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private HttpsURLConnection getConnection(String url) throws Exception {
+		SSLContext sc = SSLContext.getInstance("SSL");
+		sc.init(null, CertManager.getTrustManager(), new SecureRandom());
+		
+		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		
+		HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
+		
 		return connection;
 	}
 	
-	/**
-	 * Sets the connection properties of the connection
-	 * @param con
-	 * @param query
-	 */
-	private void setConnectionProperties(HttpsURLConnection con, String query) {
-		con.setRequestProperty("Content-length", String.valueOf(query.length()));
-		con.setRequestProperty("Content-Type", "application/json; utf-8");
+	private void setConnectionProperties(HttpsURLConnection con, int querySize, String method) throws Exception {
+		
+		con.setRequestProperty("Content-length", Integer.toString(querySize));
+		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;");
+        con.setRequestProperty("charset", "utf-8");
 		con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0;Windows98;DigExt)");
 		con.setRequestProperty("Accept", "application/json");
-
-		
-		try {
-			con.setRequestMethod("POST");
-		} catch (ProtocolException e) {
-			e.printStackTrace();
-		}
-		
+        con.setInstanceFollowRedirects(false);
+        con.setUseCaches(false);
+		con.setRequestMethod(method);
 		con.setDoInput(true);
 		con.setDoOutput(true);
+		
 	}
 	
-	/**
-	 * Takes an endpoint and appends it to {URL}/api/.
-	 * Takes a parameterList object to send to endpoint
-	 * @param endpoint
-	 * @param queryList
-	 * @return {String} Response from server
-	 */
-	public String sendQuery(String endpoint, ParameterList queryList) {
-		boolean DEV_MODE = true;
+	public String sendPostRequest(String endpoint, ParameterList queryList) throws Exception {
 		
 		String httpsURL = "https://" + url;
 		String fullURL = httpsURL + "/api/" + endpoint;
+        
+        byte[] postData = queryList.generateString().getBytes(StandardCharsets.UTF_8);
+        int postDataLength = postData.length;
+ 
+        HttpsURLConnection connection = getConnection(fullURL);
+        setConnectionProperties(connection, postDataLength, "POST");
+        
+        try (OutputStream os = connection.getOutputStream()) {
+            os.write(postData);
+        }
+ 
+        
+        if(DEV_MODE) {
+            int responseCode = connection.getResponseCode();
+            System.out.println("POST request to URL: " + fullURL);
+            System.out.println("POST Parameters    : " + queryList.generateString());
+            System.out.println("Response Code      : " + responseCode);
+        }
+
+ 
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String line;
+            StringBuilder response = new StringBuilder();
+ 
+            while ((line = in.readLine()) != null) {
+                response.append(line).append("\n");
+            }
+            connection.disconnect();
+            return response.toString();
+        }
+	}
+	
+	public String sendGetRequest(String endpoint, ParameterList queryList) throws Exception {
+		String httpsURL = "https://" + url;
+		String fullURL = httpsURL +  "/api/" + endpoint;
 		
-		String queryString = queryList.generateString();
-		HttpsURLConnection con = getConnection(fullURL);
+		HttpsURLConnection connection = getConnection(fullURL + queryList.generateString());
 		
-		setConnectionProperties(con, queryString);
-		DataOutputStream output = null;
-		DataInputStream input = null;
-		
-		String dataInputString = "";
-		
-		try {
-			output = new DataOutputStream(con.getOutputStream());
-			
-			if(queryList != null) output.writeBytes(queryString);
-			
-			output.close();
-			
-			input = new DataInputStream(con.getInputStream());
-			for(int c = input.read(); c != -1; c = input.read()) {
-				dataInputString += (char) c;
-			}
-			
-			if(DEV_MODE) {
-				System.out.println(dataInputString);
-				System.out.println(con.getResponseMessage());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(DEV_MODE) {
+	        System.out.println("GET request to URL: " + fullURL);
+	        System.out.println("GET Parameters    : " + queryList.generateString());
+	        //System.out.println("Response Code      : " + connection.getResponseCode());
 		}
 		
-		con.disconnect();
-		return dataInputString;
-	}	
+		try(BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+			StringBuilder response = new StringBuilder();
+			String line;
+			
+			while((line = in.readLine()) != null) {
+				response.append(line).append("\n");
+			}
+			connection.disconnect();
+			return response.toString();
+		}
+	}
 }
