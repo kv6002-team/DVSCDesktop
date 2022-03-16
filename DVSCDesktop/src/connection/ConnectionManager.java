@@ -6,8 +6,12 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+
+import security.ResponseParser;
 
 public class ConnectionManager {
 	private static final boolean DEV_MODE = true;
@@ -53,6 +57,7 @@ public class ConnectionManager {
 		con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0;Windows98;DigExt)");
 		con.setRequestProperty("Accept", "application/json");
         con.setInstanceFollowRedirects(false);
+        con.setReadTimeout(5000); 
         con.setUseCaches(false);
 		con.setRequestMethod(method);
 		con.setDoInput(true);
@@ -82,7 +87,6 @@ public class ConnectionManager {
             System.out.println("POST Parameters    : " + queryList.generateString());
             System.out.println("Response Code      : " + responseCode);
         }
-
  
         try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
             String line;
@@ -92,7 +96,8 @@ public class ConnectionManager {
                 response.append(line).append("\n");
             }
             connection.disconnect();
-            return response.toString();
+            ArrayList<String> result = new ResponseParser(response.toString()).parseArray().getResultsAsArrayList();
+            return result.toString();
         }
 	}
 	
