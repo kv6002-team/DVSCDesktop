@@ -31,12 +31,12 @@ public class CRUDPanel extends JPanel {
 	public JTextField txt_garageName = new JTextField();
 	public JTextField txt_contactNum = new JTextField();
 	public JTextField txt_contactEmail = new JTextField();
-	public JCheckBox chckbxNewCheckBox = new JCheckBox("");
+	public JCheckBox chck_yearPaid = new JCheckBox("");
 	public JButton btn_deleteGarage = new JButton("Delete Garage");
 	public JList lst_instruments = new JList();
 	public JButton btn_addInstrument = new JButton("Add Instrument");
 	public JTextField txt_serialNum = new JTextField();
-	public JDateChooser dateChooser = new JDateChooser();
+	public JDateChooser date_calibrationDate = new JDateChooser();
 	public JButton btn_deleteInstrument = new JButton("Delete Instrument");
 	public JButton btn_addGarage = new JButton("Add Garage");
 	public JButton btn_saveChanges = new JButton("Save Changes");
@@ -219,11 +219,11 @@ public class CRUDPanel extends JPanel {
 		gbc_lbl_yearPaid.gridy = 2;
 		pnl_garageInfo.add(lbl_yearPaid, gbc_lbl_yearPaid);
 		
-		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
-		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxNewCheckBox.gridx = 7;
-		gbc_chckbxNewCheckBox.gridy = 2;
-		pnl_garageInfo.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
+		GridBagConstraints gbc_chck_yearPaid = new GridBagConstraints();
+		gbc_chck_yearPaid.insets = new Insets(0, 0, 5, 5);
+		gbc_chck_yearPaid.gridx = 7;
+		gbc_chck_yearPaid.gridy = 2;
+		pnl_garageInfo.add(chck_yearPaid, gbc_chck_yearPaid);
 		
 		btn_deleteGarage.setPreferredSize(new Dimension(200, 23));
 		btn_deleteGarage.setMaximumSize(new Dimension(200, 23));
@@ -361,12 +361,12 @@ public class CRUDPanel extends JPanel {
 		gbc_lbl_calibrationDate.gridy = 2;
 		pnl_instrumentInfo.add(lbl_calibrationDate, gbc_lbl_calibrationDate);
 		
-		GridBagConstraints gbc_dateChooser = new GridBagConstraints();
-		gbc_dateChooser.insets = new Insets(0, 0, 5, 5);
-		gbc_dateChooser.fill = GridBagConstraints.HORIZONTAL;
-		gbc_dateChooser.gridx = 2;
-		gbc_dateChooser.gridy = 2;
-		pnl_instrumentInfo.add(dateChooser, gbc_dateChooser);
+		GridBagConstraints gbc_date_calibrationDate = new GridBagConstraints();
+		gbc_date_calibrationDate.insets = new Insets(0, 0, 5, 5);
+		gbc_date_calibrationDate.fill = GridBagConstraints.HORIZONTAL;
+		gbc_date_calibrationDate.gridx = 2;
+		gbc_date_calibrationDate.gridy = 2;
+		pnl_instrumentInfo.add(date_calibrationDate, gbc_date_calibrationDate);
 		
 		GridBagConstraints gbc_btn_deleteInstrument = new GridBagConstraints();
 		gbc_btn_deleteInstrument.gridwidth = 2;
@@ -398,5 +398,39 @@ public class CRUDPanel extends JPanel {
 
 	}
 
+	public JList getGaragesList(){
+		return lst_garages;
+	}
 	
+	public JTextField getGarageNameTextField(){
+		return txt_garageName;
+	}
+	
+	public JTextField getGarageNumberTextField(){
+		return txt_contactNum;
+	}
+	
+	public JTextField getGarageEmailTextField(){
+		return txt_contactEmail;
+	}
+	
+	public JCheckBox getGarageYearPaidChckBox(){
+		return chck_yearPaid;
+	}
+	
+	public JButton getDeleteGarageButton(){
+		return btn_deleteGarage;
+	}
+	
+	public JList getInstrumentList() {
+		return lst_instruments;
+	}
+	
+	public JButton getAddInstrumentButton(){
+		return btn_addInstrument;
+	}
+	
+	public JTextField getSerialNumTextField(){
+		return txt_serialNum;
+	}
 }
