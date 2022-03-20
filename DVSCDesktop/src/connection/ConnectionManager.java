@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
-import security.ResponseParser;
-
 public class ConnectionManager {
 	private static final boolean DEV_MODE = true;
 	private static ConnectionManager instance;
