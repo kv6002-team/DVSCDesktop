@@ -358,13 +358,13 @@ public class CRUDPanel extends JPanel {
 		gbc_lbl_calibrationDate.gridy = 2;
 		pnl_instrumentInfo.add(lbl_calibrationDate, gbc_lbl_calibrationDate);
 		
-		//JDateChooser dateChooser = new JDateChooser();
+		JDateChooser dateChooser = new JDateChooser();
 		GridBagConstraints gbc_dateChooser = new GridBagConstraints();
 		gbc_dateChooser.insets = new Insets(0, 0, 5, 5);
 		gbc_dateChooser.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dateChooser.gridx = 2;
 		gbc_dateChooser.gridy = 2;
-		//pnl_instrumentInfo.add(dateChooser, gbc_dateChooser);
+		pnl_instrumentInfo.add(dateChooser, gbc_dateChooser);
 		
 		JButton btn_deleteInstrument = new JButton("Delete Instrument");
 		GridBagConstraints gbc_btn_deleteInstrument = new GridBagConstraints();
