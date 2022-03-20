@@ -50,9 +50,9 @@ public class CRUDPanelManager {
 
 	}
 
-	public void addInstrument(Instrument instrument){
-
-	}
+//	public void addInstrument(Instrument instrument){
+//
+//	}
 
 	public void removeInstrument(int index){
 

@@ -36,7 +36,7 @@ public class CRUDPanel extends JPanel {
 	public JList lst_instruments = new JList();
 	public JButton btn_addInstrument = new JButton("Add Instrument");
 	public JTextField txt_serialNum = new JTextField();
-	public JDateChooser date_calibrationDate = new JDateChooser();
+//	public JDateChooser date_calibrationDate = new JDateChooser();
 	public JButton btn_deleteInstrument = new JButton("Delete Instrument");
 	public JButton btn_addGarage = new JButton("Add Garage");
 	public JButton btn_saveChanges = new JButton("Save Changes");
@@ -366,7 +366,7 @@ public class CRUDPanel extends JPanel {
 		gbc_date_calibrationDate.fill = GridBagConstraints.HORIZONTAL;
 		gbc_date_calibrationDate.gridx = 2;
 		gbc_date_calibrationDate.gridy = 2;
-		pnl_instrumentInfo.add(date_calibrationDate, gbc_date_calibrationDate);
+//		pnl_instrumentInfo.add(date_calibrationDate, gbc_date_calibrationDate);
 		
 		GridBagConstraints gbc_btn_deleteInstrument = new GridBagConstraints();
 		gbc_btn_deleteInstrument.gridwidth = 2;

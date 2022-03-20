@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+/**
+ * 
+ * @author Scrub
+ *
+ */
 public class ResponseParser {
 	String response;
 	JSONObject objectResults;

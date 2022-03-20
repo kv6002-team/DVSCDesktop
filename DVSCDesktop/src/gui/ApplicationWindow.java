@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import guimanagers.AuthenticationPanelManager;
 import security.AuthenticationManager;
 import security.SecurityManager;
 /**
@@ -42,27 +43,12 @@ public class ApplicationWindow extends JFrame {
 	
 	public void init(){
 		
-		AuthenticationPanel AuthenticationPanel = new AuthenticationPanel();
+		AuthenticationPanelManager authPanelManager = new AuthenticationPanelManager(this);
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 576);
-		setContentPane(AuthenticationPanel);
-		
-		AuthenticationPanel.getAuthenticationButton().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(SecurityManager.checkConnection()) {
-					AuthenticationPanel.clearFields();
-					if(AuthenticationManager.authenticate(AuthenticationPanel.getUsernameField(), AuthenticationPanel.getPasswordField())) {
-						setContentPane(new Wrapper());
-						revalidate();
-					}
-				} else {
-					NoConnectionDialog x = new NoConnectionDialog();
-					x.run();
-				}
-			}
-		});
+		setContentPane(authPanelManager.getPanel());
 		
 	}
 }

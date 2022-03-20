@@ -7,7 +7,11 @@ import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-
+/**
+ * 
+ * @author Scrub
+ *
+ */
 public class ConnectionValidator {
 		
 	public static boolean testConntectionHTTPS(String https_url) {
