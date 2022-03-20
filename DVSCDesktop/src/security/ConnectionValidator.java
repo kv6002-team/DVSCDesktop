@@ -19,7 +19,7 @@ public class ConnectionValidator {
 			connection.disconnect();
 
 		} catch (MalformedURLException ex) {
-			
+			return false;
 		} catch (IOException ex) {
 			return false;
 		}

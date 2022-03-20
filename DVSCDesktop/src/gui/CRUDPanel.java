@@ -21,8 +21,8 @@ import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.Cursor;
-import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JCalendar;
+//import com.toedter.calendar.JDateChooser;
+//import com.toedter.calendar.JCalendar;
 import java.awt.Dimension;
 
 public class CRUDPanel extends JPanel {
