@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
+import security.JWT;
+
 public class ConnectionManager {
 	private static final boolean DEV_MODE = true;
 	private static ConnectionManager instance;
 	private String url;
+	private String JWTToken = JWT.getInstance().getToken();
 	
 	ConnectionManager(String url){
 		this.url = url;
@@ -61,6 +64,7 @@ public class ConnectionManager {
 		con.setDoInput(true);
 		con.setDoOutput(true);
 		
+		if(JWTToken != null) con.setRequestProperty("Authorization", "bearer " + JWTToken);
 	}
 	
 	public String sendPostRequest(String endpoint, ParameterList queryList) throws Exception {

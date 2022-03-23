@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 public class AlertDialog {
 	
 	public AlertDialog () {
-
 	}
+	
 	private void generateDialog(String message) {
 		JOptionPane.showMessageDialog(new JFrame(), message, "Alert" , JOptionPane.WARNING_MESSAGE);
 	}
