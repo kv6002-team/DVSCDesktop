@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import java.awt.ComponentOrientation;
 import java.awt.Component;
 import javax.swing.Box;
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JTextField;
@@ -25,6 +26,8 @@ import java.awt.Cursor;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JCalendar;
 import java.awt.Dimension;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 
 public class CRUDPanel extends JPanel {
@@ -43,12 +46,13 @@ public class CRUDPanel extends JPanel {
 	public JButton btn_addGarage = new JButton("Add Garage");
 	public JButton btn_saveChanges = new JButton("Save Changes");
 	
-	public static final String tabName = "garages";
+	public static final String tabName = "Garages";
 	
 	/**
 	 * Create the panel.
 	 */
 	public CRUDPanel() {
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{138, 260, 0};
 		gridBagLayout.rowHeights = new int[]{27, 0, 0};
@@ -434,5 +438,9 @@ public class CRUDPanel extends JPanel {
 	
 	public JTextField getSerialNumTextField(){
 		return txt_serialNum;
+	}
+	
+	public void setGarageList(DefaultListModel list){
+		lst_garages.setModel(list);
 	}
 }
