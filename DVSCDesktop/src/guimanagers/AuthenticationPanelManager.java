@@ -5,11 +5,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import connection.Connection;
 import gui.AuthenticationPanel;
 import gui.NoConnectionDialog;
 import gui.Wrapper;
 import security.AuthenticationManager;
 import security.SecurityManager;
+import utils.Console;
 
 /**
  * 
@@ -18,12 +20,20 @@ import security.SecurityManager;
  */
 public class AuthenticationPanelManager {
 	private AuthenticationPanel authenticationPanel = new AuthenticationPanel();
-	
+	private Connection connection = new Connection();
 	public AuthenticationPanelManager(JFrame mainWindow) {
+		addAuthenticationEventListener(mainWindow);
+	}
+	
+	public AuthenticationPanel getPanel() {
+		return authenticationPanel;
+	}
+	
+	
+	private void addAuthenticationEventListener(JFrame mainWindow) {
 		authenticationPanel.getAuthenticationButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(SecurityManager.checkConnection()) {
-					authenticationPanel.clearFields();
+				if(connection.ping()) {					
 					if(AuthenticationManager.authenticate(authenticationPanel.getUsernameField(), authenticationPanel.getPasswordField())) {
 						mainWindow.setContentPane(new Wrapper());
 						mainWindow.revalidate();
@@ -32,11 +42,8 @@ public class AuthenticationPanelManager {
 					NoConnectionDialog x = new NoConnectionDialog();
 					x.run();
 				}
+				authenticationPanel.clearFields();
 			}
 		});
-	}
-	
-	public AuthenticationPanel getPanel() {
-		return authenticationPanel;
 	}
 }
