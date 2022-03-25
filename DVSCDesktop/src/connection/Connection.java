@@ -21,10 +21,8 @@ public class Connection {
 	public boolean ping() {
 		boolean flag = false;
 		try {
-			String response = connectionManager.sendPostRequest("ping", null, ConnectionManager.AUTH_TYPE.NONE, null);
-			
-			ResponseParser responseParser = new ResponseParser(response);
-			JSONArray responseArray = responseParser.getArray();
+			Response response = connectionManager.sendPostRequest("ping", null, ConnectionManager.AUTH_TYPE.NONE, null);
+			JSONArray responseArray = response.getArray();
 			String res = responseArray.getString(0);
 			
 			if(res.contentEquals("pong")) flag = true;
@@ -36,11 +34,8 @@ public class Connection {
 	
 	public void getPing() {
 		try {
-			ParameterList l = new ParameterList();
-			l.add("X","y");
-			String response = connectionManager.sendGetRequest("ping", l);
-			ResponseParser responseParser = new ResponseParser(response);
-			JSONArray resArr = responseParser.getArray();
+			Response response = connectionManager.sendGetRequest("ping", null);
+			JSONArray resArr = response.getArray();
 			String res = resArr.getString(0);
 			Console.log(res);
 		} catch (Exception e) {
@@ -52,9 +47,8 @@ public class Connection {
 		boolean flag = false;
 		String authString = SecurityManager.encode(username + ":" + password);
 		try {
-			String response = connectionManager.sendPostRequest("authenticate", null, ConnectionManager.AUTH_TYPE.BASIC, authString);
-			ResponseParser responseParser = new ResponseParser(response);
-			JSONObject resObj = responseParser.getObject();
+			Response response = connectionManager.sendPostRequest("authenticate", null, ConnectionManager.AUTH_TYPE.BASIC, authString);
+			JSONObject resObj = response.getObject();
 			if(resObj.getString("token_type") == "bearer") {
 				JWT.getInstance().setToken(resObj.getString("token"));
 				flag = true;

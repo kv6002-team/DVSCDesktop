@@ -71,4 +71,7 @@ public class ParameterList {
 		output = String.join("&", outputArray);
 		return (outputArray.size() > 0) ? "?" + output : "";
 	}
+	public Map getList() {
+		return parameterList;
+	}
 }
