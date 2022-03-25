@@ -146,7 +146,7 @@ public class ConnectionManager {
 				response.append(line).append("\n");
 			}
 			connection.disconnect();
-			return new Response(response.toString(), connection.getResponseCode(), fullUrl, queryList);
+			return new Response(response.toString(), connection.getResponseCode(), fullURL, queryList);
 		}
 	}
 }
