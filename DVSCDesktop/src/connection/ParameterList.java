@@ -12,6 +12,7 @@ import java.util.Map;
  *
  */
 public class ParameterList {
+
 	// Main Map variable
 	private Map<String,String> parameterList = new HashMap<String,String>();
 	
@@ -39,6 +40,9 @@ public class ParameterList {
 	 */
 	public void remove(String key) {
 		parameterList.remove(key);
+	}
+	public String getParam(String Key) {
+		return parameterList.get(Key);
 	}
 	
 	/**

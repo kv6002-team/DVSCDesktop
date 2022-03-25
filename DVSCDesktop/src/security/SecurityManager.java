@@ -1,6 +1,7 @@
 package security;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import gui.AlertDialog;
 
@@ -17,17 +18,7 @@ public class SecurityManager {
 		if(instance == null) instance = new SecurityManager();
 		return instance;
 	}
-	
-	/**
-	 * @author Scrub
-	 * @return boolean
-	 * 
-	 * Checks the the connection to the Clients server, ensuring that the application has a connection.
-	 */
-	public static boolean checkConnection() {
-		return ConnectionValidator.testConntectionHTTPS(hostname);
-	}
-	
+
 	public static void testSystemSecurity() {
 		AlertDialog alertDialog =  new AlertDialog();
 		int maxKeySize;
@@ -45,5 +36,10 @@ public class SecurityManager {
 	
 	public static String getHostname() {
 		return hostname;
+	}
+	
+	
+	public static String encode(String toEncode) {
+		return Base64.getMimeEncoder().encodeToString(toEncode.getBytes());
 	}
 }

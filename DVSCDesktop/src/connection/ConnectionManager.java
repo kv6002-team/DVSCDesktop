@@ -11,15 +11,27 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
 import security.JWT;
+import utils.Console;
 
 public class ConnectionManager {
 	private static final boolean DEV_MODE = true;
 	private static ConnectionManager instance;
 	private String url;
-	private String JWTToken = JWT.getInstance().getToken();
 	
-	private ConnectionManager(String url){
+	public ConnectionManager(String url){
 		this.url = url;
+	}
+	
+	public static enum AUTH_TYPE{
+		JWT("bearer"),
+		BASIC("basic"),
+		NONE(null);
+
+		public final String type;
+		
+		private AUTH_TYPE(String type) {
+			this.type = type;
+		}
 	}
 	
 	/**
@@ -27,10 +39,10 @@ public class ConnectionManager {
 	 * @param url
 	 * @return ConnectionManager
 	 */
-	public static ConnectionManager getInstance(String url) {
-		if(instance == null) instance = new ConnectionManager(url);
-		return instance;
-	}
+//	public static ConnectionManager getInstance(String url) {
+//		if(instance == null) instance = new ConnectionManager(url);
+//		return instance;
+//	}
 	
 	/**
 	 * Creates a URL
@@ -57,30 +69,40 @@ public class ConnectionManager {
 		con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0;Windows98;DigExt)");
 		con.setRequestProperty("Accept", "application/json");
         con.setInstanceFollowRedirects(false);
-        con.setReadTimeout(5000); 
+//        con.setReadTimeout(5000); 
+        con.setConnectTimeout(5000);
         con.setUseCaches(false);
 		con.setRequestMethod(method);
 		con.setDoInput(true);
 		con.setDoOutput(true);
-		
-		if(JWTToken != null) con.setRequestProperty("Authorization", "bearer " + JWTToken);
 	}
 	
-	public String sendPostRequest(String endpoint, ParameterList queryList) throws Exception{
+	private void setAuthenticationType(HttpsURLConnection con, AUTH_TYPE authType, String authorisationString) {
+		if(authorisationString == null && authType == AUTH_TYPE.JWT && JWT.getInstance().isTokenSet()) authorisationString = JWT.getInstance().getToken();
+		con.setRequestProperty("Authorization", authType + " " + authorisationString);
+	}
+	
+	public String sendPostRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception{
+		
+		if(queryList == null) queryList = new ParameterList();
 		
 		String httpsURL = "https://" + url;
 		String fullURL = httpsURL + "/api/" + endpoint;
         
         byte[] postData = queryList.generateString().getBytes(StandardCharsets.UTF_8);
+
         int postDataLength = postData.length;
  
         HttpsURLConnection connection = getConnection(fullURL);
         setConnectionProperties(connection, postDataLength, "POST");
+
+        if(authType != AUTH_TYPE.NONE) {
+        	setAuthenticationType(connection, authType, authorisationString);
+        }
         
         try (OutputStream os = connection.getOutputStream()) {
             os.write(postData);
         }
- 
         
         if(DEV_MODE) {
             int responseCode = connection.getResponseCode();
@@ -102,6 +124,9 @@ public class ConnectionManager {
 	}
 	
 	public String sendGetRequest(String endpoint, ParameterList queryList) throws Exception {
+		
+		if(queryList == null) queryList = new ParameterList();
+
 		String httpsURL = "https://" + url;
 		String fullURL = httpsURL +  "/api/" + endpoint;
 		
