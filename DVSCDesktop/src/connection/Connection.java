@@ -1,14 +1,17 @@
 package connection;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
+import security.JWT;
+import security.SecurityManager;
 /**
  * 
  * @author Scrub
  *
  */
 public class Connection {
-	private ConnectionManager connectionManager = ConnectionManager.getInstance("dvsc.services");
+	private ConnectionManager connectionManager = ConnectionManager.getInstance(SecurityManager.getHostname());
 	
 	/**
 	 * Returns true if the correct and a valid response is received from the server
@@ -30,12 +33,21 @@ public class Connection {
 		return flag;
 	}
 	
-	
-//	public String getHashedPassword(String username) {
-//		ParameterList pm = new ParameterList();
-//		pm.add("username", username);
-//		
-//		String response = connectionManager.sendPostRequest("");
-//		
-//	}
+	public boolean authenticate(String username, String password) {
+		boolean flag = false;
+		String authString = SecurityManager.encode(username + ":" + password);
+		try {
+			String response = connectionManager.sendPostRequest("authenticate", null, ConnectionManager.AUTH_TYPE.BASIC, authString);
+			ResponseParser responseParser = new ResponseParser(response);
+			JSONObject resObj = responseParser.getObject();
+			if(resObj.getString("token_type") == "bearer") {
+				JWT.getInstance().setToken(resObj.getString("token"));
+				flag = true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

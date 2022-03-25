@@ -94,8 +94,6 @@ public class ConnectionManager {
  
         HttpsURLConnection connection = getConnection(fullURL);
         setConnectionProperties(connection, postDataLength, "POST");
-        Console.log(connection.getHeaderFields().toString());
-
 
         if(authType != AUTH_TYPE.NONE) {
         	setAuthenticationType(connection, authType, authorisationString);
@@ -104,7 +102,6 @@ public class ConnectionManager {
         try (OutputStream os = connection.getOutputStream()) {
             os.write(postData);
         }
- 
         
         if(DEV_MODE) {
             int responseCode = connection.getResponseCode();

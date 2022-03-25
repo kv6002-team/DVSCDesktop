@@ -1,6 +1,7 @@
 package security;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import gui.AlertDialog;
 
@@ -35,5 +36,10 @@ public class SecurityManager {
 	
 	public static String getHostname() {
 		return hostname;
+	}
+	
+	
+	public static String encode(String toEncode) {
+		return Base64.getMimeEncoder().encodeToString(toEncode.getBytes());
 	}
 }
