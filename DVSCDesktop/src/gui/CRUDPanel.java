@@ -99,15 +99,6 @@ public class CRUDPanel extends JPanel {
 		
 	
 		lst_garages.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lst_garages.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
 		scrl_garagesList.setViewportView(lst_garages);
 		
 		JPanel pnl_garageInfo = new JPanel();
@@ -278,15 +269,7 @@ public class CRUDPanel extends JPanel {
 		gbc_scrl_instrumentList.gridy = 1;
 		pnl_instrumentList.add(scrl_instrumentList, gbc_scrl_instrumentList);
 		
-		lst_instruments.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument\t"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		lst_instruments.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		scrl_instrumentList.setViewportView(lst_instruments);
 		
 		
