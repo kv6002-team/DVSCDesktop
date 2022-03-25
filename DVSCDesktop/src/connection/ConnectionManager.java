@@ -16,8 +16,9 @@ import utils.Console;
 public class ConnectionManager {
 	private static final boolean DEV_MODE = true;
 	private static ConnectionManager instance;
-	private String url;	
-	private ConnectionManager(String url){
+	private String url;
+	
+	public ConnectionManager(String url){
 		this.url = url;
 	}
 	
@@ -38,10 +39,10 @@ public class ConnectionManager {
 	 * @param url
 	 * @return ConnectionManager
 	 */
-	public static ConnectionManager getInstance(String url) {
-		if(instance == null) instance = new ConnectionManager(url);
-		return instance;
-	}
+//	public static ConnectionManager getInstance(String url) {
+//		if(instance == null) instance = new ConnectionManager(url);
+//		return instance;
+//	}
 	
 	/**
 	 * Creates a URL
@@ -68,7 +69,7 @@ public class ConnectionManager {
 		con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0;Windows98;DigExt)");
 		con.setRequestProperty("Accept", "application/json");
         con.setInstanceFollowRedirects(false);
-        con.setReadTimeout(5000); 
+//        con.setReadTimeout(5000); 
         con.setConnectTimeout(5000);
         con.setUseCaches(false);
 		con.setRequestMethod(method);
