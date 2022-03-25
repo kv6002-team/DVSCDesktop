@@ -1,6 +1,7 @@
 package guimanagers;
 
 import gui.CRUDPanel;
+import gui.Wrapper;
 import domain.Garage;
 import domain.Instrument;
 
@@ -11,6 +12,10 @@ import java.util.Date;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * 
@@ -22,26 +27,26 @@ public class CRUDPanelManager {
 	
 	private CRUDPanel CRUDPanel = new CRUDPanel();
 	ArrayList<Garage> garages = new ArrayList<Garage>();
+	Wrapper wrapper;
 	
 	
 	
 	
-	
-	public CRUDPanelManager() {
-
+	public CRUDPanelManager(Wrapper wrapper){
 		
+		this.wrapper = wrapper;
 		
 		garages.add(new Garage("garage 1", 1));
 		garages.add(new Garage("garage 2", 2));
 		garages.add(new Garage("garage 3", 3));
 		
-		CRUDPanel.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
+		System.out.print(garages);
+		
+		wrapper.getTabbedPane().addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
 				populateGarageList(garages);
 			}
 		});
-		
 		
 		
 	}

@@ -5,6 +5,8 @@ import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 
 import guimanagers.CRUDPanelManager;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 /**
  * 
  * @author Scrub
@@ -13,18 +15,21 @@ import guimanagers.CRUDPanelManager;
 @SuppressWarnings("serial")
 public class Wrapper extends JPanel {
 	
-	CRUDPanelManager CRUDPanelManager = new CRUDPanelManager();
+	private JTabbedPane tab_MainTabPane = new JTabbedPane(JTabbedPane.TOP);
+	
+	CRUDPanelManager CRUDPanelManager = new CRUDPanelManager(this);
 	/**
 	 * Create the panel.
 	 */
 	public Wrapper() {
 		setLayout(new BorderLayout(0, 0));
-		
-		JTabbedPane tab_MainTabPane = new JTabbedPane(JTabbedPane.TOP);
 		add(tab_MainTabPane);
 		tab_MainTabPane.addTab(CRUDPanel.tabName, null, CRUDPanelManager.getCRUDPanel(), null);
 		JPanel panel = new JPanel();
 		tab_MainTabPane.addTab("name", panel);
 	}
-
+	
+	public JTabbedPane getTabbedPane(){
+		return tab_MainTabPane;
+	}
 }
