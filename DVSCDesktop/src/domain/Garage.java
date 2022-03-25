@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.Date;
+//import connection.Connection
 
 /**
  * @author Callum
@@ -40,7 +40,7 @@ public class Garage {
 	}
 	
 	public void addGarageInfo(){
-		this.gi = connection.getGarageInfo(this.ID);
+//		this.gi = Connection.getGarageInfo(this.ID);
 	}
 
 }
