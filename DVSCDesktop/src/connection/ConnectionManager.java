@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -19,7 +18,7 @@ public class ConnectionManager {
 	private String url;
 	private String JWTToken = JWT.getInstance().getToken();
 	
-	ConnectionManager(String url){
+	private ConnectionManager(String url){
 		this.url = url;
 	}
 	
@@ -67,7 +66,7 @@ public class ConnectionManager {
 		if(JWTToken != null) con.setRequestProperty("Authorization", "bearer " + JWTToken);
 	}
 	
-	public String sendPostRequest(String endpoint, ParameterList queryList) throws Exception {
+	public String sendPostRequest(String endpoint, ParameterList queryList) throws Exception{
 		
 		String httpsURL = "https://" + url;
 		String fullURL = httpsURL + "/api/" + endpoint;
@@ -98,8 +97,7 @@ public class ConnectionManager {
                 response.append(line).append("\n");
             }
             connection.disconnect();
-            ArrayList<String> result = new ResponseParser(response.toString()).parseArray().getResultsAsArrayList();
-            return result.toString();
+            return response.toString();
         }
 	}
 	
@@ -112,7 +110,7 @@ public class ConnectionManager {
 		if(DEV_MODE) {
 	        System.out.println("GET request to URL: " + fullURL);
 	        System.out.println("GET Parameters    : " + queryList.generateString());
-	        //System.out.println("Response Code      : " + connection.getResponseCode());
+	        System.out.println("Response Code      : " + connection.getResponseCode());
 		}
 		
 		try(BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
