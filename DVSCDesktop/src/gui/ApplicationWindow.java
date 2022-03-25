@@ -43,7 +43,6 @@ public class ApplicationWindow extends JFrame {
 	}
 	
 	public void init(){
-
 		AuthenticationPanelManager authPanelManager = new AuthenticationPanelManager(this);
 		
 		setResizable(false);

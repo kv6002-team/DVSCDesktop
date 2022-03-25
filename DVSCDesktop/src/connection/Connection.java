@@ -5,13 +5,14 @@ import org.json.JSONObject;
 
 import security.JWT;
 import security.SecurityManager;
+import utils.Console;
 /**
  * 
  * @author Scrub
  *
  */
 public class Connection {
-	private ConnectionManager connectionManager = ConnectionManager.getInstance(SecurityManager.getHostname());
+	private ConnectionManager connectionManager = new ConnectionManager(SecurityManager.getHostname());
 	
 	/**
 	 * Returns true if the correct and a valid response is received from the server
@@ -31,6 +32,20 @@ public class Connection {
 			e.printStackTrace();
 		}
 		return flag;
+	}
+	
+	public void getPing() {
+		try {
+			ParameterList l = new ParameterList();
+			l.add("X","y");
+			String response = connectionManager.sendGetRequest("ping", l);
+			ResponseParser responseParser = new ResponseParser(response);
+			JSONArray resArr = responseParser.getArray();
+			String res = resArr.getString(0);
+			Console.log(res);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean authenticate(String username, String password) {
