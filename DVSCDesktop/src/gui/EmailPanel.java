@@ -11,7 +11,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JList;
 import java.awt.TextField;
+import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+
 import java.awt.List;
 import java.awt.Button;
 import java.awt.Component;
@@ -19,66 +23,190 @@ import javax.swing.Box;
 import java.awt.Choice;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.border.LineBorder;
+
+import domain.Email;
+
 import java.awt.Color;
 import javax.swing.JTabbedPane;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractListModel;
 
 public class EmailPanel extends JPanel {
-	private JTextField EmailSubject;
-	private JTextField EmailRecipient;
+	
+	public JList<?> lst_GarageEmails = new JList();
+	public JList<?> lst_ApprovedEmails = new JList();
+	public JButton btn_MoveAll = new JButton("Move all");
+	public JButton btn_MoveSelected = new JButton("Move selected");
+	public JButton btn_RemoveSelected = new JButton("Remove selected");
+	public JButton btn_RemoveAll = new JButton("Remove All");
+	public JButton btn_Approve = new JButton("Approve");
+	
+	public JList getGarageEmails() {
+		return lst_GarageEmails;
+	}
 
+	public JList getApprovedEmails() {
+		return lst_ApprovedEmails;
+	}
+	
+	public JButton getMoveAll() {
+		return btn_MoveAll;
+	}
+	
+	public JButton getMoveSelected() {
+		return btn_MoveSelected;
+	}
+	
+	public JButton getRemoveSelected() {
+		return btn_RemoveSelected;
+	}
+	
+	public JButton getRemoveAll() {
+		return btn_RemoveAll;
+	}
+	
+	public JButton getApprove() {
+		return btn_Approve;
+	}
+	
+	public void setUnapprovedEmailList(Email email) {
+		lst_GarageEmails.setModel((ListModel) email);
+	}
+	
+	public void setApprovedEmailList(Email email) {
+		lst_ApprovedEmails.setModel((ListModel) email);
+	}
+	
 	/**
 	 * Create the panel.
 	 */
+	
 	public EmailPanel() {
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{17, 161, 294, 0, 0};
-		gridBagLayout.rowHeights = new int[]{21, 0, 327, 13, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{0, 210, 159, 210, 0, 0};
+		gridBagLayout.rowHeights = new int[]{21, 0, 327, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JPanel pnl_emailLists = new JPanel();
-		GridBagConstraints gbc_pnl_emailLists = new GridBagConstraints();
-		gbc_pnl_emailLists.weightx = 0.5;
-		gbc_pnl_emailLists.insets = new Insets(0, 0, 5, 5);
-		gbc_pnl_emailLists.fill = GridBagConstraints.BOTH;
-		gbc_pnl_emailLists.gridx = 1;
-		gbc_pnl_emailLists.gridy = 2;
-		add(pnl_emailLists, gbc_pnl_emailLists);
-		pnl_emailLists.setLayout(new GridLayout(0, 1, 0, 0));
+		JPanel pnl_Recipients = new JPanel();
+		GridBagConstraints gbc_pnl_Recipients = new GridBagConstraints();
+		gbc_pnl_Recipients.weightx = 0.5;
+		gbc_pnl_Recipients.insets = new Insets(0, 0, 5, 5);
+		gbc_pnl_Recipients.fill = GridBagConstraints.BOTH;
+		gbc_pnl_Recipients.gridx = 1;
+		gbc_pnl_Recipients.gridy = 2;
+		add(pnl_Recipients, gbc_pnl_Recipients);
+		pnl_Recipients.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JTabbedPane tab_EmailTabs = new JTabbedPane(JTabbedPane.TOP);
-		pnl_emailLists.add(tab_EmailTabs);
+		JTabbedPane tab_GarageEmails = new JTabbedPane(JTabbedPane.TOP);
+		pnl_Recipients.add(tab_GarageEmails);
 		
-		JPanel pnl_UnapprovedEmails = new JPanel();
-		tab_EmailTabs.addTab("Unapproved Emails", null, pnl_UnapprovedEmails, null);
-		GridBagLayout gbl_pnl_UnapprovedEmails = new GridBagLayout();
-		gbl_pnl_UnapprovedEmails.columnWidths = new int[]{0, 0};
-		gbl_pnl_UnapprovedEmails.rowHeights = new int[]{0, 0};
-		gbl_pnl_UnapprovedEmails.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_pnl_UnapprovedEmails.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		pnl_UnapprovedEmails.setLayout(gbl_pnl_UnapprovedEmails);
+		JPanel pnl_GarageEmails = new JPanel();
+		tab_GarageEmails.addTab("Garages", null, pnl_GarageEmails, null);
+		GridBagLayout gbl_pnl_GarageEmails = new GridBagLayout();
+		gbl_pnl_GarageEmails.columnWidths = new int[]{0, 0};
+		gbl_pnl_GarageEmails.rowHeights = new int[]{0, 0};
+		gbl_pnl_GarageEmails.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_pnl_GarageEmails.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		pnl_GarageEmails.setLayout(gbl_pnl_GarageEmails);
 		
-		JScrollPane scrl_UnapprovedEmails = new JScrollPane();
-		GridBagConstraints gbc_scrl_UnapprovedEmails = new GridBagConstraints();
-		gbc_scrl_UnapprovedEmails.fill = GridBagConstraints.BOTH;
-		gbc_scrl_UnapprovedEmails.gridx = 0;
-		gbc_scrl_UnapprovedEmails.gridy = 0;
-		pnl_UnapprovedEmails.add(scrl_UnapprovedEmails, gbc_scrl_UnapprovedEmails);
+		JScrollPane scrl_GarageEmails = new JScrollPane();
+		GridBagConstraints gbc_scrl_GarageEmails = new GridBagConstraints();
+		gbc_scrl_GarageEmails.fill = GridBagConstraints.BOTH;
+		gbc_scrl_GarageEmails.gridx = 0;
+		gbc_scrl_GarageEmails.gridy = 0;
+		pnl_GarageEmails.add(scrl_GarageEmails, gbc_scrl_GarageEmails);
+		lst_GarageEmails.setModel(new AbstractListModel() {
+			String[] values = new String[] {"aaaa", "bbb", "ccc", "ddd"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 		
-		JList lst_UnapprovedList = new JList();
-		scrl_UnapprovedEmails.setViewportView(lst_UnapprovedList);
+		scrl_GarageEmails.setViewportView(lst_GarageEmails);
+		
+		JPanel pnl_ButtonPannel = new JPanel();
+		GridBagConstraints gbc_pnl_ButtonPannel = new GridBagConstraints();
+		gbc_pnl_ButtonPannel.insets = new Insets(0, 0, 5, 5);
+		gbc_pnl_ButtonPannel.fill = GridBagConstraints.BOTH;
+		gbc_pnl_ButtonPannel.gridx = 2;
+		gbc_pnl_ButtonPannel.gridy = 2;
+		add(pnl_ButtonPannel, gbc_pnl_ButtonPannel);
+		GridBagLayout gbl_pnl_ButtonPannel = new GridBagLayout();
+		gbl_pnl_ButtonPannel.columnWidths = new int[]{88, 0};
+		gbl_pnl_ButtonPannel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_pnl_ButtonPannel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_pnl_ButtonPannel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		pnl_ButtonPannel.setLayout(gbl_pnl_ButtonPannel);
+		
+		GridBagConstraints gbc_btn_MoveAll = new GridBagConstraints();
+		gbc_btn_MoveAll.insets = new Insets(0, 0, 5, 0);
+		gbc_btn_MoveAll.gridx = 0;
+		gbc_btn_MoveAll.gridy = 2;
+		pnl_ButtonPannel.add(btn_MoveAll, gbc_btn_MoveAll);
+		
+		GridBagConstraints gbc_btn_MoveSelected = new GridBagConstraints();
+		gbc_btn_MoveSelected.insets = new Insets(0, 0, 5, 0);
+		gbc_btn_MoveSelected.gridx = 0;
+		gbc_btn_MoveSelected.gridy = 3;
+		pnl_ButtonPannel.add(btn_MoveSelected, gbc_btn_MoveSelected);
+		
+		GridBagConstraints gbc_btn_Approve = new GridBagConstraints();
+		gbc_btn_Approve.insets = new Insets(0, 0, 5, 0);
+		gbc_btn_Approve.gridx = 0;
+		gbc_btn_Approve.gridy = 5;
+		pnl_ButtonPannel.add(btn_Approve, gbc_btn_Approve);
+		
+		GridBagConstraints gbc_btn_RemoveSelected = new GridBagConstraints();
+		gbc_btn_RemoveSelected.insets = new Insets(0, 0, 5, 0);
+		gbc_btn_RemoveSelected.gridx = 0;
+		gbc_btn_RemoveSelected.gridy = 7;
+		pnl_ButtonPannel.add(btn_RemoveSelected, gbc_btn_RemoveSelected);
+		
+		GridBagConstraints gbc_btn_RemoveAll = new GridBagConstraints();
+		gbc_btn_RemoveAll.insets = new Insets(0, 0, 5, 0);
+		gbc_btn_RemoveAll.gridx = 0;
+		gbc_btn_RemoveAll.gridy = 8;
+		pnl_ButtonPannel.add(btn_RemoveAll, gbc_btn_RemoveAll);
+		
+		JPanel pnl_EmailRecpients = new JPanel();
+		GridBagConstraints gbc_pnl_EmailRecpients = new GridBagConstraints();
+		gbc_pnl_EmailRecpients.insets = new Insets(0, 0, 5, 5);
+		gbc_pnl_EmailRecpients.fill = GridBagConstraints.BOTH;
+		gbc_pnl_EmailRecpients.gridx = 3;
+		gbc_pnl_EmailRecpients.gridy = 2;
+		add(pnl_EmailRecpients, gbc_pnl_EmailRecpients);
+		GridBagLayout gbl_pnl_EmailRecpients = new GridBagLayout();
+		gbl_pnl_EmailRecpients.columnWidths = new int[]{0, 0};
+		gbl_pnl_EmailRecpients.rowHeights = new int[]{0, 0};
+		gbl_pnl_EmailRecpients.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_pnl_EmailRecpients.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		pnl_EmailRecpients.setLayout(gbl_pnl_EmailRecpients);
+		
+		JTabbedPane tab_ApprovedEmails = new JTabbedPane(JTabbedPane.TOP);
+		GridBagConstraints gbc_tab_ApprovedEmails = new GridBagConstraints();
+		gbc_tab_ApprovedEmails.fill = GridBagConstraints.BOTH;
+		gbc_tab_ApprovedEmails.gridx = 0;
+		gbc_tab_ApprovedEmails.gridy = 0;
+		pnl_EmailRecpients.add(tab_ApprovedEmails, gbc_tab_ApprovedEmails);
 		
 		JPanel pnl_ApprovedEmails = new JPanel();
-		tab_EmailTabs.addTab("Approved Emails", null, pnl_ApprovedEmails, null);
+		tab_ApprovedEmails.addTab("Approved Emails", null, pnl_ApprovedEmails, null);
 		GridBagLayout gbl_pnl_ApprovedEmails = new GridBagLayout();
-		gbl_pnl_ApprovedEmails.columnWidths = new int[]{76, 0};
-		gbl_pnl_ApprovedEmails.rowHeights = new int[]{1, 0};
+		gbl_pnl_ApprovedEmails.columnWidths = new int[]{2, 0};
+		gbl_pnl_ApprovedEmails.rowHeights = new int[]{2, 0};
 		gbl_pnl_ApprovedEmails.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_pnl_ApprovedEmails.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		pnl_ApprovedEmails.setLayout(gbl_pnl_ApprovedEmails);
@@ -90,113 +218,7 @@ public class EmailPanel extends JPanel {
 		gbc_scrl_ApprovedEmails.gridy = 0;
 		pnl_ApprovedEmails.add(scrl_ApprovedEmails, gbc_scrl_ApprovedEmails);
 		
-		JList lst_ApprovedList = new JList();
-		scrl_ApprovedEmails.setViewportView(lst_ApprovedList);
-		
-		JPanel pnl_ArchivedEmails = new JPanel();
-		tab_EmailTabs.addTab("Archived Emails", null, pnl_ArchivedEmails, null);
-		GridBagLayout gbl_pnl_ArchivedEmails = new GridBagLayout();
-		gbl_pnl_ArchivedEmails.columnWidths = new int[]{75, 0};
-		gbl_pnl_ArchivedEmails.rowHeights = new int[]{2, 0};
-		gbl_pnl_ArchivedEmails.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_pnl_ArchivedEmails.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		pnl_ArchivedEmails.setLayout(gbl_pnl_ArchivedEmails);
-		
-		JScrollPane scrl_ArchivedEmails = new JScrollPane();
-		GridBagConstraints gbc_scrl_ArchivedEmails = new GridBagConstraints();
-		gbc_scrl_ArchivedEmails.fill = GridBagConstraints.BOTH;
-		gbc_scrl_ArchivedEmails.gridx = 0;
-		gbc_scrl_ArchivedEmails.gridy = 0;
-		pnl_ArchivedEmails.add(scrl_ArchivedEmails, gbc_scrl_ArchivedEmails);
-		
-		JList list = new JList();
-		scrl_ArchivedEmails.setViewportView(list);
-		
-		JPanel pnl_EmailBody = new JPanel();
-		pnl_EmailBody.setBorder(new LineBorder(Color.BLACK));
-		GridBagConstraints gbc_pnl_EmailBody = new GridBagConstraints();
-		gbc_pnl_EmailBody.insets = new Insets(0, 0, 5, 5);
-		gbc_pnl_EmailBody.fill = GridBagConstraints.BOTH;
-		gbc_pnl_EmailBody.gridx = 2;
-		gbc_pnl_EmailBody.gridy = 2;
-		add(pnl_EmailBody, gbc_pnl_EmailBody);
-		GridBagLayout gbl_pnl_EmailBody = new GridBagLayout();
-		gbl_pnl_EmailBody.columnWidths = new int[]{0, 82, 0, 0, 0, 0, 0};
-		gbl_pnl_EmailBody.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_pnl_EmailBody.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-		gbl_pnl_EmailBody.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		pnl_EmailBody.setLayout(gbl_pnl_EmailBody);
-		
-		JLabel lblNewLabel_2 = new JLabel("Email Approval");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 22));
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.gridwidth = 7;
-		gbc_lblNewLabel_2.insets = new Insets(20, 0, 5, 0);
-		gbc_lblNewLabel_2.gridx = 0;
-		gbc_lblNewLabel_2.gridy = 0;
-		pnl_EmailBody.add(lblNewLabel_2, gbc_lblNewLabel_2);
-		
-		JLabel lblNewLabel = new JLabel("Subject");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 2;
-		pnl_EmailBody.add(lblNewLabel, gbc_lblNewLabel);
-		
-		EmailSubject = new JTextField();
-		EmailSubject.setBorder(new LineBorder(new Color(171, 173, 179)));
-		GridBagConstraints gbc_EmailSubject = new GridBagConstraints();
-		gbc_EmailSubject.gridwidth = 4;
-		gbc_EmailSubject.insets = new Insets(0, 0, 5, 5);
-		gbc_EmailSubject.fill = GridBagConstraints.HORIZONTAL;
-		gbc_EmailSubject.gridx = 2;
-		gbc_EmailSubject.gridy = 2;
-		pnl_EmailBody.add(EmailSubject, gbc_EmailSubject);
-		EmailSubject.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("Recipient");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 1;
-		gbc_lblNewLabel_1.gridy = 3;
-		pnl_EmailBody.add(lblNewLabel_1, gbc_lblNewLabel_1);
-		
-		EmailRecipient = new JTextField();
-		EmailRecipient.setBorder(new LineBorder(new Color(171, 173, 179)));
-		GridBagConstraints gbc_EmailRecipient = new GridBagConstraints();
-		gbc_EmailRecipient.gridwidth = 4;
-		gbc_EmailRecipient.insets = new Insets(0, 0, 5, 5);
-		gbc_EmailRecipient.fill = GridBagConstraints.HORIZONTAL;
-		gbc_EmailRecipient.gridx = 2;
-		gbc_EmailRecipient.gridy = 3;
-		pnl_EmailBody.add(EmailRecipient, gbc_EmailRecipient);
-		EmailRecipient.setColumns(10);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		GridBagConstraints gbc_textArea = new GridBagConstraints();
-		gbc_textArea.gridwidth = 5;
-		gbc_textArea.gridheight = 4;
-		gbc_textArea.insets = new Insets(0, 0, 5, 5);
-		gbc_textArea.fill = GridBagConstraints.BOTH;
-		gbc_textArea.gridx = 1;
-		gbc_textArea.gridy = 4;
-		pnl_EmailBody.add(textArea, gbc_textArea);
-		
-		JButton AmendEmail = new JButton("Amend");
-		GridBagConstraints gbc_AmendEmail = new GridBagConstraints();
-		gbc_AmendEmail.insets = new Insets(0, 0, 5, 5);
-		gbc_AmendEmail.gridx = 1;
-		gbc_AmendEmail.gridy = 8;
-		pnl_EmailBody.add(AmendEmail, gbc_AmendEmail);
-		
-		JButton ApproveEmail = new JButton("Approve");
-		GridBagConstraints gbc_ApproveEmail = new GridBagConstraints();
-		gbc_ApproveEmail.insets = new Insets(0, 0, 5, 5);
-		gbc_ApproveEmail.gridx = 5;
-		gbc_ApproveEmail.gridy = 8;
-		pnl_EmailBody.add(ApproveEmail, gbc_ApproveEmail);
+		scrl_ApprovedEmails.setViewportView(lst_ApprovedEmails);
 
 	}
-
 }
