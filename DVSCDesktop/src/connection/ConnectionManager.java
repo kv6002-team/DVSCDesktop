@@ -12,10 +12,10 @@ import javax.net.ssl.SSLContext;
 
 import security.JWT;
 import utils.Console;
+import connection.Response;
 
 public class ConnectionManager {
 	private static final boolean DEV_MODE = true;
-	private static ConnectionManager instance;
 	private String url;
 	
 	public ConnectionManager(String url){
@@ -82,7 +82,7 @@ public class ConnectionManager {
 		con.setRequestProperty("Authorization", authType + " " + authorisationString);
 	}
 	
-	public String sendPostRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception{
+	public Response sendPostRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception{
 		
 		if(queryList == null) queryList = new ParameterList();
 		
@@ -119,11 +119,11 @@ public class ConnectionManager {
                 response.append(line).append("\n");
             }
             connection.disconnect();
-            return response.toString();
+            return new Response(response.toString(), connection.getResponseCode(), fullURL, queryList);
         }
 	}
 	
-	public String sendGetRequest(String endpoint, ParameterList queryList) throws Exception {
+	public Response sendGetRequest(String endpoint, ParameterList queryList) throws Exception {
 		
 		if(queryList == null) queryList = new ParameterList();
 
@@ -146,7 +146,7 @@ public class ConnectionManager {
 				response.append(line).append("\n");
 			}
 			connection.disconnect();
-			return response.toString();
+			return new Response(response.toString(), connection.getResponseCode(), fullUrl, queryList);
 		}
 	}
 }
