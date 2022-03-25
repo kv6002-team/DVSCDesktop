@@ -8,43 +8,39 @@ import java.util.Date;
 
 public class Garage {
 	
-	private String vts;
+	private GarageInfo gi;
 	private String garageName;
-	private String ownerName;
-	private String emailAddress;
-	private String telephoneNum;
-	private Date paidUntil;
+	private int ID;
 	
-	public Garage(String vts, String garageName,String ownerName, String emailAddress, String telephoneNum, Date paidUntil){
-		this.vts = vts;
+	public Garage(String garageName, int ID){
+		
 		this.garageName = garageName;
-		this.ownerName = ownerName; 
-		this.emailAddress = emailAddress;
-		this.telephoneNum = telephoneNum;
-		this.paidUntil = paidUntil;
-	}
-
-	public String getVts() {
-		return vts;
+		this.ID = ID;
+		
 	}
 
 	public String getGarageName() {
 		return garageName;
 	}
-
-	public String getOwnerName() {
-		return ownerName;
+	
+	public int getGarageID(){
+		return ID;
 	}
 
-	public String getEmailAddress() {
-		return emailAddress;
+	public GarageInfo getGarageInfo(){
+		return gi;
 	}
 
-	public String getTelephoneNum() {
-		return telephoneNum;
+	public void setGarageID(int ID){
+		this.ID = ID;
+	}
+	
+	public void setGarageName(String garageName){
+		this.garageName = garageName;
+	}
+	
+	public void addGarageInfo(){
+		this.gi = connection.getGarageInfo(this.ID);
 	}
 
-	public Date getPaidUntil() {
-		return paidUntil;
-	}
 }
