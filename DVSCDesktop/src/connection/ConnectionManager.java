@@ -69,6 +69,7 @@ public class ConnectionManager {
 		con.setRequestProperty("Accept", "application/json");
         con.setInstanceFollowRedirects(false);
         con.setReadTimeout(5000); 
+        con.setConnectTimeout(5000);
         con.setUseCaches(false);
 		con.setRequestMethod(method);
 		con.setDoInput(true);

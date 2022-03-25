@@ -10,8 +10,6 @@ import gui.AuthenticationPanel;
 import gui.NoConnectionDialog;
 import gui.Wrapper;
 import security.AuthenticationManager;
-import security.SecurityManager;
-import utils.Console;
 
 /**
  * 
