@@ -59,4 +59,17 @@ public class Connection {
 		}
 		return flag;
 	}
+	
+	public boolean reset(String username) {
+		ParameterList pList = new ParameterList();
+		pList.add("username",username);
+		boolean flag = false;
+		try {
+			Response response = connectionManager.sendPostRequest("reset", pList, ConnectionManager.AUTH_TYPE.NONE, null);
+			if(response.getResponseCode() == 200) flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
 }

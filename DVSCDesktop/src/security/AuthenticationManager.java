@@ -1,5 +1,5 @@
 package security;
-
+import connection.Connection;
 import connection.ConnectionManager;
 import connection.ParameterList;
 import gui.AlertDialog;
@@ -11,6 +11,7 @@ import gui.AlertDialog;
  */
 public class AuthenticationManager {
 	
+	private static Connection con = new Connection();
 	public static boolean authenticate(String username, String password) {
 		
 		
@@ -22,5 +23,9 @@ public class AuthenticationManager {
 		}
 		
 		return true;
+	}
+	
+	public static boolean resetPassword(String username) {
+		return con.reset(username);
 	}
 }

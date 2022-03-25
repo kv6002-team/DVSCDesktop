@@ -21,6 +21,8 @@ public class AuthenticationPanel extends JPanel {
 	private JPasswordField pass_PasswordField;
 	
 	public JButton btn_Authenticate = new JButton("Login");
+	public JButton btn_resetPasswd = new JButton("Reset");
+
 
 	/**
 	 * Create the panel.
@@ -28,9 +30,9 @@ public class AuthenticationPanel extends JPanel {
 	public AuthenticationPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
@@ -87,11 +89,16 @@ public class AuthenticationPanel extends JPanel {
 		gbc_pass_PasswordField.gridy = 2;
 		add(pass_PasswordField, gbc_pass_PasswordField);
 		
-		GridBagConstraints gbc_btn_Authenticate = new GridBagConstraints();
-		gbc_btn_Authenticate.insets = new Insets(0, 0, 0, 5);
-		gbc_btn_Authenticate.gridx = 2;
-		gbc_btn_Authenticate.gridy = 3;
-		add(btn_Authenticate, gbc_btn_Authenticate);
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 2;
+		gbc_panel.gridy = 3;
+		add(panel, gbc_panel);
+		panel.add(btn_Authenticate);
+		
+		panel.add(btn_resetPasswd);
 
 	}
 	
@@ -110,5 +117,9 @@ public class AuthenticationPanel extends JPanel {
 	public void clearFields() {
 		pass_PasswordField.setText("");
 		txt_UsernameField.setText("");
+	}
+	
+	public JButton getResetButton() {
+		return btn_resetPasswd;
 	}
 }

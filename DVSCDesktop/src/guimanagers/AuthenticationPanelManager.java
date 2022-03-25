@@ -21,6 +21,7 @@ public class AuthenticationPanelManager {
 	private Connection connection = new Connection();
 	public AuthenticationPanelManager(JFrame mainWindow) {
 		addAuthenticationEventListener(mainWindow);
+		addResetEventListener();
 	}
 	
 	public AuthenticationPanel getPanel() {
@@ -41,6 +42,18 @@ public class AuthenticationPanelManager {
 					x.run();
 				}
 				authenticationPanel.clearFields();
+			}
+		});
+	}
+	
+	private void addResetEventListener() {
+		authenticationPanel.getResetButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 if(AuthenticationManager.resetPassword(authenticationPanel.getUsernameField())) {
+					 // reset password email sent
+				 }else {
+					 //try again later
+				 }
 			}
 		});
 	}
