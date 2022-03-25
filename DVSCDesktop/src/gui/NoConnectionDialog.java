@@ -6,6 +6,7 @@ package gui;
  */
 public class NoConnectionDialog {
 	public void run() {
-		new AlertDialog("No Connection!");
+		AlertDialog x = new AlertDialog();
+		x.run("No Connection!");
 	}
 }

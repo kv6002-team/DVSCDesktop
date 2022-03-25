@@ -29,15 +29,16 @@ public class SecurityManager {
 	}
 	
 	public static void testSystemSecurity() {
+		AlertDialog alertDialog =  new AlertDialog();
 		int maxKeySize;
 		try {
 			maxKeySize = javax.crypto.Cipher.getMaxAllowedKeyLength("AES");
 			if(maxKeySize <= 128) {
-				new AlertDialog("Invalid System Security Setup!");
+				alertDialog.run("Invalid System Security Setup!");
 				System.exit(0);
 			}
 		} catch (NoSuchAlgorithmException ex){
-			new AlertDialog("Invalid System Security Setup!");
+			alertDialog.run("Invalid System Security Setup!");
 			System.exit(0);
 		}
 	}

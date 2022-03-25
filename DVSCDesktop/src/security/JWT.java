@@ -1,10 +1,14 @@
 package security;
-
+/**
+ * 
+ * @author Scrub
+ *
+ */
 public class JWT {
-	private JWT instance;
+	private static JWT instance;
 	private String token;
 	
-	public JWT getInstance() {
+	public static JWT getInstance() {
 		if(instance == null) instance = new JWT();
 		return instance;
 	}
