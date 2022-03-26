@@ -3,6 +3,7 @@ package connection;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import logging.Logger;
 import security.JWT;
 import security.SecurityManager;
 import utils.Console;
@@ -71,5 +72,19 @@ public class Connection {
 			e.printStackTrace();
 		}
 		return flag;
+	}
+	
+	public boolean log (Logger.TYPE type, Logger.LEVEL level, String message) {
+		ParameterList pList = new ParameterList();
+		pList.add("type", type.toString());
+		pList.add("level", level.toString());
+		pList.add("message", message);
+		try {
+			Response response = connectionManager.sendPostRequest(message, pList, ConnectionManager.AUTH_TYPE.NONE, null);
+			if(response.getResponseCode() == 200) return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
