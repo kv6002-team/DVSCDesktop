@@ -149,4 +149,9 @@ public class ConnectionManager {
 			return new Response(response.toString(), connection.getResponseCode(), fullURL, queryList);
 		}
 	}
+	
+	public Response sendDeleteRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
+	}
+	public Response sendPatchRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
+	}
 }
