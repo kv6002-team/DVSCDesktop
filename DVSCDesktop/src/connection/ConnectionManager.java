@@ -154,4 +154,6 @@ public class ConnectionManager {
 	}
 	public Response sendPatchRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
 	}
+	public Response sendPutRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
+	}
 }
