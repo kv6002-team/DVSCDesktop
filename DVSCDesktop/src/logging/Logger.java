@@ -19,6 +19,6 @@ public class Logger {
 		CRITICAL
 	}
 	public void log(TYPE logType,LEVEL logLevel, String message) {
-		
+		con.log(logType, logLevel, message);
 	}
 }
