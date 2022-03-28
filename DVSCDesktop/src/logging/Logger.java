@@ -3,7 +3,7 @@ package logging;
 import connection.Connection;
 
 public class Logger {
-	private Connection con = new Connection();
+	private static Connection con = new Connection();
 	public static enum TYPE {
 		LOGIN_EVENT,
 		MESSAGE_EVENT,
@@ -18,7 +18,7 @@ public class Logger {
 		WARN,
 		CRITICAL
 	}
-	public void log(TYPE logType,LEVEL logLevel, String message) {
+	public static void log(TYPE logType,LEVEL logLevel, String message) {
 		con.log(logType, logLevel, message);
 	}
 }
