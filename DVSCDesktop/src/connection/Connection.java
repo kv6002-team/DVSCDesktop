@@ -1,8 +1,11 @@
 package connection;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import domain.Garage;
 import logging.Logger;
 import security.JWT;
 import security.SecurityManager;
@@ -77,5 +80,24 @@ public class Connection {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public ArrayList<Garage> getAllGarages(){
+		ArrayList<Garage> allGarages = new ArrayList<Garage>();
+		try {
+			Response response = connectionManager.sendGetRequest("garages", null);
+			if(response.getResponseCode() == 200){
+				JSONArray arr = response.getArray();
+				for(int i=0; i<arr.length(); i++) {
+					allGarages.add(new Garage(arr.getJSONObject(i).getString("name"), Integer.parseInt(arr.getJSONObject(i).getString("id"))));
+				}
+				
+			} 
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return allGarages;
+		
 	}
 }

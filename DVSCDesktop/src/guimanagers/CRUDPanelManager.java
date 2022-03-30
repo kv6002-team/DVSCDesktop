@@ -17,6 +17,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import connection.Connection;
+
 /**
  * 
  * @author Callum
@@ -28,7 +30,7 @@ public class CRUDPanelManager {
 	private CRUDPanel CRUDPanel = new CRUDPanel();
 	ArrayList<Garage> garages = new ArrayList<Garage>();
 	Wrapper wrapper;
-	
+	private Connection connection = new Connection(); 
 	
 	
 	
@@ -36,15 +38,12 @@ public class CRUDPanelManager {
 		
 		this.wrapper = wrapper;
 		
-		garages.add(new Garage("garage 1", 1));
-		garages.add(new Garage("garage 2", 2));
-		garages.add(new Garage("garage 3", 3));
-		
+		ArrayList<Garage> allGarages = connection.getAllGarages();
 		System.out.print(garages);
 		
 		wrapper.getTabbedPane().addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				populateGarageList(garages);
+				populateGarageList(allGarages);
 			}
 		});
 		
