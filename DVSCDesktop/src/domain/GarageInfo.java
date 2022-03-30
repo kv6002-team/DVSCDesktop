@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * 
@@ -15,13 +16,15 @@ public class GarageInfo {
 	private String emailAddress;
 	private String telephoneNum;
 	private Date paidUntil;
+	private ArrayList<Instrument> instrumentList = new ArrayList<Instrument>();
 	
-	public GarageInfo(String vts, String ownerName, String emailAddress, String telephoneNum, Date paidUntil){
+	public GarageInfo(String vts, String ownerName, String emailAddress, String telephoneNum, Date paidUntil, ArrayList<Instrument> instrumentList){
 		this.vts = vts;
 		this.ownerName = ownerName;
 		this.emailAddress = emailAddress;
 		this.telephoneNum = telephoneNum;
 		this.paidUntil = paidUntil;
+		this.instrumentList = instrumentList;
 	}
 	
 	public String getVts(){
@@ -43,6 +46,10 @@ public class GarageInfo {
 	public Date getPaidUntil(){
 		return this.paidUntil;
 	}
+	
+	public ArrayList<Instrument> getInstrumentList(){
+		return this.instrumentList;
+	} 
 
 	public void setVts(String vts){
 		this.vts = vts;
@@ -62,6 +69,10 @@ public class GarageInfo {
 	
 	public void setPaidUntil(Date paidUntil){
 		this.paidUntil = paidUntil;
+	}
+	
+	public void setInstrumentList(ArrayList<Instrument> instrumentList){
+		this.instrumentList = instrumentList;
 	}
 }
 
