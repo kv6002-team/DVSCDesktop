@@ -42,5 +42,10 @@ public class Garage {
 	public void addGarageInfo(){
 //		this.gi = Connection.getGarageInfo(this.ID);
 	}
+	
+	@Override
+	public String toString() {
+		return garageName;
+	}
 
 }

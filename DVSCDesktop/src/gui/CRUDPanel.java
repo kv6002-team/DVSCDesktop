@@ -24,21 +24,27 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.Cursor;
 import com.toedter.calendar.JDateChooser;
+
+import domain.Garage;
+import domain.Instrument;
+
 import com.toedter.calendar.JCalendar;
 import java.awt.Dimension;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 
 public class CRUDPanel extends JPanel {
 
-	public JList lst_garages = new JList();
+	public JList<Garage> lst_garages = new JList<Garage>();
 	public JTextField txt_garageName = new JTextField();
 	public JTextField txt_contactNum = new JTextField();
 	public JTextField txt_contactEmail = new JTextField();
 	public JCheckBox chck_yearPaid = new JCheckBox("");
 	public JButton btn_deleteGarage = new JButton("Delete Garage");
-	public JList lst_instruments = new JList();
+	public JList<Instrument> lst_instruments = new JList<Instrument>();
 	public JButton btn_addInstrument = new JButton("Add Instrument");
 	public JTextField txt_serialNum = new JTextField();
 	public JDateChooser date_calibrationDate = new JDateChooser();
@@ -96,7 +102,6 @@ public class CRUDPanel extends JPanel {
 		gbc_scrl_garagesList.gridx = 0;
 		gbc_scrl_garagesList.gridy = 1;
 		pnl_garageList.add(scrl_garagesList, gbc_scrl_garagesList);
-		
 	
 		lst_garages.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		scrl_garagesList.setViewportView(lst_garages);
@@ -387,7 +392,7 @@ public class CRUDPanel extends JPanel {
 
 	}
 
-	public JList getGaragesList(){
+	public JList<Garage> getGaragesList(){
 		return lst_garages;
 	}
 	
@@ -411,7 +416,7 @@ public class CRUDPanel extends JPanel {
 		return btn_deleteGarage;
 	}
 	
-	public JList getInstrumentList() {
+	public JList<Instrument> getInstrumentList() {
 		return lst_instruments;
 	}
 	
@@ -423,7 +428,7 @@ public class CRUDPanel extends JPanel {
 		return txt_serialNum;
 	}
 	
-	public void setGarageList(DefaultListModel list){
+	public void setGarageList(DefaultListModel<Garage> list){
 		lst_garages.setModel(list);
 	}
 }

@@ -9,6 +9,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -16,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import connection.Connection;
 
@@ -29,6 +32,7 @@ public class CRUDPanelManager {
 	
 	private CRUDPanel CRUDPanel = new CRUDPanel();
 	ArrayList<Garage> garages = new ArrayList<Garage>();
+
 	Wrapper wrapper;
 	private Connection connection = new Connection(); 
 	
@@ -39,11 +43,16 @@ public class CRUDPanelManager {
 		this.wrapper = wrapper;
 		
 		ArrayList<Garage> allGarages = connection.getAllGarages();
-		System.out.print(garages);
 		
 		wrapper.getTabbedPane().addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				populateGarageList(allGarages);
+			}
+		});
+		
+		CRUDPanel.getGaragesList().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				System.out.println(CRUDPanel.getGaragesList().getSelectedValue());
 			}
 		});
 		
@@ -56,10 +65,10 @@ public class CRUDPanelManager {
 
 	public void populateGarageList(ArrayList<Garage> garages){
 		
-		DefaultListModel<String> list = new DefaultListModel();
+		DefaultListModel<Garage> list = new DefaultListModel<Garage>();
 		
 		for(int i=0; i<garages.size(); i++){
-			list.addElement((garages.get(i).getGarageName()));
+			list.addElement((garages.get(i)));
 		}
 		
 		CRUDPanel.setGarageList(list);
@@ -98,9 +107,9 @@ public class CRUDPanelManager {
 
 	}
 
-//	public void addInstrument(Instrument instrument){
-//
-//	}
+	public void addInstrument(Instrument instrument){
+
+	}
 
 	public void removeInstrument(int index){
 
