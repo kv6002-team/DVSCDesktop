@@ -60,6 +60,13 @@ public class CRUDPanelManager {
 				Garage tempGarage = CRUDPanel.getGaragesList().getSelectedValue();
 				System.out.println(tempGarage.getGarageID());
 				CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
+				
+				CRUDPanel.getGarageNameTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageName());
+				CRUDPanel.getGarageEmailTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getEmailAddress());
+				CRUDPanel.getGarageNumberTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getTelephoneNum());
+				CRUDPanel.getGaragePaidUntil().setDate(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getPaidUntil());
+				
+				
 			}
 		});
 		
@@ -75,7 +82,7 @@ public class CRUDPanelManager {
 		DefaultListModel<Garage> list = new DefaultListModel<Garage>();
 		
 		for(int i=0; i<garages.size(); i++){
-			list.addElement((garages.get(i)));
+			list.addElement(garages.get(i));
 		}
 		
 		CRUDPanel.setGarageList(list);
@@ -102,7 +109,7 @@ public class CRUDPanelManager {
 
 	}
 
-	public void changeYearPaid(Boolean yearPaid){
+	public void changePaidUntil(Date paidUntil){
 		
 	}
 
@@ -110,8 +117,14 @@ public class CRUDPanelManager {
 
 	}
 
-	public void populateInstrumentList(String[] instrumentList){
-
+	public void populateInstrumentList(ArrayList<Instrument> instruments){
+		DefaultListModel<Instrument> list = new DefaultListModel<Instrument>();
+		
+		for(int i=0; i<instruments.size(); i++) {
+			list.addElement(instruments.get(i));
+		}
+		
+		CRUDPanel.setInstrumentList(list);
 	}
 
 	public void addInstrument(Instrument instrument){

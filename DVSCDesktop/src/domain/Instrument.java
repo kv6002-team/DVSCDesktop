@@ -76,4 +76,9 @@ public class Instrument {
 	public void setCheckStatus(CheckStatus status){
 		this.status = status;
 	}
+	
+	@Override
+	public String toString() {
+		return instrumentName;
+	}
 }
