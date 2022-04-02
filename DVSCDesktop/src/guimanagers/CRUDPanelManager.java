@@ -52,7 +52,14 @@ public class CRUDPanelManager {
 		
 		CRUDPanel.getGaragesList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				System.out.println(CRUDPanel.getGaragesList().getSelectedValue());
+				
+				if(e.getValueIsAdjusting()){
+					return;
+				}
+				
+				Garage tempGarage = CRUDPanel.getGaragesList().getSelectedValue();
+				//System.out.println(tempGarage.getGarageID());
+				//CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
 			}
 		});
 		
