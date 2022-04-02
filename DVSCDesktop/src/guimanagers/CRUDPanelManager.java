@@ -58,8 +58,8 @@ public class CRUDPanelManager {
 				}
 				
 				Garage tempGarage = CRUDPanel.getGaragesList().getSelectedValue();
-				//System.out.println(tempGarage.getGarageID());
-				//CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
+				System.out.println(tempGarage.getGarageID());
+				CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
 			}
 		});
 		
