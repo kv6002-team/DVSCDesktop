@@ -1,6 +1,6 @@
 package domain;
 
-//import connection.Connection
+import connection.Connection;
 
 /**
  * @author Callum
@@ -11,6 +11,8 @@ public class Garage {
 	private GarageInfo gi;
 	private String garageName;
 	private int ID;
+	
+	private Connection connection = new Connection();
 	
 	public Garage(String garageName, int ID){
 		
@@ -40,7 +42,7 @@ public class Garage {
 	}
 	
 	public void addGarageInfo(){
-//		this.gi = Connection.getGarageInfo(this.ID);
+		this.gi = connection.getGarageInfo(this.ID);
 	}
 	
 	@Override
