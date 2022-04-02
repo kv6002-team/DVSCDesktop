@@ -8,39 +8,53 @@ import java.util.Date;
  *
  */
 public class Instrument {
-
-	private String instrumentName;
-	private String serialNum;
-	private Date expiryDate;
 	
 	public enum CheckStatus{
-		SATISFACTORY,
-		UNSATISFACTORY, 
+		checked_satisfactory,
+		checked_unsatisfactory,
+		unchecked
 	};
 	
+	private int ID;
+	private String instrumentName;
+	private String serialNum;
+	private Date checkDate;
+	private Date statusExpiryDate;
 	private CheckStatus status;
 		
-	public Instrument(String instrumentName, String serialNum, Date expiryDate, CheckStatus status){
+	public Instrument(int ID, String instrumentName, String serialNum, Date checkDate, Date expiryDate, CheckStatus status){
 		this.instrumentName = instrumentName;
 		this.serialNum = serialNum;
-		this.expiryDate = expiryDate;
+		this.statusExpiryDate = expiryDate;
 		this.status = status;
 	}
 	
-	public String getInstrumentName(){
+	public int getInstrumentID() {
+		return this.ID;
+	}
+	
+	public String getInstrumentName() {
 		return this.instrumentName;
 	}
 	
-	public String getSerialNum(){
+	public String getSerialNum() {
 		return this.serialNum;
 	}
 	
-	public Date getExpiryDate(){
-		return this.expiryDate;
+	public Date getCheckDate() {
+		return this.checkDate;
 	}
 	
-	public CheckStatus getCheckStatus(){
+	public Date getStatusExpiryDate() {
+		return this.statusExpiryDate;
+	}
+	
+	public CheckStatus getCheckStatus() {
 		return this.status;
+	}
+	
+	public void setInstrumentID(int ID) {
+		this.ID = ID;
 	}
 	
 	public void setInstrumentName(String instrumentName){
@@ -49,6 +63,14 @@ public class Instrument {
 	
 	public void setSerialNum(String serialNum){
 		this.serialNum = serialNum;
+	}
+	
+	public void setCheckDate(Date checkDate) {
+		this.checkDate = checkDate;
+	}
+	
+	public void setStatusExpiryDate(Date statusExpiryDate) {
+		this.statusExpiryDate = statusExpiryDate;
 	}
 	
 	public void setCheckStatus(CheckStatus status){
