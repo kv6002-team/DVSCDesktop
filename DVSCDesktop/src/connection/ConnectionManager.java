@@ -1,14 +1,18 @@
 package connection;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.security.cert.Certificate;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLPeerUnverifiedException;
 
 import security.JWT;
 import utils.Console;
@@ -32,6 +36,13 @@ public class ConnectionManager {
 		private AUTH_TYPE(String type) {
 			this.type = type;
 		}
+	}
+	public static enum REQ_TYPE{
+		GET,
+		POST,
+		DELETE,
+		PATCH,
+		PUT;
 	}
 	
 	/**
@@ -61,7 +72,7 @@ public class ConnectionManager {
 		return connection;
 	}
 	
-	private void setConnectionProperties(HttpsURLConnection con, int querySize, String method) throws Exception {
+	private void setConnectionProperties(HttpsURLConnection con, int querySize, REQ_TYPE method) throws Exception {
 		
 		con.setRequestProperty("Content-length", Integer.toString(querySize));
 		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;");
@@ -69,10 +80,13 @@ public class ConnectionManager {
 		con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0;Windows98;DigExt)");
 		con.setRequestProperty("Accept", "application/json");
         con.setInstanceFollowRedirects(false);
-//        con.setReadTimeout(5000); 
-        con.setConnectTimeout(5000);
+        
+        int timeout = 1000 * 10 * 6; // One minute
+        con.setReadTimeout(timeout); 
+        con.setConnectTimeout(timeout);
+        
         con.setUseCaches(false);
-		con.setRequestMethod(method);
+		con.setRequestMethod(method.toString());
 		con.setDoInput(true);
 		con.setDoOutput(true);
 	}
@@ -94,7 +108,7 @@ public class ConnectionManager {
         int postDataLength = postData.length;
  
         HttpsURLConnection connection = getConnection(fullURL);
-        setConnectionProperties(connection, postDataLength, "POST");
+        setConnectionProperties(connection, postDataLength, REQ_TYPE.POST);
 
         if(authType != AUTH_TYPE.NONE) {
         	setAuthenticationType(connection, authType, authorisationString);
@@ -151,9 +165,141 @@ public class ConnectionManager {
 	}
 	
 	public Response sendDeleteRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
+		if(queryList == null) queryList = new ParameterList();
+		
+		String httpsURL = "https://" + url;
+		String fullURL = httpsURL + "/api/" + endpoint;
+        
+        byte[] postData = queryList.generateString().getBytes(StandardCharsets.UTF_8);
+
+        int postDataLength = postData.length;
+ 
+        HttpsURLConnection connection = getConnection(fullURL);
+        setConnectionProperties(connection, postDataLength, REQ_TYPE.DELETE);
+
+        if(authType != AUTH_TYPE.NONE) {
+        	setAuthenticationType(connection, authType, authorisationString);
+        }
+        
+        try (OutputStream os = connection.getOutputStream()) {
+            os.write(postData);
+        }
+        
+        if(DEV_MODE) {
+            int responseCode = connection.getResponseCode();
+            System.out.println("DELETE request to URL: " + fullURL);
+            System.out.println("DELETE Parameters    : " + queryList.generateString());
+            System.out.println("Response Code      : " + responseCode);
+        }
+ 
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String line;
+            StringBuilder response = new StringBuilder();
+ 
+            while ((line = in.readLine()) != null) {
+                response.append(line).append("\n");
+            }
+            connection.disconnect();
+            return new Response(response.toString(), connection.getResponseCode(), fullURL, queryList);
+        }
 	}
 	public Response sendPatchRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
+		if(queryList == null) queryList = new ParameterList();
+		
+		String httpsURL = "https://" + url;
+		String fullURL = httpsURL + "/api/" + endpoint;
+        
+        byte[] postData = queryList.generateString().getBytes(StandardCharsets.UTF_8);
+
+        int postDataLength = postData.length;
+ 
+        HttpsURLConnection connection = getConnection(fullURL);
+        setConnectionProperties(connection, postDataLength, REQ_TYPE.PATCH);
+
+        if(authType != AUTH_TYPE.NONE) {
+        	setAuthenticationType(connection, authType, authorisationString);
+        }
+        
+        try (OutputStream os = connection.getOutputStream()) {
+            os.write(postData);
+        }
+        
+        if(DEV_MODE) {
+            int responseCode = connection.getResponseCode();
+            System.out.println("PATCH request to URL: " + fullURL);
+            System.out.println("PATCH Parameters    : " + queryList.generateString());
+            System.out.println("Response Code      : " + responseCode);
+        }
+ 
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String line;
+            StringBuilder response = new StringBuilder();
+ 
+            while ((line = in.readLine()) != null) {
+                response.append(line).append("\n");
+            }
+            connection.disconnect();
+            return new Response(response.toString(), connection.getResponseCode(), fullURL, queryList);
+        }
 	}
 	public Response sendPutRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
+		if(queryList == null) queryList = new ParameterList();
+		
+		String httpsURL = "https://" + url;
+		String fullURL = httpsURL + "/api/" + endpoint;
+        
+        byte[] postData = queryList.generateString().getBytes(StandardCharsets.UTF_8);
+
+        int postDataLength = postData.length;
+ 
+        HttpsURLConnection connection = getConnection(fullURL);
+        setConnectionProperties(connection, postDataLength, REQ_TYPE.PUT);
+
+        if(authType != AUTH_TYPE.NONE) {
+        	setAuthenticationType(connection, authType, authorisationString);
+        }
+        
+        try (OutputStream os = connection.getOutputStream()) {
+            os.write(postData);
+        }
+        
+        if(DEV_MODE) {
+            int responseCode = connection.getResponseCode();
+            System.out.println("PUT request to URL: " + fullURL);
+            System.out.println("PUT Parameters    : " + queryList.generateString());
+            System.out.println("Response Code      : " + responseCode);
+        }
+ 
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String line;
+            StringBuilder response = new StringBuilder();
+ 
+            while ((line = in.readLine()) != null) {
+                response.append(line).append("\n");
+            }
+            connection.disconnect();
+            return new Response(response.toString(), connection.getResponseCode(), fullURL, queryList);
+        }
+	}
+	public static Response test() throws Exception {
+		URL url = new URL("https://dvsc.services/api/ping");
+		HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+
+		con.setRequestMethod("GET");
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setConnectTimeout(5000);
+		con.setReadTimeout(5000);
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer content = new StringBuffer();
+		Console.log(in);
+		while ((inputLine = in.readLine()) != null) {
+			content.append(inputLine);
+		}
+		in.close();
+		con.disconnect();
+		Console.log(content.toString());
+
+		return new Response("xx", 100, "xx", new ParameterList());
 	}
 }
