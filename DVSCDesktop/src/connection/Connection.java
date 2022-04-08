@@ -33,17 +33,6 @@ public class Connection {
 		return flag;
 	}
 	
-	public void getPing() {
-		try {
-			Response response = connectionManager.sendGetRequest("ping", null);
-			JSONArray resArr = response.getArray();
-			String res = resArr.getString(0);
-			Console.log(res);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public boolean authenticate(String username, String password) {
 		boolean flag = false;
 		String authString = SecurityManager.encode(username + ":" + password);
