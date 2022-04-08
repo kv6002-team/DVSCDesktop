@@ -37,9 +37,11 @@ public class Connection {
 		boolean flag = false;
 		String authString = SecurityManager.encode(username + ":" + password);
 		try {
-			Response response = connectionManager.sendPostRequest("authenticate", null, ConnectionManager.AUTH_TYPE.BASIC, authString);
+			ParameterList pl = new ParameterList();
+			pl.add("types", "garage-consultant");
+			Response response = connectionManager.sendPostRequest("auth", pl, ConnectionManager.AUTH_TYPE.BASIC, authString);
 			JSONObject resObj = response.getObject();
-			if(resObj.getString("token_type") == "bearer") {
+			if(resObj.getString("token_type").equals("bearer")) {
 				JWT.getInstance().setToken(resObj.getString("token"));
 				flag = true;
 			}

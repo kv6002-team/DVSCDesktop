@@ -50,16 +50,22 @@ public class ConnectionManager {
 		if(queryList == null) queryList = new ParameterList();
 		try(CloseableHttpClient httpClient = HttpClients.createDefault()){
 			HttpPost httpPost = new HttpPost("https://" + this.url + "/api/" + endpoint);
-			httpPost.setEntity(this.parseParameterList(queryList));
+			UrlEncodedFormEntity data = this.parseParameterList(queryList);
+			httpPost.setEntity(data);
 			if(authType != AUTH_TYPE.NONE) httpPost.setHeader("Authorization",authType.type + " " + authorisationString);
+			httpPost.setHeader("Accept", "application/json");
+			httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
 			try(CloseableHttpResponse response = httpClient.execute(httpPost)){
 				HttpEntity entity = response.getEntity();
 				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
 				if(DEV_MODE) {
 					Console.log("POST | " + "https://" + this.url + "/api/" + endpoint);
+					Console.log("ARGS | " + new String(data.getContent().readAllBytes(), StandardCharsets.UTF_8));
 					Console.log("CODE | " + response.getCode());
 					Console.log("RESP | " + output);
+					Console.log("AUTH | " + httpPost.getHeader("Authorization"));
 				}
+				if(response.getCode() == 401) System.exit(0);
 				Response res = new Response(output, response.getCode(),this.url + endpoint, queryList);
 				EntityUtils.consume(entity);
 				return res;
@@ -78,6 +84,7 @@ public class ConnectionManager {
 				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
 				if(DEV_MODE) {
 					Console.log("GET  | " + "https://" + this.url + "/api/" + endpoint);
+					Console.log("ARGS | " + queryList.generateString());
 					Console.log("CODE | " + response.getCode());
 					Console.log("RESP | " + output);
 				}
