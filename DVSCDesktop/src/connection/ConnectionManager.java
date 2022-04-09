@@ -4,8 +4,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPatch;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -93,5 +96,80 @@ public class ConnectionManager {
 				return res;
 			}
 		}
+	}
+	
+	public Response sendDeleteRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
+		if(queryList == null) queryList = new ParameterList();
+		try(CloseableHttpClient httpClient = HttpClients.createDefault()){
+			HttpDelete httpDelete = new HttpDelete("https://" + this.url + "/api/" + endpoint);
+			UrlEncodedFormEntity data = this.parseParameterList(queryList);
+			httpDelete.setEntity(data);
+			if(authType != AUTH_TYPE.NONE) httpDelete.setHeader("Authorization",authType.type + " " + authorisationString);
+			httpDelete.setHeader("Accept", "application/json");
+			httpDelete.setHeader("Content-type", "application/x-www-form-urlencoded");
+			try(CloseableHttpResponse response = httpClient.execute(httpDelete)){
+				HttpEntity entity = response.getEntity();
+				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				if(DEV_MODE) {
+					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
+					Console.log("ARGS | " + queryList.generateString());
+					Console.log("CODE | " + response.getCode());
+					Console.log("RESP | " + output);
+				}
+				Response res = new Response(output, response.getCode(), this.url+endpoint, queryList);
+				EntityUtils.consume(entity);
+				return res;
+			}
+		}
+	}
+	
+	public Response sendPatchRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception{
+		if(queryList == null) queryList = new ParameterList();
+		try(CloseableHttpClient httpClient = HttpClients.createDefault()){
+			HttpPatch httpPatch = new HttpPatch("https://" + this.url + "/api/" + endpoint);
+			UrlEncodedFormEntity data = this.parseParameterList(queryList);
+			httpPatch.setEntity(data);
+			if(authType != AUTH_TYPE.NONE) httpPatch.setHeader("Authorization",authType.type + " " + authorisationString);
+			httpPatch.setHeader("Accept", "application/json");
+			httpPatch.setHeader("Content-type", "application/x-www-form-urlencoded");
+			try(CloseableHttpResponse response = httpClient.execute(httpPatch)){
+				HttpEntity entity = response.getEntity();
+				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				if(DEV_MODE) {
+					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
+					Console.log("ARGS | " + queryList.generateString());
+					Console.log("CODE | " + response.getCode());
+					Console.log("RESP | " + output);
+				}
+				Response res = new Response(output, response.getCode(), this.url+endpoint, queryList);
+				EntityUtils.consume(entity);
+				return res;
+			}
+		}	
+	}
+	
+	public Response sendPutRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception{
+		if(queryList == null) queryList = new ParameterList();
+		try(CloseableHttpClient httpClient = HttpClients.createDefault()){
+			HttpPut httpPut = new HttpPut("https://" + this.url + "/api/" + endpoint);
+			UrlEncodedFormEntity data = this.parseParameterList(queryList);
+			httpPut.setEntity(data);
+			if(authType != AUTH_TYPE.NONE) httpPut.setHeader("Authorization",authType.type + " " + authorisationString);
+			httpPut.setHeader("Accept", "application/json");
+			httpPut.setHeader("Content-type", "application/x-www-form-urlencoded");
+			try(CloseableHttpResponse response = httpClient.execute(httpPut)){
+				HttpEntity entity = response.getEntity();
+				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				if(DEV_MODE) {
+					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
+					Console.log("ARGS | " + queryList.generateString());
+					Console.log("CODE | " + response.getCode());
+					Console.log("RESP | " + output);
+				}
+				Response res = new Response(output, response.getCode(), this.url+endpoint, queryList);
+				EntityUtils.consume(entity);
+				return res;
+			}
+		}	
 	}
 }
