@@ -24,21 +24,27 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.Cursor;
 import com.toedter.calendar.JDateChooser;
+
+import domain.Garage;
+import domain.Instrument;
+
 import com.toedter.calendar.JCalendar;
 import java.awt.Dimension;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 
 public class CRUDPanel extends JPanel {
 
-	public JList lst_garages = new JList();
+	public JList<Garage> lst_garages = new JList<Garage>();
 	public JTextField txt_garageName = new JTextField();
 	public JTextField txt_contactNum = new JTextField();
 	public JTextField txt_contactEmail = new JTextField();
-	public JCheckBox chck_yearPaid = new JCheckBox("");
+	public JDateChooser date_paidUntil = new JDateChooser();
 	public JButton btn_deleteGarage = new JButton("Delete Garage");
-	public JList lst_instruments = new JList();
+	public JList<Instrument> lst_instruments = new JList<Instrument>();
 	public JButton btn_addInstrument = new JButton("Add Instrument");
 	public JTextField txt_serialNum = new JTextField();
 	public JDateChooser date_calibrationDate = new JDateChooser();
@@ -96,18 +102,8 @@ public class CRUDPanel extends JPanel {
 		gbc_scrl_garagesList.gridx = 0;
 		gbc_scrl_garagesList.gridy = 1;
 		pnl_garageList.add(scrl_garagesList, gbc_scrl_garagesList);
-		
 	
 		lst_garages.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lst_garages.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage", "Garage"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
 		scrl_garagesList.setViewportView(lst_garages);
 		
 		JPanel pnl_garageInfo = new JPanel();
@@ -121,31 +117,27 @@ public class CRUDPanel extends JPanel {
 		gbc_pnl_garageInfo.gridy = 0;
 		add(pnl_garageInfo, gbc_pnl_garageInfo);
 		GridBagLayout gbl_pnl_garageInfo = new GridBagLayout();
-		gbl_pnl_garageInfo.columnWidths = new int[]{0, 0, 126, 198, 35, 194, 0, 159, 0, 0, 0, 0};
-		gbl_pnl_garageInfo.rowHeights = new int[]{27, 14, 0, 69, 0, 0, 0, 0};
-		gbl_pnl_garageInfo.columnWeights = new double[]{1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_pnl_garageInfo.rowWeights = new double[]{1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnl_garageInfo.columnWidths = new int[]{-15, 0, 145, 31, 230, 0, 35, 100, 0, 209, 0, 24, 0};
+		gbl_pnl_garageInfo.rowHeights = new int[]{72, 62, 60, 81, 0, 0, 0, 0};
+		gbl_pnl_garageInfo.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 9.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnl_garageInfo.rowWeights = new double[]{1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnl_garageInfo.setLayout(gbl_pnl_garageInfo);
 		
 		JLabel lbl_garageInfo = new JLabel("Garage Information");
 		GridBagConstraints gbc_lbl_garageInfo = new GridBagConstraints();
-		gbc_lbl_garageInfo.gridwidth = 8;
+		gbc_lbl_garageInfo.gridwidth = 10;
 		gbc_lbl_garageInfo.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_garageInfo.gridx = 0;
+		gbc_lbl_garageInfo.gridx = 1;
 		gbc_lbl_garageInfo.gridy = 0;
 		pnl_garageInfo.add(lbl_garageInfo, gbc_lbl_garageInfo);
 		lbl_garageInfo.setHorizontalTextPosition(SwingConstants.CENTER);
 		lbl_garageInfo.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_garageInfo.setFont(new Font("Tahoma", Font.BOLD, 22));
 		
-		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
-		GridBagConstraints gbc_horizontalStrut_1 = new GridBagConstraints();
-		gbc_horizontalStrut_1.insets = new Insets(0, 0, 5, 5);
-		gbc_horizontalStrut_1.gridx = 1;
-		gbc_horizontalStrut_1.gridy = 1;
-		pnl_garageInfo.add(horizontalStrut_1, gbc_horizontalStrut_1);
-		
 		JLabel lbl_garageName = new JLabel("Garage Name");
+		lbl_garageName.setPreferredSize(new Dimension(50, 14));
+		lbl_garageName.setMinimumSize(new Dimension(30, 14));
+		lbl_garageName.setMaximumSize(new Dimension(50, 14));
 		GridBagConstraints gbc_lbl_garageName = new GridBagConstraints();
 		gbc_lbl_garageName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lbl_garageName.weighty = 1.0;
@@ -155,53 +147,75 @@ public class CRUDPanel extends JPanel {
 		gbc_lbl_garageName.gridy = 1;
 		pnl_garageInfo.add(lbl_garageName, gbc_lbl_garageName);
 		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		GridBagConstraints gbc_horizontalStrut = new GridBagConstraints();
+		gbc_horizontalStrut.insets = new Insets(0, 0, 5, 5);
+		gbc_horizontalStrut.gridx = 3;
+		gbc_horizontalStrut.gridy = 1;
+		pnl_garageInfo.add(horizontalStrut, gbc_horizontalStrut);
+		
 		GridBagConstraints gbc_txt_garageName = new GridBagConstraints();
+		gbc_txt_garageName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txt_garageName.insets = new Insets(0, 0, 5, 5);
 		gbc_txt_garageName.weighty = 1.0;
-		gbc_txt_garageName.weightx = 2.0;
-		gbc_txt_garageName.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txt_garageName.gridx = 3;
+		gbc_txt_garageName.weightx = 1.0;
+		gbc_txt_garageName.gridx = 4;
 		gbc_txt_garageName.gridy = 1;
+		txt_garageName.setPreferredSize(new Dimension(30, 20));
+		txt_garageName.setMinimumSize(new Dimension(30, 20));
 		pnl_garageInfo.add(txt_garageName, gbc_txt_garageName);
 		txt_garageName.setColumns(10);
 		
 		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
 		GridBagConstraints gbc_horizontalStrut_2 = new GridBagConstraints();
 		gbc_horizontalStrut_2.insets = new Insets(0, 0, 5, 5);
-		gbc_horizontalStrut_2.gridx = 4;
+		gbc_horizontalStrut_2.gridx = 6;
 		gbc_horizontalStrut_2.gridy = 1;
 		pnl_garageInfo.add(horizontalStrut_2, gbc_horizontalStrut_2);
 		
 		JLabel lbl_contactNum = new JLabel("Contact Number");
+		lbl_contactNum.setPreferredSize(new Dimension(50, 14));
+		lbl_contactNum.setMinimumSize(new Dimension(30, 14));
+		lbl_contactNum.setMaximumSize(new Dimension(50, 14));
 		GridBagConstraints gbc_lbl_contactNum = new GridBagConstraints();
 		gbc_lbl_contactNum.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lbl_contactNum.insets = new Insets(0, 0, 5, 5);
 		gbc_lbl_contactNum.weighty = 1.0;
 		gbc_lbl_contactNum.weightx = 1.0;
-		gbc_lbl_contactNum.gridx = 5;
+		gbc_lbl_contactNum.gridx = 7;
 		gbc_lbl_contactNum.gridy = 1;
 		pnl_garageInfo.add(lbl_contactNum, gbc_lbl_contactNum);
 		
 		GridBagConstraints gbc_txt_contactNum = new GridBagConstraints();
 		gbc_txt_contactNum.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txt_contactNum.insets = new Insets(0, 0, 5, 5);
-		gbc_txt_contactNum.weighty = 1.0;
-		gbc_txt_contactNum.weightx = 2.0;
-		gbc_txt_contactNum.gridx = 7;
+		gbc_txt_contactNum.gridx = 9;
 		gbc_txt_contactNum.gridy = 1;
+		txt_contactNum.setMinimumSize(new Dimension(30, 20));
+		txt_contactNum.setPreferredSize(new Dimension(100, 20));
 		pnl_garageInfo.add(txt_contactNum, gbc_txt_contactNum);
 		txt_contactNum.setColumns(10);
 		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		GridBagConstraints gbc_horizontalStrut_1 = new GridBagConstraints();
+		gbc_horizontalStrut_1.insets = new Insets(0, 0, 5, 5);
+		gbc_horizontalStrut_1.gridx = 10;
+		gbc_horizontalStrut_1.gridy = 1;
+		pnl_garageInfo.add(horizontalStrut_1, gbc_horizontalStrut_1);
+		
 		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
 		GridBagConstraints gbc_horizontalStrut_3 = new GridBagConstraints();
-		gbc_horizontalStrut_3.insets = new Insets(0, 0, 5, 0);
-		gbc_horizontalStrut_3.gridx = 10;
-		gbc_horizontalStrut_3.gridy = 1;
+		gbc_horizontalStrut_3.insets = new Insets(0, 0, 5, 5);
+		gbc_horizontalStrut_3.gridx = 1;
+		gbc_horizontalStrut_3.gridy = 2;
 		pnl_garageInfo.add(horizontalStrut_3, gbc_horizontalStrut_3);
 		
 		JLabel lbl_contactEmail = new JLabel("Contact Email");
+		lbl_contactEmail.setMinimumSize(new Dimension(30, 14));
+		lbl_contactEmail.setMaximumSize(new Dimension(50, 14));
+		lbl_contactEmail.setPreferredSize(new Dimension(50, 14));
 		GridBagConstraints gbc_lbl_contactEmail = new GridBagConstraints();
-		gbc_lbl_contactEmail.anchor = GridBagConstraints.LINE_START;
+		gbc_lbl_contactEmail.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lbl_contactEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_lbl_contactEmail.gridx = 2;
 		gbc_lbl_contactEmail.gridy = 2;
@@ -212,31 +226,37 @@ public class CRUDPanel extends JPanel {
 		gbc_txt_contactEmail.weightx = 2.0;
 		gbc_txt_contactEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_txt_contactEmail.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txt_contactEmail.gridx = 3;
+		gbc_txt_contactEmail.gridx = 4;
 		gbc_txt_contactEmail.gridy = 2;
+		txt_contactEmail.setPreferredSize(new Dimension(30, 20));
+		txt_contactEmail.setMinimumSize(new Dimension(30, 20));
 		pnl_garageInfo.add(txt_contactEmail, gbc_txt_contactEmail);
 		txt_contactEmail.setColumns(10);
 		
-		JLabel lbl_yearPaid = new JLabel("Year Paid");
-		GridBagConstraints gbc_lbl_yearPaid = new GridBagConstraints();
-		gbc_lbl_yearPaid.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lbl_yearPaid.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_yearPaid.gridx = 5;
-		gbc_lbl_yearPaid.gridy = 2;
-		pnl_garageInfo.add(lbl_yearPaid, gbc_lbl_yearPaid);
+		JLabel lbl_paidUntil = new JLabel("Paid Until");
+		lbl_paidUntil.setPreferredSize(new Dimension(50, 14));
+		lbl_paidUntil.setMinimumSize(new Dimension(30, 14));
+		lbl_paidUntil.setMaximumSize(new Dimension(50, 14));
+		GridBagConstraints gbc_lbl_paidUntil = new GridBagConstraints();
+		gbc_lbl_paidUntil.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lbl_paidUntil.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl_paidUntil.gridx = 7;
+		gbc_lbl_paidUntil.gridy = 2;
+		pnl_garageInfo.add(lbl_paidUntil, gbc_lbl_paidUntil);
 		
-		GridBagConstraints gbc_chck_yearPaid = new GridBagConstraints();
-		gbc_chck_yearPaid.insets = new Insets(0, 0, 5, 5);
-		gbc_chck_yearPaid.gridx = 7;
-		gbc_chck_yearPaid.gridy = 2;
-		pnl_garageInfo.add(chck_yearPaid, gbc_chck_yearPaid);
+		GridBagConstraints gbc_date_paidUntil = new GridBagConstraints();
+		gbc_date_paidUntil.fill = GridBagConstraints.HORIZONTAL;
+		gbc_date_paidUntil.insets = new Insets(0, 0, 5, 5);
+		gbc_date_paidUntil.gridx = 9;
+		gbc_date_paidUntil.gridy = 2;
+		pnl_garageInfo.add(date_paidUntil, gbc_date_paidUntil);
 		
 		btn_deleteGarage.setPreferredSize(new Dimension(200, 23));
 		btn_deleteGarage.setMaximumSize(new Dimension(200, 23));
 		GridBagConstraints gbc_btn_deleteGarage = new GridBagConstraints();
-		gbc_btn_deleteGarage.gridwidth = 5;
+		gbc_btn_deleteGarage.gridwidth = 8;
 		gbc_btn_deleteGarage.insets = new Insets(0, 0, 5, 5);
-		gbc_btn_deleteGarage.gridx = 3;
+		gbc_btn_deleteGarage.gridx = 2;
 		gbc_btn_deleteGarage.gridy = 3;
 		pnl_garageInfo.add(btn_deleteGarage, gbc_btn_deleteGarage);
 		
@@ -254,7 +274,7 @@ public class CRUDPanel extends JPanel {
 		pnl_garageInfo.add(pnl_instrumentList, gbc_pnl_instrumentList);
 		GridBagLayout gbl_pnl_instrumentList = new GridBagLayout();
 		gbl_pnl_instrumentList.columnWidths = new int[]{128, 0};
-		gbl_pnl_instrumentList.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_pnl_instrumentList.rowHeights = new int[]{65, 186, 0, 0};
 		gbl_pnl_instrumentList.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_pnl_instrumentList.rowWeights = new double[]{1.0, 1.0, 0.0, Double.MIN_VALUE};
 		pnl_instrumentList.setLayout(gbl_pnl_instrumentList);
@@ -278,15 +298,7 @@ public class CRUDPanel extends JPanel {
 		gbc_scrl_instrumentList.gridy = 1;
 		pnl_instrumentList.add(scrl_instrumentList, gbc_scrl_instrumentList);
 		
-		lst_instruments.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument", "Instrument\t"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		lst_instruments.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		scrl_instrumentList.setViewportView(lst_instruments);
 		
 		
@@ -301,14 +313,14 @@ public class CRUDPanel extends JPanel {
 		gbc_pnl_instrumentInfo.weighty = 5.0;
 		gbc_pnl_instrumentInfo.weightx = 2.0;
 		gbc_pnl_instrumentInfo.gridheight = 2;
-		gbc_pnl_instrumentInfo.gridwidth = 3;
+		gbc_pnl_instrumentInfo.gridwidth = 6;
 		gbc_pnl_instrumentInfo.insets = new Insets(0, 0, 5, 5);
 		gbc_pnl_instrumentInfo.fill = GridBagConstraints.BOTH;
-		gbc_pnl_instrumentInfo.gridx = 5;
+		gbc_pnl_instrumentInfo.gridx = 4;
 		gbc_pnl_instrumentInfo.gridy = 4;
 		pnl_garageInfo.add(pnl_instrumentInfo, gbc_pnl_instrumentInfo);
 		GridBagLayout gbl_pnl_instrumentInfo = new GridBagLayout();
-		gbl_pnl_instrumentInfo.columnWidths = new int[]{0, 308, 267, 0, 0};
+		gbl_pnl_instrumentInfo.columnWidths = new int[]{0, 291, 249, 0, 0};
 		gbl_pnl_instrumentInfo.rowHeights = new int[]{27, 0, 42, 30, 0};
 		gbl_pnl_instrumentInfo.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_pnl_instrumentInfo.rowWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
@@ -334,7 +346,7 @@ public class CRUDPanel extends JPanel {
 		
 		JLabel lbl_serialNum = new JLabel("Serial Number");
 		GridBagConstraints gbc_lbl_serialNum = new GridBagConstraints();
-		gbc_lbl_serialNum.anchor = GridBagConstraints.LINE_START;
+		gbc_lbl_serialNum.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lbl_serialNum.weighty = 1.0;
 		gbc_lbl_serialNum.weightx = 1.0;
 		gbc_lbl_serialNum.insets = new Insets(0, 0, 5, 5);
@@ -384,7 +396,7 @@ public class CRUDPanel extends JPanel {
 		Component verticalStrut = Box.createVerticalStrut(20);
 		GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
 		gbc_verticalStrut.insets = new Insets(0, 0, 0, 5);
-		gbc_verticalStrut.gridx = 5;
+		gbc_verticalStrut.gridx = 7;
 		gbc_verticalStrut.gridy = 6;
 		pnl_garageInfo.add(verticalStrut, gbc_verticalStrut);
 		
@@ -404,43 +416,51 @@ public class CRUDPanel extends JPanel {
 
 	}
 
-	public JList getGaragesList(){
+	public JList<Garage> getGaragesList(){
 		return lst_garages;
 	}
 	
-	public JTextField getGarageNameTextField(){
+	public JTextField getGarageNameTextField() {
 		return txt_garageName;
 	}
 	
-	public JTextField getGarageNumberTextField(){
+	public JTextField getGarageNumberTextField() {
 		return txt_contactNum;
 	}
 	
-	public JTextField getGarageEmailTextField(){
+	public JTextField getGarageEmailTextField() {
 		return txt_contactEmail;
 	}
 	
-	public JCheckBox getGarageYearPaidChckBox(){
-		return chck_yearPaid;
+	public JDateChooser getGaragePaidUntil() {
+		return date_paidUntil;
 	}
 	
-	public JButton getDeleteGarageButton(){
+	public JButton getDeleteGarageButton() {
 		return btn_deleteGarage;
 	}
 	
-	public JList getInstrumentList() {
+	public JList<Instrument> getInstrumentList() {
 		return lst_instruments;
 	}
 	
-	public JButton getAddInstrumentButton(){
+	public JButton getAddInstrumentButton() {
 		return btn_addInstrument;
 	}
 	
-	public JTextField getSerialNumTextField(){
+	public JTextField getSerialNumTextField() {
 		return txt_serialNum;
 	}
 	
-	public void setGarageList(DefaultListModel list){
+	public JDateChooser getCalibrationDate() {
+		return date_calibrationDate;
+	}
+	
+	public void setGarageList(DefaultListModel<Garage> list) {
 		lst_garages.setModel(list);
+	}
+	
+	public void setInstrumentList(DefaultListModel<Instrument> list) {
+		lst_instruments.setModel(list);
 	}
 }

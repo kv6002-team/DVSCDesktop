@@ -1,8 +1,15 @@
 package connection;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import domain.Garage;
+import domain.GarageInfo;
+import domain.Instrument;
+import domain.Instrument.CheckStatus;
 import logging.Logger;
 import security.JWT;
 import security.SecurityManager;
@@ -77,5 +84,65 @@ public class Connection {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public ArrayList<Garage> getAllGarages() {
+		ArrayList<Garage> allGarages = new ArrayList<Garage>();
+		try {
+			Response response = connectionManager.sendGetRequest("garages", null);
+			if(response.getResponseCode() == 200) {
+				JSONArray arr = response.getArray();
+				for(int i=0; i<arr.length(); i++) {
+					allGarages.add(new Garage(
+							arr.getJSONObject(i).getString("name"),
+							arr.getJSONObject(i).getInt("id")
+							));
+				}
+				
+			} 
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return allGarages;		
+	}
+	
+	public GarageInfo getGarage(int id) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		
+		GarageInfo gi = null;
+		ArrayList<Instrument> instruments = new ArrayList<Instrument>();
+		try{
+			Response response = connectionManager.sendGetRequest("garages/"+id, null);
+			if(response.getResponseCode() == 200) {
+				JSONObject obj = response.getObject();
+				
+				JSONArray instArr = obj.getJSONArray("instruments");
+				for(int i=0; i<instArr.length(); i++){
+					CheckStatus status = CheckStatus.valueOf(instArr.getJSONObject(i).getString("ourCheckStatus"));
+					
+					instruments.add(new Instrument(
+							instArr.getJSONObject(i).getInt("id"),
+							instArr.getJSONObject(i).getString("name"),
+							instArr.getJSONObject(i).getString("serialNumber"),
+							formatter.parse(instArr.getJSONObject(i).getString("ourCheckDate")),
+							formatter.parse(instArr.getJSONObject(i).getString("officialCheckExpiryDate")),
+							status
+							));
+				}
+				
+				gi = new GarageInfo(
+							obj.getString("vts"),
+							obj.getString("ownerName"),
+							obj.getString("emailAddress"),
+							obj.getString("telephoneNumber"),
+							formatter.parse(obj.getString("paidUntil")),
+							instruments
+						);
+			}
+		} catch	(Exception e) {
+			e.printStackTrace();
+		}
+		return gi;
+		
 	}
 }

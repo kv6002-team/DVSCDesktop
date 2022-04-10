@@ -1,6 +1,7 @@
 package guimanagers;
 
 import gui.CRUDPanel;
+import gui.Wrapper;
 import domain.Garage;
 import domain.Instrument;
 
@@ -8,9 +9,18 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import connection.Connection;
 
 /**
  * 
@@ -22,26 +32,70 @@ public class CRUDPanelManager {
 	
 	private CRUDPanel CRUDPanel = new CRUDPanel();
 	ArrayList<Garage> garages = new ArrayList<Garage>();
-	
-	
-	
-	
-	
-	public CRUDPanelManager() {
 
+	Wrapper wrapper;
+	private Connection connection = new Connection(); 
+	
+	
+	
+	public CRUDPanelManager(Wrapper wrapper){
 		
+		this.wrapper = wrapper;
 		
-		garages.add(new Garage("garage 1", 1));
-		garages.add(new Garage("garage 2", 2));
-		garages.add(new Garage("garage 3", 3));
+		ArrayList<Garage> allGarages = connection.getAllGarages();
 		
-		CRUDPanel.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				populateGarageList(garages);
+		wrapper.getTabbedPane().addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				populateGarageList(allGarages);
 			}
 		});
 		
+		CRUDPanel.getGaragesList().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				
+				CRUDPanel.getGarageNameTextField().setText("");
+				CRUDPanel.getGarageEmailTextField().setText("");
+				CRUDPanel.getGarageNumberTextField().setText("");
+				CRUDPanel.getGaragePaidUntil().setDate(null);
+				
+				CRUDPanel.getInstrumentList().clearSelection();
+				CRUDPanel.getSerialNumTextField().setText("");
+				CRUDPanel.getCalibrationDate().setDate(null);
+				
+				if(e.getValueIsAdjusting()){
+					return;
+				}
+				
+				if(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo() == null) {
+					CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
+				}
+				
+				CRUDPanel.getGarageNameTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageName());
+				CRUDPanel.getGarageEmailTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getEmailAddress());
+				CRUDPanel.getGarageNumberTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getTelephoneNum());
+				CRUDPanel.getGaragePaidUntil().setDate(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getPaidUntil());
+				
+				populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
+				
+			}
+		});
+		
+		CRUDPanel.getInstrumentList().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				
+				if(e.getValueIsAdjusting()) {
+					return;
+				}
+				
+				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) { 
+					CRUDPanel.getSerialNumTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getSerialNum());
+					CRUDPanel.getCalibrationDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
+				}
+				
+			}
+			
+			
+		});
 		
 		
 	}
@@ -52,10 +106,10 @@ public class CRUDPanelManager {
 
 	public void populateGarageList(ArrayList<Garage> garages){
 		
-		DefaultListModel<String> list = new DefaultListModel();
+		DefaultListModel<Garage> list = new DefaultListModel<Garage>();
 		
 		for(int i=0; i<garages.size(); i++){
-			list.addElement((garages.get(i).getGarageName()));
+			list.addElement(garages.get(i));
 		}
 		
 		CRUDPanel.setGarageList(list);
@@ -82,7 +136,7 @@ public class CRUDPanelManager {
 
 	}
 
-	public void changeYearPaid(Boolean yearPaid){
+	public void changePaidUntil(Date paidUntil){
 		
 	}
 
@@ -90,13 +144,19 @@ public class CRUDPanelManager {
 
 	}
 
-	public void populateInstrumentList(String[] instrumentList){
-
+	public void populateInstrumentList(ArrayList<Instrument> instruments){
+		DefaultListModel<Instrument> list = new DefaultListModel<Instrument>();
+		
+		for(int i=0; i<instruments.size(); i++) {
+			list.addElement(instruments.get(i));
+		}
+		
+		CRUDPanel.setInstrumentList(list);
 	}
 
-//	public void addInstrument(Instrument instrument){
-//
-//	}
+	public void addInstrument(Instrument instrument){
+
+	}
 
 	public void removeInstrument(int index){
 
