@@ -53,21 +53,48 @@ public class CRUDPanelManager {
 		CRUDPanel.getGaragesList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				
+				CRUDPanel.getGarageNameTextField().setText("");
+				CRUDPanel.getGarageEmailTextField().setText("");
+				CRUDPanel.getGarageNumberTextField().setText("");
+				CRUDPanel.getGaragePaidUntil().setDate(null);
+				
+				CRUDPanel.getInstrumentList().clearSelection();
+				CRUDPanel.getSerialNumTextField().setText("");
+				CRUDPanel.getCalibrationDate().setDate(null);
+				
 				if(e.getValueIsAdjusting()){
 					return;
 				}
 				
-				Garage tempGarage = CRUDPanel.getGaragesList().getSelectedValue();
-				System.out.println(tempGarage.getGarageID());
-				CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
+				if(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo() == null) {
+					CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
+				}
 				
 				CRUDPanel.getGarageNameTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageName());
 				CRUDPanel.getGarageEmailTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getEmailAddress());
 				CRUDPanel.getGarageNumberTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getTelephoneNum());
 				CRUDPanel.getGaragePaidUntil().setDate(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getPaidUntil());
 				
+				populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
 				
 			}
+		});
+		
+		CRUDPanel.getInstrumentList().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				
+				if(e.getValueIsAdjusting()) {
+					return;
+				}
+				
+				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) { 
+					CRUDPanel.getSerialNumTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getSerialNum());
+					CRUDPanel.getCalibrationDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
+				}
+				
+			}
+			
+			
 		});
 		
 		
