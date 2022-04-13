@@ -38,15 +38,23 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractListModel;
 
+/**
+ * 
+ * @author Liam
+ *
+ */
+
 public class EmailPanel extends JPanel {
 	
 	public JList<?> lst_GarageEmails = new JList();
 	public JList<?> lst_ApprovedEmails = new JList();
+	public JList<?> lst_SelectedApprovedEmails = new JList();
 	public JButton btn_MoveAll = new JButton("Move all");
 	public JButton btn_MoveSelected = new JButton("Move selected");
 	public JButton btn_RemoveSelected = new JButton("Remove selected");
 	public JButton btn_RemoveAll = new JButton("Remove All");
 	public JButton btn_Approve = new JButton("Approve");
+	public static final String tabName = "Emails";
 	
 	public JList getGarageEmails() {
 		return lst_GarageEmails;
@@ -54,6 +62,10 @@ public class EmailPanel extends JPanel {
 
 	public JList getApprovedEmails() {
 		return lst_ApprovedEmails;
+	}
+	
+	public JList getSelectedApprovedEmails() {
+		return lst_SelectedApprovedEmails;
 	}
 	
 	public JButton getMoveAll() {
@@ -82,6 +94,10 @@ public class EmailPanel extends JPanel {
 	
 	public void setApprovedEmailList(Email email) {
 		lst_ApprovedEmails.setModel((ListModel) email);
+	}
+	
+	public void setSelectedApprovedEmails(Email email) {
+		lst_SelectedApprovedEmails.setModel((ListModel) email);
 	}
 	
 	/**

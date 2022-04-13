@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import guimanagers.CRUDPanelManager;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import guimanagers.EmailPanelManager;
+
 /**
  * 
  * @author Scrub
@@ -25,6 +27,7 @@ public class Wrapper extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		add(tab_MainTabPane);
 		tab_MainTabPane.addTab(CRUDPanel.tabName, null, CRUDPanelManager.getCRUDPanel(), null);
+		tab_MainTabPane.addTab(EmailPanel.tabName, null, EmailPanelManager.getEmailPanel(), null);
 	}
 	
 	public JTabbedPane getTabbedPane(){

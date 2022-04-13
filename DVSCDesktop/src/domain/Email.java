@@ -2,6 +2,12 @@ package domain;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author Liam
+ *
+ */
+
 public class Email {
 	
 	private int instrumentID;
