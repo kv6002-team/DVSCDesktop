@@ -25,8 +25,6 @@ public class Wrapper extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		add(tab_MainTabPane);
 		tab_MainTabPane.addTab(CRUDPanel.tabName, null, CRUDPanelManager.getCRUDPanel(), null);
-		JPanel panel = new JPanel();
-		tab_MainTabPane.addTab("name", panel);
 	}
 	
 	public JTabbedPane getTabbedPane(){
