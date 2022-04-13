@@ -13,7 +13,6 @@ import domain.Instrument.CheckStatus;
 import logging.Logger;
 import security.JWT;
 import security.SecurityManager;
-import utils.Console;
 /**
  * 
  * @author Scrub
@@ -85,7 +84,7 @@ public class Connection {
 		pList.add("level", level.toString());
 		pList.add("message", message);
 		try {
-			Response response = connectionManager.sendPostRequest(message, pList, ConnectionManager.AUTH_TYPE.NONE, null);
+			Response response = connectionManager.sendPostRequest("log", pList, ConnectionManager.AUTH_TYPE.NONE, null);
 			if(response.getResponseCode() == 200) return true;
 		} catch (Exception e) {
 			e.printStackTrace();
