@@ -37,6 +37,7 @@ public class Connection {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if(flag) Logger.log(Logger.TYPE.CONNECTION_EVENT, Logger.LEVEL.INFO, "CONNECTION-SUCCESS-PING");
 		return flag;
 	}
 	
@@ -56,6 +57,9 @@ public class Connection {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if(flag) Logger.log(Logger.TYPE.LOGIN_EVENT, Logger.LEVEL.INFO, "AUTHENTICATION-SUCCESS-APP-" + username.toUpperCase());
+		if(!flag) Logger.log(Logger.TYPE.LOGIN_EVENT, Logger.LEVEL.WARN, "AUTHENTICATION-FAILED-APP-" + username.toUpperCase());
+
 		return flag;
 	}
 	
@@ -69,6 +73,9 @@ public class Connection {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if(flag) Logger.log(Logger.TYPE.LOGIN_EVENT, Logger.LEVEL.INFO, "PASSWORD-RESET-SUCCESS-" + username.toUpperCase());
+		if(!flag) Logger.log(Logger.TYPE.LOGIN_EVENT, Logger.LEVEL.ALERT, "PASSWORD-RESET-FAILED-" + username.toUpperCase());
+
 		return flag;
 	}
 	
