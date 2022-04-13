@@ -5,16 +5,13 @@ import gui.Wrapper;
 import domain.Garage;
 import domain.Instrument;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -31,8 +28,10 @@ import connection.Connection;
 public class CRUDPanelManager {
 	
 	private CRUDPanel CRUDPanel = new CRUDPanel();
+	private GarageFormPanelManager GarageFormPanelManager = new GarageFormPanelManager();
+	
 	ArrayList<Garage> garages = new ArrayList<Garage>();
-
+	
 	Wrapper wrapper;
 	private Connection connection = new Connection(); 
 	
@@ -90,13 +89,16 @@ public class CRUDPanelManager {
 				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) { 
 					CRUDPanel.getSerialNumTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getSerialNum());
 					CRUDPanel.getCalibrationDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
-				}
-				
+				}	
 			}
-			
-			
 		});
 		
+		CRUDPanel.getAddGarageButton().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				addGarage();
+			}
+		});
 		
 	}
 	
@@ -116,8 +118,12 @@ public class CRUDPanelManager {
 		
 	}
 
-	public void addGarage(Garage garage){
-	
+	public void addGarage(){
+		
+		JFrame garageFormFrame = new JFrame();
+		garageFormFrame.add(GarageFormPanelManager.getGarageFormPanel());
+		garageFormFrame.setBounds(100, 100, 640, 360);
+		garageFormFrame.setVisible(true);
 	}
 
 	public void removeGarage(int index){
