@@ -10,6 +10,7 @@ import gui.AuthenticationPanel;
 import gui.NoConnectionDialog;
 import gui.Wrapper;
 import security.AuthenticationManager;
+import security.Sanitiser;
 
 /**
  * 
@@ -32,8 +33,10 @@ public class AuthenticationPanelManager {
 	private void addAuthenticationEventListener(JFrame mainWindow) {
 		authenticationPanel.getAuthenticationButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(connection.ping()) {					
-					if(AuthenticationManager.authenticate(authenticationPanel.getUsernameField(), authenticationPanel.getPasswordField())) {
+				if(connection.ping()) {
+					if(Sanitiser.containsColon(authenticationPanel.getUsernameField())) {
+						//THROW ERROR DIALOG BOX
+					}else if(AuthenticationManager.authenticate(Sanitiser.trim(authenticationPanel.getUsernameField()), authenticationPanel.getPasswordField())) {
 						mainWindow.setContentPane(new Wrapper());
 						mainWindow.revalidate();
 					}
@@ -49,10 +52,10 @@ public class AuthenticationPanelManager {
 	private void addResetEventListener() {
 		authenticationPanel.getResetButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 if(AuthenticationManager.resetPassword(authenticationPanel.getUsernameField())) {
-					 // reset password email sent
+				 if(AuthenticationManager.resetPassword(Sanitiser.trim(authenticationPanel.getUsernameField()))) {
+					 // reset password email sent DIALOG BOX
 				 }else {
-					 //try again later
+					 //try again later DIALOG BOX
 				 }
 			}
 		});
