@@ -2,41 +2,15 @@ package gui;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Font;
-import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JList;
-import java.awt.TextField;
-import java.util.ArrayList;
-
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-
-import java.awt.List;
-import java.awt.Button;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Choice;
 import java.awt.GridLayout;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
-import javax.swing.border.LineBorder;
-
-import domain.Email;
-
-import java.awt.Color;
+import domain.Garage;
 import javax.swing.JTabbedPane;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.JTextArea;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractListModel;
 
 /**
  * 
@@ -46,26 +20,22 @@ import javax.swing.AbstractListModel;
 
 public class EmailPanel extends JPanel {
 	
-	public JList<?> lst_GarageEmails = new JList();
-	public JList<?> lst_ApprovedEmails = new JList();
-	public JList<?> lst_SelectedApprovedEmails = new JList();
+	public JList<Garage> lst_GarageEmails = new JList<Garage>();
+	public JList<Garage> lst_ApprovedEmails = new JList<Garage>();
 	public JButton btn_MoveAll = new JButton("Move all");
 	public JButton btn_MoveSelected = new JButton("Move selected");
 	public JButton btn_RemoveSelected = new JButton("Remove selected");
 	public JButton btn_RemoveAll = new JButton("Remove All");
 	public JButton btn_Approve = new JButton("Approve");
+	
 	public static final String tabName = "Emails";
 	
-	public JList getGarageEmails() {
+	public JList<Garage> getGarageEmails() {
 		return lst_GarageEmails;
 	}
 
-	public JList getApprovedEmails() {
+	public JList<Garage> getApprovedEmails() {
 		return lst_ApprovedEmails;
-	}
-	
-	public JList getSelectedApprovedEmails() {
-		return lst_SelectedApprovedEmails;
 	}
 	
 	public JButton getMoveAll() {
@@ -86,18 +56,6 @@ public class EmailPanel extends JPanel {
 	
 	public JButton getApprove() {
 		return btn_Approve;
-	}
-	
-	public void setUnapprovedEmailList(Email email) {
-		lst_GarageEmails.setModel((ListModel) email);
-	}
-	
-	public void setApprovedEmailList(Email email) {
-		lst_ApprovedEmails.setModel((ListModel) email);
-	}
-	
-	public void setSelectedApprovedEmails(Email email) {
-		lst_SelectedApprovedEmails.setModel((ListModel) email);
 	}
 	
 	/**
@@ -141,15 +99,14 @@ public class EmailPanel extends JPanel {
 		gbc_scrl_GarageEmails.gridx = 0;
 		gbc_scrl_GarageEmails.gridy = 0;
 		pnl_GarageEmails.add(scrl_GarageEmails, gbc_scrl_GarageEmails);
-		lst_GarageEmails.setModel(new AbstractListModel() {
-			String[] values = new String[] {"aaaa", "bbb", "ccc", "ddd"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		
+		DefaultListModel<Garage> sampleData = new DefaultListModel<Garage>(); 
+		
+		sampleData.addElement(new Garage("Garage One", 1));
+		sampleData.addElement(new Garage("Garage Two", 2));
+		sampleData.addElement(new Garage("Garage Three", 3));
+		
+		lst_GarageEmails.setModel(sampleData);
 		
 		scrl_GarageEmails.setViewportView(lst_GarageEmails);
 		
@@ -235,6 +192,7 @@ public class EmailPanel extends JPanel {
 		pnl_ApprovedEmails.add(scrl_ApprovedEmails, gbc_scrl_ApprovedEmails);
 		
 		scrl_ApprovedEmails.setViewportView(lst_ApprovedEmails);
+		lst_ApprovedEmails.setModel(new DefaultListModel<Garage>());
 
 	}
 }

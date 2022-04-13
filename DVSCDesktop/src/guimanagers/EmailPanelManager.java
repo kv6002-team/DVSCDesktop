@@ -1,12 +1,14 @@
 package guimanagers;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import domain.Email;
+import domain.Garage;
 import gui.EmailPanel;
+import utils.Console;
+import javax.swing.AbstractListModel;
 
 /**
  * 
@@ -15,40 +17,39 @@ import gui.EmailPanel;
  */
 
 public class EmailPanelManager {
-	private static EmailPanel EmailPanel = new EmailPanel();
-	public static EmailPanel getEmailPanel() {
+	private EmailPanel EmailPanel = new EmailPanel();
+	
+	public EmailPanel getEmailPanel() {
 		return EmailPanel;
 	}
-	ArrayList<Email> unapprovedEmails = new ArrayList<Email>();
 	
 	public EmailPanelManager() {
-		unapprovedEmails.add(new Email(1, null));
-		unapprovedEmails.add(new Email(2, null));
-		unapprovedEmails.add(new Email(3, null));
-		
-		
-		
 		EmailPanel.getMoveAll().addActionListener(new ActionListener() {
 			//Moves all elements within the Garage Emails list, places them within the Approved Emails list
 			//Also removes all moved elements from the Garage Emails List once finished
 			public void actionPerformed(ActionEvent e) {
 				int totalElements = EmailPanel.getGarageEmails().getModel().getSize();
-				for(int i=0; i < totalElements; i++) {
-					((DefaultListModel)EmailPanel.getApprovedEmails().getModel()).addElement(i);
-					((DefaultListModel)EmailPanel.getGarageEmails().getModel()).remove(i);
+				for(int i = 0; i < totalElements; i++) {
+					((DefaultListModel<Garage>) EmailPanel.getApprovedEmails().getModel()).addElement(
+						((DefaultListModel<Garage>) EmailPanel.getGarageEmails().getModel()).getElementAt(i)
+					);
 				}
+				((DefaultListModel<Garage>)EmailPanel.getGarageEmails().getModel()).clear();
 			}
 		});
 		
-		EmailPanel.getMoveSelected().addActionListener(new ActionListener(){
+		EmailPanel.getMoveSelected().addActionListener(new ActionListener() {
 			//Moves all selected elements from the Garage Emails list, places them within the Approved Emails list
 			//Then removes selected elements from the Garage Emails list
 			public void actionPerformed(ActionEvent e) {
 				int[] selectedElements = EmailPanel.getGarageEmails().getSelectedIndices();
 				for(int i=0; i < selectedElements.length; i++) {
-				      Object listElements = EmailPanel.getGarageEmails().getComponent(selectedElements[i]);
-				      ((DefaultListModel)EmailPanel.getApprovedEmails().getModel()).addElement(listElements);
-				      ((DefaultListModel)EmailPanel.getGarageEmails().getModel()).remove(selectedElements[i]);
+					((DefaultListModel<Garage>) EmailPanel.getApprovedEmails().getModel()).addElement(
+						((DefaultListModel<Garage>) EmailPanel.getGarageEmails().getModel()).getElementAt(selectedElements[i])
+					);
+				}
+				for (int i = selectedElements.length -1; i >= 0; i--) {
+					((DefaultListModel<Garage>)EmailPanel.getGarageEmails().getModel()).remove(selectedElements[i]);
 				}
 			}
 		});
@@ -59,9 +60,12 @@ public class EmailPanelManager {
 			public void actionPerformed(ActionEvent e) {
 				int[] selectedElements = EmailPanel.getApprovedEmails().getSelectedIndices();
 				for(int i=0; i < selectedElements.length; i++) {
-				      Object listElements = EmailPanel.getApprovedEmails().getComponent(selectedElements[i]);
-				      ((DefaultListModel)EmailPanel.getGarageEmails().getModel()).addElement(listElements);
-				      ((DefaultListModel)EmailPanel.getApprovedEmails().getModel()).remove(selectedElements[i]);
+					((DefaultListModel<Garage>) EmailPanel.getGarageEmails().getModel()).addElement(
+						((DefaultListModel<Garage>) EmailPanel.getApprovedEmails().getModel()).getElementAt(selectedElements[i])
+					);
+				}
+				for (int i = selectedElements.length -1; i >= 0; i--) {
+					((DefaultListModel<Garage>)EmailPanel.getApprovedEmails().getModel()).remove(selectedElements[i]);
 				}
 			}
 		});
@@ -71,10 +75,12 @@ public class EmailPanelManager {
 			//Removes all elements from the Approved Emails list
 			public void actionPerformed(ActionEvent e) {
 				int totalElements = EmailPanel.getApprovedEmails().getModel().getSize();
-				for(int i=0; i < totalElements; i++) {
-					((DefaultListModel)EmailPanel.getGarageEmails().getModel()).addElement(i);
-					((DefaultListModel)EmailPanel.getApprovedEmails().getModel()).remove(i);
+				for(int i = 0; i < totalElements; i++) {
+					((DefaultListModel<Garage>) EmailPanel.getGarageEmails().getModel()).addElement(
+						((DefaultListModel<Garage>) EmailPanel.getApprovedEmails().getModel()).getElementAt(i)
+					);
 				}
+				((DefaultListModel<Garage>)EmailPanel.getApprovedEmails().getModel()).clear();
 			}
 		});
 		
@@ -82,34 +88,8 @@ public class EmailPanelManager {
 			//Creates JFrame, displays two options to either approve or reject the currently selected list elements within the 
 			//Approved Email List
 			public void actionPerformed(ActionEvent e) {
-				 JFrame jFrame = new JFrame();
-				 String[] buttons = {"Approve", "Reject"};
-				    int result = JOptionPane.showOptionDialog(null, "Please confirm your choice", "Confirmation",
-				        JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[2]);
-			        if (result == 0)
-			            ApproveEmails();
-			        else if (result == 1)
-			            System.out.println("Approval Cancelled");
 			}
 		});
 	}
-	
-	public void ApproveEmails() {
-		//Function takes all list elements within Approved Emails, places them in a new list called SelectedApprovedEmails
-		//All elements within Approved Emails is then removed
-		int totalElements = EmailPanel.getApprovedEmails().getModel().getSize();
-		for(int i = 0; i < totalElements; i++) {
-			((DefaultListModel)EmailPanel.getSelectedApprovedEmails().getModel()).addElement(i);
-			((DefaultListModel)EmailPanel.getApprovedEmails().getModel()).remove(i);
-		}
-		JFrame jFrame = new JFrame();
-        JOptionPane.showMessageDialog(jFrame, "Emails approved");  
-	}
-	
-	public void populateUnapprovedEmails(ArrayList<Email> emails) {
-		//Populates the Garage Emails list 
-		for(int i = 0; i < emails.size(); i++) {
-			EmailPanel.setUnapprovedEmailList(emails.get(i));
-		}
-	}	
+		
 }
