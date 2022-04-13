@@ -12,6 +12,8 @@ import javax.swing.Box;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GarageFormPanel extends JPanel {
 	private JTextField txt_garageName;
@@ -20,6 +22,7 @@ public class GarageFormPanel extends JPanel {
 	private JTextField txt_vts;
 	private JDateChooser date_paidUntil = new JDateChooser();
 	private JButton btn_confirm = new JButton("Add Garage");
+	private JTextField txt_ownerName;
 
 	/**
 	 * Create the panel.
@@ -41,7 +44,7 @@ public class GarageFormPanel extends JPanel {
 		GridBagLayout gbl_pnl_addGarage = new GridBagLayout();
 		gbl_pnl_addGarage.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_pnl_addGarage.rowHeights = new int[]{0, 27, 23, 0, 24, 0, 0, 0, 0, 0, 0};
-		gbl_pnl_addGarage.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnl_addGarage.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_pnl_addGarage.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnl_addGarage.setLayout(gbl_pnl_addGarage);
 		
@@ -101,6 +104,23 @@ public class GarageFormPanel extends JPanel {
 		gbc_txt_vts.gridy = 3;
 		pnl_addGarage.add(txt_vts, gbc_txt_vts);
 		txt_vts.setColumns(10);
+		
+		JLabel lbl_ownerName = new JLabel("Owner Name");
+		GridBagConstraints gbc_lbl_ownerName = new GridBagConstraints();
+		gbc_lbl_ownerName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lbl_ownerName.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl_ownerName.gridx = 4;
+		gbc_lbl_ownerName.gridy = 3;
+		pnl_addGarage.add(lbl_ownerName, gbc_lbl_ownerName);
+		
+		txt_ownerName = new JTextField();
+		GridBagConstraints gbc_txt_ownerName = new GridBagConstraints();
+		gbc_txt_ownerName.insets = new Insets(0, 0, 5, 5);
+		gbc_txt_ownerName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txt_ownerName.gridx = 5;
+		gbc_txt_ownerName.gridy = 3;
+		pnl_addGarage.add(txt_ownerName, gbc_txt_ownerName);
+		txt_ownerName.setColumns(10);
 		
 		JLabel lbl_garageName = new JLabel("Garage Name");
 		GridBagConstraints gbc_lbl_garageName = new GridBagConstraints();
@@ -198,6 +218,10 @@ public class GarageFormPanel extends JPanel {
 	public JTextField getGarageName() {
 		return this.txt_garageName;
 	}	
+	
+	public JTextField getOwnerName() {
+		return this.txt_ownerName;
+	}
 	
 	public JTextField getContactEmail() {
 		return this.txt_contactEmail;
