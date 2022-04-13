@@ -52,14 +52,7 @@ public class CRUDPanelManager {
 		CRUDPanel.getGaragesList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				
-				CRUDPanel.getGarageNameTextField().setText("");
-				CRUDPanel.getGarageEmailTextField().setText("");
-				CRUDPanel.getGarageNumberTextField().setText("");
-				CRUDPanel.getGaragePaidUntil().setDate(null);
-				
-				CRUDPanel.getInstrumentList().clearSelection();
-				CRUDPanel.getSerialNumTextField().setText("");
-				CRUDPanel.getCalibrationDate().setDate(null);
+				resetFields();
 				
 				if(e.getValueIsAdjusting()){
 					return;
@@ -69,10 +62,7 @@ public class CRUDPanelManager {
 					CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
 				}
 				
-				CRUDPanel.getGarageNameTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageName());
-				CRUDPanel.getGarageEmailTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getEmailAddress());
-				CRUDPanel.getGarageNumberTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getTelephoneNum());
-				CRUDPanel.getGaragePaidUntil().setDate(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getPaidUntil());
+				populateGarageFields();
 				
 				populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
 				
@@ -117,6 +107,24 @@ public class CRUDPanelManager {
 		CRUDPanel.setGarageList(list);
 		
 	}
+	
+	public void resetFields(){
+		CRUDPanel.getGarageNameTextField().setText("");
+		CRUDPanel.getGarageEmailTextField().setText("");
+		CRUDPanel.getGarageNumberTextField().setText("");
+		CRUDPanel.getGaragePaidUntil().setDate(null);
+		
+		CRUDPanel.getInstrumentList().clearSelection();
+		CRUDPanel.getSerialNumTextField().setText("");
+		CRUDPanel.getCalibrationDate().setDate(null);
+	}
+	
+	public void populateGarageFields() {
+		CRUDPanel.getGarageNameTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageName());
+		CRUDPanel.getGarageEmailTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getEmailAddress());
+		CRUDPanel.getGarageNumberTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getTelephoneNum());
+		CRUDPanel.getGaragePaidUntil().setDate(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getPaidUntil());
+	}
 
 	public void addGarage(){
 		
@@ -124,6 +132,7 @@ public class CRUDPanelManager {
 		garageFormFrame.add(GarageFormPanelManager.getGarageFormPanel());
 		garageFormFrame.setBounds(100, 100, 640, 360);
 		garageFormFrame.setVisible(true);
+		
 	}
 
 	public void removeGarage(int index){
