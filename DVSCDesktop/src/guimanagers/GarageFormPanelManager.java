@@ -6,15 +6,16 @@ import gui.GarageFormPanel;
 
 public class GarageFormPanelManager {
 	
-	GarageFormPanel GarageFormPanel;
+	GarageFormPanel garageFormPanel = new GarageFormPanel();;
 	
 	public GarageFormPanelManager() {
 		
-		GarageFormPanel = new GarageFormPanel();
-		
 	}
 	
-	public JPanel getGarageFormPanel() {
-		return this.GarageFormPanel;
+	GarageFormPanel getGarageFormPanel() {
+		return this.garageFormPanel;
 	}
+	
+	
+	
 }
