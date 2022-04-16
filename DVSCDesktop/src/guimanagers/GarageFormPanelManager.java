@@ -35,9 +35,7 @@ public class GarageFormPanelManager{
 							garageFormPanel.getContactNum().getText(),
 							garageFormPanel.getPaidUntil().getDate()
 							);
-					
-					System.out.println(newGarage);
-			
+	
 					int id = connection.addGarage(newGarage);
 					
 					if(id == -1) {

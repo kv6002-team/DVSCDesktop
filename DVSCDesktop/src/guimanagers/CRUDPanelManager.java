@@ -61,7 +61,9 @@ public class CRUDPanelManager {
 				
 				populateGarageFields();
 				
-				populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
+				if(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList() != null) {
+					populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
+				}
 				
 			}
 		});
