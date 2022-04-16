@@ -2,6 +2,7 @@ package connection;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -174,5 +175,17 @@ public class Connection {
 		}
 		return -1;
 		
+	}
+	
+	public Response sendEmailList(ArrayList<Integer> emailList) {
+		ParameterList pl = new ParameterList();
+		pl.add("garages", Arrays.toString(emailList.toArray()));
+		Response response = null;
+		try {
+			response = connectionManager.sendPostRequest("send-emails", pl, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return response;
 	}
 }
