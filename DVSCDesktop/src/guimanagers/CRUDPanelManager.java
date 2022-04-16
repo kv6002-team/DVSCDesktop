@@ -28,18 +28,15 @@ import connection.Connection;
 public class CRUDPanelManager {
 	
 	private CRUDPanel CRUDPanel = new CRUDPanel();
-	private GarageFormPanelManager GarageFormPanelManager = new GarageFormPanelManager();
+	private GarageFormPanelManager GarageFormPanelManager = new GarageFormPanelManager(this);
 	
 	ArrayList<Garage> garages = new ArrayList<Garage>();
 	
-	Wrapper wrapper;
 	private Connection connection = new Connection(); 
 	
 	
 	
 	public CRUDPanelManager(Wrapper wrapper){
-		
-		this.wrapper = wrapper;
 		
 		ArrayList<Garage> allGarages = connection.getAllGarages();
 		
