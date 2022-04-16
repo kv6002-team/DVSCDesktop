@@ -26,9 +26,6 @@ import domain.Instrument;
 
 import java.awt.Dimension;
 
-
-
-
 public class CRUDPanel extends JPanel {
 
 	public JList<Garage> lst_garages = new JList<Garage>();
@@ -243,6 +240,7 @@ public class CRUDPanel extends JPanel {
 		gbc_date_paidUntil.gridx = 9;
 		gbc_date_paidUntil.gridy = 2;
 		pnl_garageInfo.add(date_paidUntil, gbc_date_paidUntil);
+		
 		
 		btn_deleteGarage.setPreferredSize(new Dimension(200, 23));
 		btn_deleteGarage.setMaximumSize(new Dimension(200, 23));

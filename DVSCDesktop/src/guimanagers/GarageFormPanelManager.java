@@ -44,7 +44,6 @@ public class GarageFormPanelManager{
 					}
 					else {
 						newGarage.setGarageID(id);
-						System.out.println(newGarage.getGarageID());
 						DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanelManager.getCRUDPanel().getGaragesList().getModel();
 						garagesList.addElement(newGarage);
 						CRUDPanelManager.getCRUDPanel().getGaragesList().setModel(garagesList);

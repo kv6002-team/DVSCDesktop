@@ -55,14 +55,15 @@ public class CRUDPanelManager {
 					return;
 				}
 				
-				if(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo() == null) {
-					CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
-				}
+				if(CRUDPanel.getGaragesList().getSelectedValue() != null) {
+					if(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo() == null) {
+						CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
+					}
+					populateGarageFields();
 				
-				populateGarageFields();
-				
-				if(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList() != null) {
-					populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
+					if(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList() != null) {
+						populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
+					}
 				}
 				
 			}
@@ -89,6 +90,12 @@ public class CRUDPanelManager {
 			}
 		});
 		
+		CRUDPanel.getDeleteGarageButton().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				removeGarage(CRUDPanel.getGaragesList().getSelectedValue());
+			}
+		});
 	}
 	
 	public CRUDPanel getCRUDPanel(){
@@ -119,10 +126,12 @@ public class CRUDPanelManager {
 	}
 	
 	public void populateGarageFields() {
-		CRUDPanel.getGarageNameTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageName());
-		CRUDPanel.getGarageEmailTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getEmailAddress());
-		CRUDPanel.getGarageNumberTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getTelephoneNum());
-		CRUDPanel.getGaragePaidUntil().setDate(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getPaidUntil());
+		if(CRUDPanel.getGaragesList().getSelectedValue() != null) {
+			CRUDPanel.getGarageNameTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageName());
+			CRUDPanel.getGarageEmailTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getEmailAddress());
+			CRUDPanel.getGarageNumberTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getTelephoneNum());
+			CRUDPanel.getGaragePaidUntil().setDate(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getPaidUntil());
+		}
 	}
 
 	public void addGarage(){
@@ -134,8 +143,14 @@ public class CRUDPanelManager {
 		
 	}
 
-	public void removeGarage(int index){
-
+	public void removeGarage(Garage garage){
+		//connection.removeGarage(garage);
+		
+		DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanel.getGaragesList().getModel();
+		CRUDPanel.getGaragesList().clearSelection();
+		garagesList.removeElement(garage);
+		CRUDPanel.getGaragesList().setModel(garagesList);
+		
 	}
 
 	public void changeGarageNameValue(String garageName){
@@ -172,7 +187,7 @@ public class CRUDPanelManager {
 
 	}
 
-	public void removeInstrument(int index){
+	public void removeInstrument(Instrument instrument){
 
 	}
 
