@@ -1,21 +1,26 @@
 package guimanagers;
 
+import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
-import java.util.HashMap;
 
-import javax.swing.JPanel;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
+import connection.Connection;
 import domain.Garage;
 import gui.AlertDialog;
 import gui.GarageFormPanel;
 
-public class GarageFormPanelManager {
+public class GarageFormPanelManager{
 	
 	GarageFormPanel garageFormPanel = new GarageFormPanel();;
+	Connection connection = new Connection();
 	
-	public GarageFormPanelManager() {
+	public GarageFormPanelManager(CRUDPanelManager CRUDPanelManager) {
+		
 		garageFormPanel.getConfirmButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -32,13 +37,23 @@ public class GarageFormPanelManager {
 							);
 					
 					System.out.println(newGarage);
+			
+					int id = connection.addGarage(newGarage);
 					
-					//ADD TO LIST AND SEND TO SERVER
-					
-					AlertDialog x = new AlertDialog();
-					x.run("Garage Created");
+					if(id == -1) {
+						AlertDialog x = new AlertDialog();
+						x.run("Garage Creation Failed. Please try again.");
+					}
+					else {
+						newGarage.setGarageID(id);
+						System.out.println(newGarage.getGarageID());
+						DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanelManager.getCRUDPanel().getGaragesList().getModel();
+						garagesList.addElement(newGarage);
+						CRUDPanelManager.getCRUDPanel().getGaragesList().setModel(garagesList);
+					}
+					JOptionPane.showMessageDialog(new JFrame(), "Garage Created");
+					((Window) garageFormPanel.getTopLevelAncestor()).dispose();
 				}
-				
 			}
 		});
 	}
@@ -60,7 +75,6 @@ public class GarageFormPanelManager {
 				garageFormPanel.getContactNum().getText().equals("") ||
 				garageFormPanel.getPaidUntil().getDate() == null
 		){
-			//System.out.println("missing");
 			missingFields = true;
 		}
 		
@@ -68,7 +82,6 @@ public class GarageFormPanelManager {
 			invalidEmail = true;
 		}
 		
-		//System.out.println(!garageFormPanel.getContactNum().getText().matches("[0-9]+"));
 		if(!garageFormPanel.getContactNum().getText().matches("[0-9]+")) {
 			invalidNum = true;
 		}
@@ -104,15 +117,12 @@ public class GarageFormPanelManager {
 				AlertDialog x = new AlertDialog();
 				x.run(errorMsg);
 				
-				valid = false;
-				
+				valid = false;	
 			}else {
 				valid = true;
 			}	
 		}
-		
 		return valid;
-		
 	}
 	
 	GarageFormPanel getGarageFormPanel() {
