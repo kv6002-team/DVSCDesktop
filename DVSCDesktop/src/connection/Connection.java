@@ -142,7 +142,31 @@ public class Connection {
 		} catch	(Exception e) {
 			e.printStackTrace();
 		}
-		return gi;
+		return gi;	
+	}
+	
+	public int addGarage(Garage garage) {
+		ParameterList pl = new ParameterList();
+		pl.add("vts", garage.getGarageInfo().getVts());
+		pl.add("name", garage.getGarageName());
+		pl.add("ownerName", garage.getGarageInfo().getOwnerName());
+		pl.add("emailAddress", garage.getGarageInfo().getEmailAddress());
+		pl.add("telephoneNumber", garage.getGarageInfo().getTelephoneNum());
+		pl.add("paidUntil", garage.getGarageInfo().getPaidUntil().toString());
+		pl.add("password", "password");
+		try {
+			Response response = connectionManager.sendPostRequest("garages", pl, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
+			if(response.getResponseCode() == 201) {
+				JSONObject obj = response.getObject();
+				return obj.getInt("id");
+			}
+			else if(response.getResponseCode() == 204) {
+				return -1;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 		
 	}
 }
