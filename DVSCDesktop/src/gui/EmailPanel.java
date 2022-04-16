@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
+
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -11,6 +13,12 @@ import javax.swing.DefaultListModel;
 import java.awt.GridLayout;
 import domain.Garage;
 import javax.swing.JTabbedPane;
+import javax.swing.ListModel;
+
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * 
@@ -27,6 +35,7 @@ public class EmailPanel extends JPanel {
 	public JButton btn_RemoveSelected = new JButton("Remove selected");
 	public JButton btn_RemoveAll = new JButton("Remove All");
 	public JButton btn_Approve = new JButton("Approve");
+	public JButton btn_tempApprove = new JButton("Test");
 	
 	public static final String tabName = "Emails";
 	
@@ -36,6 +45,10 @@ public class EmailPanel extends JPanel {
 
 	public JList<Garage> getApprovedEmails() {
 		return lst_ApprovedEmails;
+	}
+	
+	public void setListOfGarages(DefaultListModel<Garage> garages) {
+		lst_GarageEmails.setModel(garages);
 	}
 	
 	public JButton getMoveAll() {
@@ -58,6 +71,10 @@ public class EmailPanel extends JPanel {
 		return btn_Approve;
 	}
 	
+	public JButton getTempApproval() {
+		return btn_tempApprove;
+	}
+	
 	/**
 	 * Create the panel.
 	 */
@@ -66,10 +83,17 @@ public class EmailPanel extends JPanel {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 210, 159, 210, 0, 0};
-		gridBagLayout.rowHeights = new int[]{21, 0, 327, 0, 0};
+		gridBagLayout.rowHeights = new int[]{327, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		GridBagConstraints gbc_horizontalStrut = new GridBagConstraints();
+		gbc_horizontalStrut.insets = new Insets(0, 0, 5, 5);
+		gbc_horizontalStrut.gridx = 0;
+		gbc_horizontalStrut.gridy = 0;
+		add(horizontalStrut, gbc_horizontalStrut);
 		
 		JPanel pnl_Recipients = new JPanel();
 		GridBagConstraints gbc_pnl_Recipients = new GridBagConstraints();
@@ -77,7 +101,7 @@ public class EmailPanel extends JPanel {
 		gbc_pnl_Recipients.insets = new Insets(0, 0, 5, 5);
 		gbc_pnl_Recipients.fill = GridBagConstraints.BOTH;
 		gbc_pnl_Recipients.gridx = 1;
-		gbc_pnl_Recipients.gridy = 2;
+		gbc_pnl_Recipients.gridy = 0;
 		add(pnl_Recipients, gbc_pnl_Recipients);
 		pnl_Recipients.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -100,13 +124,11 @@ public class EmailPanel extends JPanel {
 		gbc_scrl_GarageEmails.gridy = 0;
 		pnl_GarageEmails.add(scrl_GarageEmails, gbc_scrl_GarageEmails);
 		
-		DefaultListModel<Garage> sampleData = new DefaultListModel<Garage>(); 
-		
-		sampleData.addElement(new Garage("Garage One", 1));
-		sampleData.addElement(new Garage("Garage Two", 2));
-		sampleData.addElement(new Garage("Garage Three", 3));
-		
-		lst_GarageEmails.setModel(sampleData);
+		//DefaultListModel<Garage> sampleData = new DefaultListModel<Garage>(); 
+		//sampleData.addElement(new Garage("Garage One", 1));
+		//sampleData.addElement(new Garage("Garage Two", 2));
+		//sampleData.addElement(new Garage("Garage Three", 3));
+		//lst_GarageEmails.setModel(sampleData);
 		
 		scrl_GarageEmails.setViewportView(lst_GarageEmails);
 		
@@ -115,13 +137,13 @@ public class EmailPanel extends JPanel {
 		gbc_pnl_ButtonPannel.insets = new Insets(0, 0, 5, 5);
 		gbc_pnl_ButtonPannel.fill = GridBagConstraints.BOTH;
 		gbc_pnl_ButtonPannel.gridx = 2;
-		gbc_pnl_ButtonPannel.gridy = 2;
+		gbc_pnl_ButtonPannel.gridy = 0;
 		add(pnl_ButtonPannel, gbc_pnl_ButtonPannel);
 		GridBagLayout gbl_pnl_ButtonPannel = new GridBagLayout();
-		gbl_pnl_ButtonPannel.columnWidths = new int[]{88, 0};
-		gbl_pnl_ButtonPannel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_pnl_ButtonPannel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_pnl_ButtonPannel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnl_ButtonPannel.columnWidths = new int[]{117, 0};
+		gbl_pnl_ButtonPannel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_pnl_ButtonPannel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_pnl_ButtonPannel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnl_ButtonPannel.setLayout(gbl_pnl_ButtonPannel);
 		
 		GridBagConstraints gbc_btn_MoveAll = new GridBagConstraints();
@@ -154,12 +176,17 @@ public class EmailPanel extends JPanel {
 		gbc_btn_RemoveAll.gridy = 8;
 		pnl_ButtonPannel.add(btn_RemoveAll, gbc_btn_RemoveAll);
 		
+		GridBagConstraints gbc_btn_tempApprove = new GridBagConstraints();
+		gbc_btn_tempApprove.gridx = 0;
+		gbc_btn_tempApprove.gridy = 10;
+		pnl_ButtonPannel.add(btn_tempApprove, gbc_btn_tempApprove);
+		
 		JPanel pnl_EmailRecpients = new JPanel();
 		GridBagConstraints gbc_pnl_EmailRecpients = new GridBagConstraints();
 		gbc_pnl_EmailRecpients.insets = new Insets(0, 0, 5, 5);
 		gbc_pnl_EmailRecpients.fill = GridBagConstraints.BOTH;
 		gbc_pnl_EmailRecpients.gridx = 3;
-		gbc_pnl_EmailRecpients.gridy = 2;
+		gbc_pnl_EmailRecpients.gridy = 0;
 		add(pnl_EmailRecpients, gbc_pnl_EmailRecpients);
 		GridBagLayout gbl_pnl_EmailRecpients = new GridBagLayout();
 		gbl_pnl_EmailRecpients.columnWidths = new int[]{0, 0};
@@ -193,6 +220,20 @@ public class EmailPanel extends JPanel {
 		
 		scrl_ApprovedEmails.setViewportView(lst_ApprovedEmails);
 		lst_ApprovedEmails.setModel(new DefaultListModel<Garage>());
+		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		GridBagConstraints gbc_horizontalStrut_1 = new GridBagConstraints();
+		gbc_horizontalStrut_1.insets = new Insets(0, 0, 5, 0);
+		gbc_horizontalStrut_1.gridx = 4;
+		gbc_horizontalStrut_1.gridy = 0;
+		add(horizontalStrut_1, gbc_horizontalStrut_1);
+		
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		GridBagConstraints gbc_verticalStrut_1 = new GridBagConstraints();
+		gbc_verticalStrut_1.insets = new Insets(0, 0, 0, 5);
+		gbc_verticalStrut_1.gridx = 2;
+		gbc_verticalStrut_1.gridy = 1;
+		add(verticalStrut_1, gbc_verticalStrut_1);
 
 	}
 }
