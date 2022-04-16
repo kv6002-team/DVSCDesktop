@@ -14,6 +14,7 @@ import domain.Instrument.CheckStatus;
 import logging.Logger;
 import security.JWT;
 import security.SecurityManager;
+import utils.Console;
 /**
  * 
  * @author Scrub
@@ -37,7 +38,6 @@ public class Connection {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(flag) Logger.log(Logger.TYPE.CONNECTION_EVENT, Logger.LEVEL.INFO, "CONNECTION-SUCCESS-PING");
 		return flag;
 	}
 	
@@ -57,9 +57,6 @@ public class Connection {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(flag) Logger.log(Logger.TYPE.LOGIN_EVENT, Logger.LEVEL.INFO, "AUTHENTICATION-SUCCESS-APP-" + username.toUpperCase());
-		if(!flag) Logger.log(Logger.TYPE.LOGIN_EVENT, Logger.LEVEL.WARN, "AUTHENTICATION-FAILED-APP-" + username.toUpperCase());
-
 		return flag;
 	}
 	
@@ -73,9 +70,6 @@ public class Connection {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(flag) Logger.log(Logger.TYPE.LOGIN_EVENT, Logger.LEVEL.INFO, "PASSWORD-RESET-SUCCESS-" + username.toUpperCase());
-		if(!flag) Logger.log(Logger.TYPE.LOGIN_EVENT, Logger.LEVEL.ALERT, "PASSWORD-RESET-FAILED-" + username.toUpperCase());
-
 		return flag;
 	}
 	
@@ -85,7 +79,7 @@ public class Connection {
 		pList.add("level", level.toString());
 		pList.add("message", message);
 		try {
-			Response response = connectionManager.sendPostRequest("log", pList, ConnectionManager.AUTH_TYPE.NONE, null);
+			Response response = connectionManager.sendPostRequest(message, pList, ConnectionManager.AUTH_TYPE.NONE, null);
 			if(response.getResponseCode() == 200) return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,8 +167,21 @@ public class Connection {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -1;
-		
+		return -1;	
+	}
+	
+	public boolean removeGarage(Garage garage) {
+		ParameterList pl = new ParameterList();
+		pl.add("id", garage.getGarageID().toString());
+		try {
+			Response response = connectionManager.sendDeleteRequest("garages", pl, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
+			if(response.getResponseCode() == 204) {
+				return true;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	public Response sendEmailList(ArrayList<Integer> emailList) {
