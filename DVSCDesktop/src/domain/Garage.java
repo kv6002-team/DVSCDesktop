@@ -32,7 +32,7 @@ public class Garage {
 		return garageName;
 	}
 	
-	public int getGarageID(){
+	public Integer getGarageID(){
 		return ID;
 	}
 

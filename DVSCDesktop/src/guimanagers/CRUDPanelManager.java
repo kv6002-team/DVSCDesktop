@@ -40,12 +40,14 @@ public class CRUDPanelManager {
 		
 		ArrayList<Garage> allGarages = connection.getAllGarages();
 		
+		// Listener for the change of tab to the CRUD Panel.
 		wrapper.getTabbedPane().addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				populateGarageList(allGarages);
 			}
 		});
 		
+		// Listener for the change of selection within the JList of Garages.
 		CRUDPanel.getGaragesList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				
@@ -69,6 +71,7 @@ public class CRUDPanelManager {
 			}
 		});
 		
+		// Listener for the change of selection within the JList of Instruments.
 		CRUDPanel.getInstrumentList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				
@@ -83,6 +86,7 @@ public class CRUDPanelManager {
 			}
 		});
 		
+		//Listener for the mouse clicking on the add garage button.
 		CRUDPanel.getAddGarageButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -144,12 +148,16 @@ public class CRUDPanelManager {
 	}
 
 	public void removeGarage(Garage garage){
-		//connection.removeGarage(garage);
+		boolean removed = connection.removeGarage(garage);
 		
-		DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanel.getGaragesList().getModel();
-		CRUDPanel.getGaragesList().clearSelection();
-		garagesList.removeElement(garage);
-		CRUDPanel.getGaragesList().setModel(garagesList);
+		if(removed) {
+			DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanel.getGaragesList().getModel();
+			CRUDPanel.getGaragesList().clearSelection();
+			garagesList.removeElement(garage);
+			CRUDPanel.getGaragesList().setModel(garagesList);	
+		}
+		
+		
 		
 	}
 
