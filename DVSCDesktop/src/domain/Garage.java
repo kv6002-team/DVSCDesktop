@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import connection.Connection;
 
 /**
@@ -15,10 +18,14 @@ public class Garage {
 	private Connection connection = new Connection();
 	
 	public Garage(String garageName, int ID){
-		
 		this.garageName = garageName;
 		this.ID = ID;
-		
+	}
+	
+	public Garage(String vts, String ownerName, String garageName, String emailAddress, String telephoneNum, Date paidUntil) {
+		ArrayList<Instrument> instrumentList = null;
+		this.garageName = garageName;
+		this.gi = new GarageInfo(vts, ownerName, emailAddress, telephoneNum, paidUntil, instrumentList);
 	}
 
 	public String getGarageName() {

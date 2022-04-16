@@ -6,21 +6,17 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.Date;
 
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
-import java.awt.ComponentOrientation;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import java.awt.Color;
-import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.Cursor;
 import com.toedter.calendar.JDateChooser;
@@ -28,12 +24,9 @@ import com.toedter.calendar.JDateChooser;
 import domain.Garage;
 import domain.Instrument;
 
-import com.toedter.calendar.JCalendar;
 import java.awt.Dimension;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
+
+
 
 
 public class CRUDPanel extends JPanel {
@@ -416,8 +409,12 @@ public class CRUDPanel extends JPanel {
 
 	}
 
-	public JList<Garage> getGaragesList(){
+	public JList<Garage> getGaragesList() {
 		return lst_garages;
+	}
+	
+	public JButton getAddGarageButton() {
+		return btn_addGarage;
 	}
 	
 	public JTextField getGarageNameTextField() {
