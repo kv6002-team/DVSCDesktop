@@ -59,7 +59,8 @@ public class ConnectionManager {
 			httpPost.setHeader("Accept", "application/json");
 			httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
 			try(CloseableHttpResponse response = httpClient.execute(httpPost)){
-				HttpEntity entity = response.getEntity();
+				HttpEntity entity = null;
+				if(response.getEntity() != null) entity = response.getEntity();
 				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
 				if(DEV_MODE) {
 					Console.log("POST | " + "https://" + this.url + "/api/" + endpoint);
@@ -83,7 +84,8 @@ public class ConnectionManager {
 			HttpGet httpGet = new HttpGet("https://" + this.url + "/api/" + endpoint + queryList.generateString());
 			
 			try(CloseableHttpResponse response = httpClient.execute(httpGet)){
-				HttpEntity entity = response.getEntity();
+				HttpEntity entity = null;
+				if(response.getEntity() != null) entity = response.getEntity();
 				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
 				if(DEV_MODE) {
 					Console.log("GET  | " + "https://" + this.url + "/api/" + endpoint);
@@ -108,7 +110,8 @@ public class ConnectionManager {
 			httpDelete.setHeader("Accept", "application/json");
 			httpDelete.setHeader("Content-type", "application/x-www-form-urlencoded");
 			try(CloseableHttpResponse response = httpClient.execute(httpDelete)){
-				HttpEntity entity = response.getEntity();
+				HttpEntity entity = null;
+				if(response.getEntity() != null) entity = response.getEntity();
 				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
 				if(DEV_MODE) {
 					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
@@ -133,7 +136,8 @@ public class ConnectionManager {
 			httpPatch.setHeader("Accept", "application/json");
 			httpPatch.setHeader("Content-type", "application/x-www-form-urlencoded");
 			try(CloseableHttpResponse response = httpClient.execute(httpPatch)){
-				HttpEntity entity = response.getEntity();
+				HttpEntity entity = null;
+				if(response.getEntity() != null) entity = response.getEntity();
 				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
 				if(DEV_MODE) {
 					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
@@ -158,7 +162,8 @@ public class ConnectionManager {
 			httpPut.setHeader("Accept", "application/json");
 			httpPut.setHeader("Content-type", "application/x-www-form-urlencoded");
 			try(CloseableHttpResponse response = httpClient.execute(httpPut)){
-				HttpEntity entity = response.getEntity();
+				HttpEntity entity = null;
+				if(response.getEntity() != null) entity = response.getEntity();
 				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
 				if(DEV_MODE) {
 					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
