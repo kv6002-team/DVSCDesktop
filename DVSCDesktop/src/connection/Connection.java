@@ -170,11 +170,9 @@ public class Connection {
 		return -1;	
 	}
 	
-	public boolean removeGarage(Garage garage) {
-		ParameterList pl = new ParameterList();
-		pl.add("id", garage.getGarageID().toString());
+	public boolean removeGarage(int id) {
 		try {
-			Response response = connectionManager.sendDeleteRequest("garages", pl, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
+			Response response = connectionManager.sendDeleteRequest("garages/"+String.valueOf(id), null, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
 			if(response.getResponseCode() == 204) {
 				return true;
 			}

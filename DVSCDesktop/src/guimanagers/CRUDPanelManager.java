@@ -148,7 +148,7 @@ public class CRUDPanelManager {
 	}
 
 	public void removeGarage(Garage garage){
-		boolean removed = connection.removeGarage(garage);
+		boolean removed = connection.removeGarage(garage.getGarageID());
 		
 		if(removed) {
 			DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanel.getGaragesList().getModel();
