@@ -60,8 +60,11 @@ public class ConnectionManager {
 			httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
 			try(CloseableHttpResponse response = httpClient.execute(httpPost)){
 				HttpEntity entity = null;
-				if(response.getEntity() != null) entity = response.getEntity();
-				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				String output = "";
+				if(response.getEntity() != null) {
+					entity = response.getEntity();
+					output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				} 
 				if(DEV_MODE) {
 					Console.log("POST | " + "https://" + this.url + "/api/" + endpoint);
 					Console.log("ARGS | " + new String(data.getContent().readAllBytes(), StandardCharsets.UTF_8));
@@ -85,8 +88,11 @@ public class ConnectionManager {
 			
 			try(CloseableHttpResponse response = httpClient.execute(httpGet)){
 				HttpEntity entity = null;
-				if(response.getEntity() != null) entity = response.getEntity();
-				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				String output = "";
+				if(response.getEntity() != null) {
+					entity = response.getEntity();
+					 output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				} 
 				if(DEV_MODE) {
 					Console.log("GET  | " + "https://" + this.url + "/api/" + endpoint);
 					Console.log("ARGS | " + queryList.generateString());
@@ -111,8 +117,11 @@ public class ConnectionManager {
 			httpDelete.setHeader("Content-type", "application/x-www-form-urlencoded");
 			try(CloseableHttpResponse response = httpClient.execute(httpDelete)){
 				HttpEntity entity = null;
-				if(response.getEntity() != null) entity = response.getEntity();
-				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				String output = "";
+				if(response.getEntity() != null) {
+					entity = response.getEntity();
+					output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				} 
 				if(DEV_MODE) {
 					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
 					Console.log("ARGS | " + queryList.generateString());
@@ -137,8 +146,11 @@ public class ConnectionManager {
 			httpPatch.setHeader("Content-type", "application/x-www-form-urlencoded");
 			try(CloseableHttpResponse response = httpClient.execute(httpPatch)){
 				HttpEntity entity = null;
-				if(response.getEntity() != null) entity = response.getEntity();
-				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				String output = "";
+				if(response.getEntity() != null) {
+					entity = response.getEntity();
+					output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				} 
 				if(DEV_MODE) {
 					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
 					Console.log("ARGS | " + queryList.generateString());
@@ -163,8 +175,11 @@ public class ConnectionManager {
 			httpPut.setHeader("Content-type", "application/x-www-form-urlencoded");
 			try(CloseableHttpResponse response = httpClient.execute(httpPut)){
 				HttpEntity entity = null;
-				if(response.getEntity() != null) entity = response.getEntity();
-				String output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				String output = "";
+				if(response.getEntity() != null) {
+					entity = response.getEntity();
+					output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
+				} 
 				if(DEV_MODE) {
 					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
 					Console.log("ARGS | " + queryList.generateString());
