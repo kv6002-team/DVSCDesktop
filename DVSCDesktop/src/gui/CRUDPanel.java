@@ -40,7 +40,7 @@ public class CRUDPanel extends JPanel {
 	public JList<Instrument> lst_instruments = new JList<Instrument>();
 	public JButton btn_addInstrument = new JButton("Add Instrument");
 	public JTextField txt_serialNum = new JTextField();
-	public JDateChooser date_calibrationDate = new JDateChooser();
+	public JDateChooser date_checkDate = new JDateChooser();
 	public JComboBox<String> com_checkStatus = new JComboBox<String>();
 	public JButton btn_deleteInstrument = new JButton("Delete Instrument");
 	public JButton btn_addGarage = new JButton("Add Garage");
@@ -351,6 +351,7 @@ public class CRUDPanel extends JPanel {
 		gbc_lbl_serialNum.gridy = 1;
 		pnl_instrumentInfo.add(lbl_serialNum, gbc_lbl_serialNum);
 		
+		txt_serialNum.setEditable(false);
 		GridBagConstraints gbc_txt_serialNum = new GridBagConstraints();
 		gbc_txt_serialNum.insets = new Insets(0, 0, 5, 5);
 		gbc_txt_serialNum.fill = GridBagConstraints.HORIZONTAL;
@@ -366,22 +367,22 @@ public class CRUDPanel extends JPanel {
 		gbc_horizontalStrut_6.gridy = 1;
 		pnl_instrumentInfo.add(horizontalStrut_6, gbc_horizontalStrut_6);
 		
-		JLabel lbl_calibrationDate = new JLabel("Calibration Date");
-		GridBagConstraints gbc_lbl_calibrationDate = new GridBagConstraints();
-		gbc_lbl_calibrationDate.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lbl_calibrationDate.weighty = 1.0;
-		gbc_lbl_calibrationDate.weightx = 1.0;
-		gbc_lbl_calibrationDate.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_calibrationDate.gridx = 1;
-		gbc_lbl_calibrationDate.gridy = 2;
-		pnl_instrumentInfo.add(lbl_calibrationDate, gbc_lbl_calibrationDate);
+		JLabel lbl_checkDate = new JLabel("Check Date");
+		GridBagConstraints gbc_lbl_checkDate = new GridBagConstraints();
+		gbc_lbl_checkDate.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lbl_checkDate.weighty = 1.0;
+		gbc_lbl_checkDate.weightx = 1.0;
+		gbc_lbl_checkDate.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl_checkDate.gridx = 1;
+		gbc_lbl_checkDate.gridy = 2;
+		pnl_instrumentInfo.add(lbl_checkDate, gbc_lbl_checkDate);
 		
 		GridBagConstraints gbc_date_calibrationDate = new GridBagConstraints();
 		gbc_date_calibrationDate.insets = new Insets(0, 0, 5, 5);
 		gbc_date_calibrationDate.fill = GridBagConstraints.HORIZONTAL;
 		gbc_date_calibrationDate.gridx = 2;
 		gbc_date_calibrationDate.gridy = 2;
-		pnl_instrumentInfo.add(date_calibrationDate, gbc_date_calibrationDate);
+		pnl_instrumentInfo.add(date_checkDate, gbc_date_calibrationDate);
 		
 		JLabel lbl_checkStatus = new JLabel("Check Status");
 		GridBagConstraints gbc_lbl_checkStatus = new GridBagConstraints();
@@ -477,8 +478,8 @@ public class CRUDPanel extends JPanel {
 		return txt_serialNum;
 	}
 	
-	public JDateChooser getCalibrationDate() {
-		return date_calibrationDate;
+	public JDateChooser getCheckDate() {
+		return date_checkDate;
 	}
 	
 	public JComboBox<String> getCheckStatusComboBox() {

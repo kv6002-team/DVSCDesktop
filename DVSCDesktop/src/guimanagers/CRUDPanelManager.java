@@ -87,7 +87,7 @@ public class CRUDPanelManager {
 				
 				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) { 
 					CRUDPanel.getSerialNumTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getSerialNum());
-					CRUDPanel.getCalibrationDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
+					CRUDPanel.getCheckDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
 					CRUDPanel.setCheckboxList(checkStatusModel);
 					CRUDPanel.getCheckStatusComboBox().setSelectedItem(
 							CheckStatus.checkStatusToString(
@@ -152,7 +152,7 @@ public class CRUDPanelManager {
 		
 		CRUDPanel.getInstrumentList().clearSelection();
 		CRUDPanel.getSerialNumTextField().setText("");
-		CRUDPanel.getCalibrationDate().setDate(null);
+		CRUDPanel.getCheckDate().setDate(null);
 		
 		CRUDPanel.getCheckStatusComboBox().removeAllItems();
 	}
