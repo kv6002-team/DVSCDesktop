@@ -28,7 +28,8 @@ import connection.Connection;
 public class CRUDPanelManager {
 	
 	private CRUDPanel CRUDPanel = new CRUDPanel();
-	private GarageFormPanelManager GarageFormPanelManager = new GarageFormPanelManager(this);
+	private GarageFormPanelManager garageFormPanelManager = new GarageFormPanelManager(this);
+	private InstrumentFormPanelManager instrumentFormPanelManager = new InstrumentFormPanelManager(this);
 	
 	ArrayList<Garage> garages = new ArrayList<Garage>();
 	
@@ -62,10 +63,7 @@ public class CRUDPanelManager {
 						CRUDPanel.getGaragesList().getSelectedValue().addGarageInfo();
 					}
 					populateGarageFields();
-				
-					if(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList() != null) {
-						populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
-					}
+					populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
 				}
 				
 			}
@@ -78,6 +76,8 @@ public class CRUDPanelManager {
 				if(e.getValueIsAdjusting()) {
 					return;
 				}
+				
+				//System.out.println(CRUDPanel.getInstrumentList().getSelectedValue().getInstrumentID());
 				
 				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) { 
 					CRUDPanel.getSerialNumTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getSerialNum());
@@ -94,10 +94,25 @@ public class CRUDPanelManager {
 			}
 		});
 		
+		//Listener for the mouse clicking on the delete garage button.
 		CRUDPanel.getDeleteGarageButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				removeGarage(CRUDPanel.getGaragesList().getSelectedValue());
+			}
+		});
+		
+		CRUDPanel.getAddInstrumentButton().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				addInstrument();
+			}	
+		});
+		
+		CRUDPanel.getDeleteInstrumentButton().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				removeInstrument(CRUDPanel.getInstrumentList().getSelectedValue());
 			}
 		});
 	}
@@ -107,15 +122,11 @@ public class CRUDPanelManager {
 	}
 
 	public void populateGarageList(ArrayList<Garage> garages){
-		
 		DefaultListModel<Garage> list = new DefaultListModel<Garage>();
-		
 		for(int i=0; i<garages.size(); i++){
 			list.addElement(garages.get(i));
 		}
-		
-		CRUDPanel.setGarageList(list);
-		
+		CRUDPanel.setGarageList(list);	
 	}
 	
 	public void resetFields(){
@@ -127,6 +138,8 @@ public class CRUDPanelManager {
 		CRUDPanel.getInstrumentList().clearSelection();
 		CRUDPanel.getSerialNumTextField().setText("");
 		CRUDPanel.getCalibrationDate().setDate(null);
+		
+		CRUDPanel.getInstrumentList().getModel();
 	}
 	
 	public void populateGarageFields() {
@@ -139,12 +152,10 @@ public class CRUDPanelManager {
 	}
 
 	public void addGarage(){
-		
 		JFrame garageFormFrame = new JFrame();
-		garageFormFrame.add(GarageFormPanelManager.getGarageFormPanel());
+		garageFormFrame.add(garageFormPanelManager.getGarageFormPanel());
 		garageFormFrame.setBounds(100, 100, 640, 360);
 		garageFormFrame.setVisible(true);
-		
 	}
 
 	public void removeGarage(Garage garage){
@@ -154,11 +165,8 @@ public class CRUDPanelManager {
 			DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanel.getGaragesList().getModel();
 			CRUDPanel.getGaragesList().clearSelection();
 			garagesList.removeElement(garage);
-			CRUDPanel.getGaragesList().setModel(garagesList);	
-		}
-		
-		
-		
+			CRUDPanel.setGarageList(garagesList);	
+		}	
 	}
 
 	public void changeGarageNameValue(String garageName){
@@ -183,20 +191,31 @@ public class CRUDPanelManager {
 
 	public void populateInstrumentList(ArrayList<Instrument> instruments){
 		DefaultListModel<Instrument> list = new DefaultListModel<Instrument>();
-		
 		for(int i=0; i<instruments.size(); i++) {
 			list.addElement(instruments.get(i));
 		}
-		
 		CRUDPanel.setInstrumentList(list);
 	}
 
-	public void addInstrument(Instrument instrument){
-
+	public void addInstrument(){
+		JFrame garageFormFrame = new JFrame();
+		garageFormFrame.add(instrumentFormPanelManager.getInstrumentFormPanel());
+		garageFormFrame.setBounds(100, 100, 640, 360);
+		garageFormFrame.setVisible(true);
 	}
 
 	public void removeInstrument(Instrument instrument){
-
+		boolean removed = connection.removeInstrument(instrument.getInstrumentID());
+		
+		if(removed) {
+			
+			CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().remove(instrument);
+			
+			DefaultListModel<Instrument> instrumentsList = (DefaultListModel<Instrument>) CRUDPanel.getInstrumentList().getModel();
+			CRUDPanel.getInstrumentList().clearSelection();
+			instrumentsList.removeElement(instrument);
+			CRUDPanel.setInstrumentList(instrumentsList);
+		}
 	}
 
 	public void saveChanges(){
