@@ -119,8 +119,7 @@ public class Connection {
 				
 				JSONArray instArr = obj.getJSONArray("instruments");
 				for(int i=0; i<instArr.length(); i++){
-					CheckStatus status = CheckStatus.valueOf(instArr.getJSONObject(i).getString("ourCheckStatus"));
-					
+					CheckStatus status = CheckStatus.of(instArr.getJSONObject(i).getString("ourCheckStatus"));
 					instruments.add(new Instrument(
 							instArr.getJSONObject(i).getInt("id"),
 							instArr.getJSONObject(i).getString("name"),
@@ -171,8 +170,43 @@ public class Connection {
 	}
 	
 	public boolean removeGarage(int id) {
-		try {
+		try {	
 			Response response = connectionManager.sendDeleteRequest("garages/"+String.valueOf(id), null, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
+			if(response.getResponseCode() == 204) {
+				return true;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public int addInstrument(Garage garage, Instrument instrument) {
+		ParameterList pl = new ParameterList();
+		pl.add("garageID", garage.getGarageID().toString());
+		pl.add("name", instrument.getInstrumentName());
+		pl.add("serialNumber", instrument.getSerialNum());
+		pl.add("officialCheckExpiryDate", instrument.getStatusExpiryDate().toString());
+		pl.add("ourCheckStatus", instrument.getCheckStatus().value);
+		pl.add("ourCheckDate", instrument.getCheckDate().toString());
+		try {
+			Response response = connectionManager.sendPostRequest("instruments", pl, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
+			if(response.getResponseCode() == 201) {
+				JSONObject obj = response.getObject();
+				return obj.getInt("id");
+			}
+			else if(response.getResponseCode() == 204) {
+				return -1;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public boolean removeInstrument(int id) {
+		try {
+			Response response = connectionManager.sendDeleteRequest("instruments/"+String.valueOf(id), null, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
 			if(response.getResponseCode() == 204) {
 				return true;
 			}
