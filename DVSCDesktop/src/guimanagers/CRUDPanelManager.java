@@ -14,6 +14,7 @@ import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -173,14 +174,19 @@ public class CRUDPanelManager {
 	}
 
 	public void removeGarage(Garage garage){
-		boolean removed = connection.removeGarage(garage.getGarageID());
 		
-		if(removed) {
-			DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanel.getGaragesList().getModel();
-			CRUDPanel.getGaragesList().clearSelection();
-			garagesList.removeElement(garage);
-			CRUDPanel.setGarageList(garagesList);	
-		}	
+		int confirm = JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to delete this garage?", "Please select", JOptionPane.YES_NO_OPTION);
+		
+		if(confirm == JOptionPane.YES_OPTION) {
+			boolean removed = connection.removeGarage(garage.getGarageID());
+			
+			if(removed) {
+				DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanel.getGaragesList().getModel();
+				CRUDPanel.getGaragesList().clearSelection();
+				garagesList.removeElement(garage);
+				CRUDPanel.setGarageList(garagesList);	
+			}
+		}
 	}
 
 	public void changeGarageNameValue(String garageName){
@@ -219,16 +225,21 @@ public class CRUDPanelManager {
 	}
 
 	public void removeInstrument(Instrument instrument){
-		boolean removed = connection.removeInstrument(instrument.getInstrumentID());
 		
-		if(removed) {
+		int confirm = JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to delete this garage?", "Please select", JOptionPane.YES_NO_OPTION);
 			
-			CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().remove(instrument);
+		if(confirm == JOptionPane.YES_OPTION) {	
+			boolean removed = connection.removeInstrument(instrument.getInstrumentID());
 			
-			DefaultListModel<Instrument> instrumentsList = (DefaultListModel<Instrument>) CRUDPanel.getInstrumentList().getModel();
-			CRUDPanel.getInstrumentList().clearSelection();
-			instrumentsList.removeElement(instrument);
-			CRUDPanel.setInstrumentList(instrumentsList);
+			if(removed) {
+				
+				CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().remove(instrument);
+				
+				DefaultListModel<Instrument> instrumentsList = (DefaultListModel<Instrument>) CRUDPanel.getInstrumentList().getModel();
+				CRUDPanel.getInstrumentList().clearSelection();
+				instrumentsList.removeElement(instrument);
+				CRUDPanel.setInstrumentList(instrumentsList);
+			}
 		}
 	}
 
