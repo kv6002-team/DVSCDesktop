@@ -45,6 +45,7 @@ public class CRUDPanel extends JPanel {
 	public JButton btn_deleteInstrument = new JButton("Delete Instrument");
 	public JButton btn_addGarage = new JButton("Add Garage");
 	public JButton btn_saveChanges = new JButton("Save Changes");
+	public JButton btn_discardChanges = new JButton("Discard Changes");
 	
 	public static final String tabName = "Garages";
 	
@@ -54,9 +55,9 @@ public class CRUDPanel extends JPanel {
 	public CRUDPanel() {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{138, 260, 0};
+		gridBagLayout.columnWidths = new int[]{138, 260, 260, 0};
 		gridBagLayout.rowHeights = new int[]{27, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -103,7 +104,8 @@ public class CRUDPanel extends JPanel {
 		JPanel pnl_garageInfo = new JPanel();
 		pnl_garageInfo.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		GridBagConstraints gbc_pnl_garageInfo = new GridBagConstraints();
-		gbc_pnl_garageInfo.insets = new Insets(5, 5, 5, 5);
+		gbc_pnl_garageInfo.gridwidth = 2;
+		gbc_pnl_garageInfo.insets = new Insets(5, 5, 5, 0);
 		gbc_pnl_garageInfo.weighty = 1.0;
 		gbc_pnl_garageInfo.weightx = 2.0;
 		gbc_pnl_garageInfo.fill = GridBagConstraints.BOTH;
@@ -412,17 +414,22 @@ public class CRUDPanel extends JPanel {
 		
 		GridBagConstraints gbc_btn_addGarage = new GridBagConstraints();
 		gbc_btn_addGarage.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btn_addGarage.insets = new Insets(0, 5, 5, 5);
+		gbc_btn_addGarage.insets = new Insets(0, 5, 0, 5);
 		gbc_btn_addGarage.gridx = 0;
 		gbc_btn_addGarage.gridy = 1;
 		add(btn_addGarage, gbc_btn_addGarage);
 		
 		GridBagConstraints gbc_btn_saveChanges = new GridBagConstraints();
-		gbc_btn_saveChanges.insets = new Insets(0, 5, 5, 5);
+		gbc_btn_saveChanges.insets = new Insets(0, 5, 0, 5);
 		gbc_btn_saveChanges.anchor = GridBagConstraints.SOUTH;
 		gbc_btn_saveChanges.gridx = 1;
 		gbc_btn_saveChanges.gridy = 1;
 		add(btn_saveChanges, gbc_btn_saveChanges);
+		
+		GridBagConstraints gbc_btn_discardChanges = new GridBagConstraints();
+		gbc_btn_discardChanges.gridx = 2;
+		gbc_btn_discardChanges.gridy = 1;
+		add(btn_discardChanges, gbc_btn_discardChanges);
 
 	}
 
@@ -476,6 +483,14 @@ public class CRUDPanel extends JPanel {
 	
 	public JComboBox<String> getCheckStatusComboBox() {
 		return com_checkStatus;
+	}
+	
+	public JButton getSaveChangesButton() {
+		return btn_saveChanges;
+	}
+	
+	public JButton getDiscardChangesButton() {
+		return btn_discardChanges;
 	}
 	
 	public void setGarageList(DefaultListModel<Garage> list) {
