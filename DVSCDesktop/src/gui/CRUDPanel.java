@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import java.awt.Component;
 import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JTextField;
@@ -23,8 +24,10 @@ import com.toedter.calendar.JDateChooser;
 
 import domain.Garage;
 import domain.Instrument;
+import domain.Instrument.CheckStatus;
 
 import java.awt.Dimension;
+import javax.swing.JComboBox;
 
 public class CRUDPanel extends JPanel {
 
@@ -38,6 +41,7 @@ public class CRUDPanel extends JPanel {
 	public JButton btn_addInstrument = new JButton("Add Instrument");
 	public JTextField txt_serialNum = new JTextField();
 	public JDateChooser date_calibrationDate = new JDateChooser();
+	public JComboBox<String> com_checkStatus = new JComboBox<String>();
 	public JButton btn_deleteInstrument = new JButton("Delete Instrument");
 	public JButton btn_addGarage = new JButton("Add Garage");
 	public JButton btn_saveChanges = new JButton("Save Changes");
@@ -312,9 +316,9 @@ public class CRUDPanel extends JPanel {
 		pnl_garageInfo.add(pnl_instrumentInfo, gbc_pnl_instrumentInfo);
 		GridBagLayout gbl_pnl_instrumentInfo = new GridBagLayout();
 		gbl_pnl_instrumentInfo.columnWidths = new int[]{0, 291, 249, 0, 0};
-		gbl_pnl_instrumentInfo.rowHeights = new int[]{27, 0, 42, 30, 0};
+		gbl_pnl_instrumentInfo.rowHeights = new int[]{27, 0, 42, 0, 30, 0};
 		gbl_pnl_instrumentInfo.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_pnl_instrumentInfo.rowWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnl_instrumentInfo.rowWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		pnl_instrumentInfo.setLayout(gbl_pnl_instrumentInfo);
 		
 		JLabel lbl_instrumentInfo = new JLabel("Instrument Information");
@@ -362,7 +366,7 @@ public class CRUDPanel extends JPanel {
 		
 		JLabel lbl_calibrationDate = new JLabel("Calibration Date");
 		GridBagConstraints gbc_lbl_calibrationDate = new GridBagConstraints();
-		gbc_lbl_calibrationDate.anchor = GridBagConstraints.LINE_START;
+		gbc_lbl_calibrationDate.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lbl_calibrationDate.weighty = 1.0;
 		gbc_lbl_calibrationDate.weightx = 1.0;
 		gbc_lbl_calibrationDate.insets = new Insets(0, 0, 5, 5);
@@ -377,11 +381,26 @@ public class CRUDPanel extends JPanel {
 		gbc_date_calibrationDate.gridy = 2;
 		pnl_instrumentInfo.add(date_calibrationDate, gbc_date_calibrationDate);
 		
+		JLabel lbl_checkStatus = new JLabel("Check Status");
+		GridBagConstraints gbc_lbl_checkStatus = new GridBagConstraints();
+		gbc_lbl_checkStatus.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lbl_checkStatus.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl_checkStatus.gridx = 1;
+		gbc_lbl_checkStatus.gridy = 3;
+		pnl_instrumentInfo.add(lbl_checkStatus, gbc_lbl_checkStatus);
+		
+		GridBagConstraints gbc_com_checkStatus = new GridBagConstraints();
+		gbc_com_checkStatus.insets = new Insets(0, 0, 5, 5);
+		gbc_com_checkStatus.fill = GridBagConstraints.HORIZONTAL;
+		gbc_com_checkStatus.gridx = 2;
+		gbc_com_checkStatus.gridy = 3;
+		pnl_instrumentInfo.add(com_checkStatus, gbc_com_checkStatus);
+		
 		GridBagConstraints gbc_btn_deleteInstrument = new GridBagConstraints();
 		gbc_btn_deleteInstrument.gridwidth = 2;
 		gbc_btn_deleteInstrument.insets = new Insets(0, 0, 0, 5);
 		gbc_btn_deleteInstrument.gridx = 1;
-		gbc_btn_deleteInstrument.gridy = 3;
+		gbc_btn_deleteInstrument.gridy = 4;
 		pnl_instrumentInfo.add(btn_deleteInstrument, gbc_btn_deleteInstrument);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
@@ -455,11 +474,19 @@ public class CRUDPanel extends JPanel {
 		return date_calibrationDate;
 	}
 	
+	public JComboBox<String> getCheckStatusComboBox() {
+		return com_checkStatus;
+	}
+	
 	public void setGarageList(DefaultListModel<Garage> list) {
 		lst_garages.setModel(list);
 	}
 	
 	public void setInstrumentList(DefaultListModel<Instrument> list) {
 		lst_instruments.setModel(list);
+	}
+	
+	public void setCheckboxList(DefaultComboBoxModel<String> list) {
+		com_checkStatus.setModel(list);
 	}
 }

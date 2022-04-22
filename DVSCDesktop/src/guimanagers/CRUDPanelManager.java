@@ -4,12 +4,14 @@ import gui.CRUDPanel;
 import gui.Wrapper;
 import domain.Garage;
 import domain.Instrument;
+import domain.Instrument.CheckStatus;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
@@ -72,16 +74,28 @@ public class CRUDPanelManager {
 		// Listener for the change of selection within the JList of Instruments.
 		CRUDPanel.getInstrumentList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
+									
+				DefaultComboBoxModel<String> checkStatusModel = new DefaultComboBoxModel<String>();
+				for(CheckStatus status : CheckStatus.values()) {
+					checkStatusModel.addElement(CheckStatus.checkStatusToString(status));
+				}
 				
 				if(e.getValueIsAdjusting()) {
 					return;
 				}
 				
-				//System.out.println(CRUDPanel.getInstrumentList().getSelectedValue().getInstrumentID());
-				
 				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) { 
 					CRUDPanel.getSerialNumTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getSerialNum());
 					CRUDPanel.getCalibrationDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
+					CRUDPanel.setCheckboxList(checkStatusModel);
+					CRUDPanel.getCheckStatusComboBox().setSelectedItem(
+							CheckStatus.checkStatusToString(
+									CRUDPanel
+									.getInstrumentList()
+									.getSelectedValue()
+									.getCheckStatus()
+							)
+						);
 				}	
 			}
 		});
@@ -139,7 +153,7 @@ public class CRUDPanelManager {
 		CRUDPanel.getSerialNumTextField().setText("");
 		CRUDPanel.getCalibrationDate().setDate(null);
 		
-		CRUDPanel.getInstrumentList().getModel();
+		CRUDPanel.getCheckStatusComboBox().removeAllItems();
 	}
 	
 	public void populateGarageFields() {

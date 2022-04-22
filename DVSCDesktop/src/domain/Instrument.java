@@ -27,7 +27,18 @@ public class Instrument {
 			default : throw new IllegalArgumentException("Invalid CheckStatus value");
 			}
 		}
+		
+		public static String checkStatusToString(CheckStatus status) {
+			switch(status) {
+			case CHECKED_SATISFACTORY : return "checked and satisfactory";
+			case CHECKED_UNSATISFACTORY : return "checked and unsatisfactory";
+			case UNCHECKED : return "unchecked";
+			default : throw new IllegalArgumentException("Invalid CheckStatus value");
+			}
+		}
 	};
+	
+	
 	
 	private int ID;
 	private String instrumentName;
