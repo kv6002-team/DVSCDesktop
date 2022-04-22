@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import connection.Connection;
+import gui.AlertDialog;
 import gui.AuthenticationPanel;
 import gui.NoConnectionDialog;
 import gui.Wrapper;
@@ -52,10 +53,11 @@ public class AuthenticationPanelManager {
 	private void addResetEventListener() {
 		authenticationPanel.getResetButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 AlertDialog x = new AlertDialog();
 				 if(AuthenticationManager.resetPassword(Sanitiser.trim(authenticationPanel.getUsernameField()))) {
-					 // reset password email sent DIALOG BOX
+					 x.run("An email containing a password reset link has been sent to the inbox of the account associated with this user.");
 				 }else {
-					 //try again later DIALOG BOX
+					 x.run("An Error occured while trying to send a password reset email, please contact a system administrator");
 				 }
 			}
 		});
