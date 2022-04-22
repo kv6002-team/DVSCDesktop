@@ -36,7 +36,9 @@ public class AuthenticationPanelManager {
 			public void actionPerformed(ActionEvent e) {
 				if(connection.ping()) {
 					if(Sanitiser.containsColon(authenticationPanel.getUsernameField())) {
-						//THROW ERROR DIALOG BOX
+						AlertDialog x = new AlertDialog();
+						x.run("Username cannot contain a colon");
+						authenticationPanel.clearFields();
 					}else if(AuthenticationManager.authenticate(Sanitiser.trim(authenticationPanel.getUsernameField()), authenticationPanel.getPasswordField())) {
 						mainWindow.setContentPane(new Wrapper());
 						mainWindow.revalidate();
