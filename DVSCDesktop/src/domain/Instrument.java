@@ -10,9 +10,23 @@ import java.util.Date;
 public class Instrument {
 	
 	public enum CheckStatus{
-		checked_satisfactory,
-		checked_unsatisfactory,
-		unchecked
+		CHECKED_SATISFACTORY("checked_satifactory"),
+		CHECKED_UNSATISFACTORY("checked_unsatisfactory"),
+		UNCHECKED("unchecked");
+		
+		public final String value;
+		private CheckStatus(String value) {
+			this.value = value;
+		}
+		
+		public static CheckStatus of(String value) {
+			switch (value) {
+			case "checked_satisfactory" : return CHECKED_SATISFACTORY;
+			case "checked_unsatisfactory" : return CHECKED_UNSATISFACTORY;
+			case "unchecked" : return UNCHECKED;
+			default : throw new IllegalArgumentException("Invalid CheckStatus value");
+			}
+		}
 	};
 	
 	private int ID;
@@ -23,8 +37,18 @@ public class Instrument {
 	private CheckStatus status;
 		
 	public Instrument(int ID, String instrumentName, String serialNum, Date checkDate, Date expiryDate, CheckStatus status){
+		this.ID = ID;
 		this.instrumentName = instrumentName;
 		this.serialNum = serialNum;
+		this.checkDate = checkDate;
+		this.statusExpiryDate = expiryDate;
+		this.status = status;
+	}
+	
+	public Instrument(String instrumentName, String serialNum, Date checkDate, Date expiryDate, CheckStatus status) {
+		this.instrumentName = instrumentName;
+		this.serialNum = serialNum;
+		this.checkDate = checkDate;
 		this.statusExpiryDate = expiryDate;
 		this.status = status;
 	}
