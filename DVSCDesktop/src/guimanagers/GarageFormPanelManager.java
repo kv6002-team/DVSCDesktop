@@ -35,7 +35,6 @@ public class GarageFormPanelManager{
 							garageFormPanel.getContactNum().getText(),
 							garageFormPanel.getPaidUntil().getDate()
 							);
-	
 					int id = connection.addGarage(newGarage);
 					
 					if(id == -1) {
@@ -47,9 +46,12 @@ public class GarageFormPanelManager{
 						DefaultListModel<Garage> garagesList = (DefaultListModel<Garage>) CRUDPanelManager.getCRUDPanel().getGaragesList().getModel();
 						garagesList.addElement(newGarage);
 						CRUDPanelManager.getCRUDPanel().getGaragesList().setModel(garagesList);
+						
+						JOptionPane.showMessageDialog(new JFrame(), "Garage Created");
+						((Window) garageFormPanel.getTopLevelAncestor()).dispose();
 					}
-					JOptionPane.showMessageDialog(new JFrame(), "Garage Created");
-					((Window) garageFormPanel.getTopLevelAncestor()).dispose();
+					
+					
 				}
 			}
 		});

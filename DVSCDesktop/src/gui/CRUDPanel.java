@@ -443,6 +443,10 @@ public class CRUDPanel extends JPanel {
 		return btn_addInstrument;
 	}
 	
+	public JButton getDeleteInstrumentButton() {
+		return btn_deleteInstrument;
+	}
+	
 	public JTextField getSerialNumTextField() {
 		return txt_serialNum;
 	}
