@@ -108,7 +108,7 @@ public class Connection {
 	}
 	
 	public GarageInfo getGarage(int id) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		
 		GarageInfo gi = null;
 		ArrayList<Instrument> instruments = new ArrayList<Instrument>();

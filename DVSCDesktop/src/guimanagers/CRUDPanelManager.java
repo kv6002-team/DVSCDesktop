@@ -4,6 +4,7 @@ import gui.CRUDPanel;
 import gui.Wrapper;
 import utils.Console;
 import domain.Garage;
+import domain.GarageInfo;
 import domain.Instrument;
 import domain.Instrument.CheckStatus;
 
@@ -89,7 +90,7 @@ public class CRUDPanelManager {
 					checkStatusModel.addElement(CheckStatus.checkStatusToString(status));
 			 	}
 				
-				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) {
+				if(CRUDPanel.getInstrumentList().getSelectedValue() != null || CRUDPanel.getInstrumentList().getSelectedIndex() != -1) {
 					updateInstrument(lastInstrument);
 				}
 					
@@ -113,7 +114,7 @@ public class CRUDPanelManager {
 			}
 		});
 		
-		//Listener for the mouse clicking on the add garage button.
+		// Listener for the mouse clicking on the add garage button.
 		CRUDPanel.getAddGarageButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -121,7 +122,7 @@ public class CRUDPanelManager {
 			}
 		});
 		
-		//Listener for the mouse clicking on the delete garage button.
+		// Listener for the mouse clicking on the delete garage button.
 		CRUDPanel.getDeleteGarageButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -129,6 +130,7 @@ public class CRUDPanelManager {
 			}
 		});
 		
+		// Listener for the mouse clicking on the add instrument button.
 		CRUDPanel.getAddInstrumentButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -136,10 +138,18 @@ public class CRUDPanelManager {
 			}	
 		});
 		
+		// Listener for the mouse clicking on delete instrument button
 		CRUDPanel.getDeleteInstrumentButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				removeInstrument(CRUDPanel.getInstrumentList().getSelectedValue());
+			}
+		});
+	
+		CRUDPanel.getDiscardChangesButton().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				discardChanges();
 			}
 		});
 	}
@@ -173,6 +183,7 @@ public class CRUDPanelManager {
 			CRUDPanel.getGaragePaidUntil().setDate(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getPaidUntil());
 		}
 	}
+	
 
 	public void addGarage() {
 		JFrame garageFormFrame = new JFrame();
@@ -245,10 +256,27 @@ public class CRUDPanelManager {
 	public void updateInstrument(Instrument instrument) {
 		
 		if(CRUDPanel.getCheckStatusComboBox().getSelectedItem() != null) {
+			int i = CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().indexOf(instrument);
+			
 			instrument.setInstrumentName(CRUDPanel.getInstrumentNameTextField().getText());
 			instrument.setCheckDate(CRUDPanel.getCheckDate().getDate());
 			instrument.setStatusExpiryDate(CRUDPanel.getStatusExpiryDate().getDate());
 			instrument.setCheckStatus(CheckStatus.of(CRUDPanel.getCheckStatusComboBox().getSelectedItem().toString()));
+			
+			CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().set(i, instrument);
+			
 		}
+	}
+
+	public void discardChanges() {
+		//CRUDPanel.getInstrumentList().clearSelection();
+		resetInstrumentFields();
+		GarageInfo tempGarageInfo = connection.getGarage(CRUDPanel.getGaragesList().getSelectedValue().getGarageID());
+//		System.out.println(CRUDPanel.getGaragesList().getSelectedValue().getOGGarageInfo());
+//		System.out.println(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo());
+//		
+		CRUDPanel.getGaragesList().getSelectedValue().setGarageInfo(tempGarageInfo);
+		populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
+		populateGarageFields();
 	}
 }
