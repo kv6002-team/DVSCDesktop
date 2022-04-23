@@ -169,6 +169,7 @@ public class CRUDPanelManager {
 	
 	public void resetGarageFields() {
 		CRUDPanel.getGarageNameTextField().setText("");
+		CRUDPanel.getGarageOwnerTextField().setText("");
 		CRUDPanel.getGarageEmailTextField().setText("");
 		CRUDPanel.getGarageNumberTextField().setText("");
 		CRUDPanel.getGaragePaidUntil().setDate(null);	
@@ -178,6 +179,7 @@ public class CRUDPanelManager {
 	public void populateGarageFields() {
 		if(CRUDPanel.getGaragesList().getSelectedValue() != null) {
 			CRUDPanel.getGarageNameTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageName());
+			CRUDPanel.getGarageOwnerTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getOwnerName());
 			CRUDPanel.getGarageEmailTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getEmailAddress());
 			CRUDPanel.getGarageNumberTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getTelephoneNum());
 			CRUDPanel.getGaragePaidUntil().setDate(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getPaidUntil());
