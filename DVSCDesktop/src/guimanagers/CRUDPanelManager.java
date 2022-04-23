@@ -2,6 +2,7 @@ package guimanagers;
 
 import gui.CRUDPanel;
 import gui.Wrapper;
+import utils.Console;
 import domain.Garage;
 import domain.Instrument;
 import domain.Instrument.CheckStatus;
@@ -38,7 +39,7 @@ public class CRUDPanelManager {
 	
 	private Connection connection = new Connection(); 
 	
-	
+	private Instrument lastInstrument;
 	
 	public CRUDPanelManager(Wrapper wrapper){
 		
@@ -55,7 +56,8 @@ public class CRUDPanelManager {
 		CRUDPanel.getGaragesList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				
-				resetFields();
+				resetGarageFields();
+				resetInstrumentFields();
 				
 				if(e.getValueIsAdjusting()){
 					return;
@@ -75,19 +77,27 @@ public class CRUDPanelManager {
 		// Listener for the change of selection within the JList of Instruments.
 		CRUDPanel.getInstrumentList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-									
-				DefaultComboBoxModel<String> checkStatusModel = new DefaultComboBoxModel<String>();
-				for(CheckStatus status : CheckStatus.values()) {
-					checkStatusModel.addElement(CheckStatus.checkStatusToString(status));
-				}
+				
 				
 				if(e.getValueIsAdjusting()) {
 					return;
 				}
 				
+				// Load in next selected instrument
+				DefaultComboBoxModel<String> checkStatusModel = new DefaultComboBoxModel<String>();
+				for(CheckStatus status : CheckStatus.values()) {	
+					checkStatusModel.addElement(CheckStatus.checkStatusToString(status));
+			 	}
+				
+				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) {
+					updateInstrument(lastInstrument);
+				}
+					
 				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) { 
 					CRUDPanel.getSerialNumTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getSerialNum());
-					CRUDPanel.getCalibrationDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
+					CRUDPanel.getInstrumentNameTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getInstrumentName());
+					CRUDPanel.getCheckDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getCheckDate());
+					CRUDPanel.getStatusExpiryDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
 					CRUDPanel.setCheckboxList(checkStatusModel);
 					CRUDPanel.getCheckStatusComboBox().setSelectedItem(
 							CheckStatus.checkStatusToString(
@@ -97,7 +107,9 @@ public class CRUDPanelManager {
 									.getCheckStatus()
 							)
 						);
-				}	
+				}
+				
+				lastInstrument = CRUDPanel.getInstrumentList().getSelectedValue();
 			}
 		});
 		
@@ -131,7 +143,7 @@ public class CRUDPanelManager {
 			}
 		});
 	}
-	
+		
 	public CRUDPanel getCRUDPanel(){
 		return CRUDPanel;
 	}
@@ -144,18 +156,14 @@ public class CRUDPanelManager {
 		CRUDPanel.setGarageList(list);	
 	}
 	
-	public void resetFields(){
+	
+	public void resetGarageFields() {
 		CRUDPanel.getGarageNameTextField().setText("");
 		CRUDPanel.getGarageEmailTextField().setText("");
 		CRUDPanel.getGarageNumberTextField().setText("");
-		CRUDPanel.getGaragePaidUntil().setDate(null);
-		
-		CRUDPanel.getInstrumentList().clearSelection();
-		CRUDPanel.getSerialNumTextField().setText("");
-		CRUDPanel.getCalibrationDate().setDate(null);
-		
-		CRUDPanel.getCheckStatusComboBox().removeAllItems();
+		CRUDPanel.getGaragePaidUntil().setDate(null);	
 	}
+	
 	
 	public void populateGarageFields() {
 		if(CRUDPanel.getGaragesList().getSelectedValue() != null) {
@@ -166,14 +174,14 @@ public class CRUDPanelManager {
 		}
 	}
 
-	public void addGarage(){
+	public void addGarage() {
 		JFrame garageFormFrame = new JFrame();
 		garageFormFrame.add(garageFormPanelManager.getGarageFormPanel());
 		garageFormFrame.setBounds(100, 100, 640, 360);
 		garageFormFrame.setVisible(true);
 	}
 
-	public void removeGarage(Garage garage){
+	public void removeGarage(Garage garage) {
 		
 		int confirm = JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to delete this garage?", "Please select", JOptionPane.YES_NO_OPTION);
 		
@@ -189,26 +197,16 @@ public class CRUDPanelManager {
 		}
 	}
 
-	public void changeGarageNameValue(String garageName){
-
+	public void resetInstrumentFields() {
+		CRUDPanel.getInstrumentList().clearSelection();
+		CRUDPanel.getSerialNumTextField().setText("");
+		CRUDPanel.getInstrumentNameTextField().setText("");
+		CRUDPanel.getCheckDate().setDate(null);
+		CRUDPanel.getStatusExpiryDate().setDate(null);
+		CRUDPanel.getCheckStatusComboBox().removeAllItems();
 	}
-
-	public void changeGarageEmailValue(String emailAddress){
-
-	}
-
-	public void changeGaragePhoneNumber(String phoneNumber){
-
-	}
-
-	public void changePaidUntil(Date paidUntil){
-		
-	}
-
-	public void changeCalibrationDate(Date calibrationDate){
-
-	}
-
+	
+	
 	public void populateInstrumentList(ArrayList<Instrument> instruments){
 		DefaultListModel<Instrument> list = new DefaultListModel<Instrument>();
 		for(int i=0; i<instruments.size(); i++) {
@@ -217,14 +215,14 @@ public class CRUDPanelManager {
 		CRUDPanel.setInstrumentList(list);
 	}
 
-	public void addInstrument(){
+	public void addInstrument() {
 		JFrame garageFormFrame = new JFrame();
 		garageFormFrame.add(instrumentFormPanelManager.getInstrumentFormPanel());
 		garageFormFrame.setBounds(100, 100, 640, 360);
 		garageFormFrame.setVisible(true);
 	}
 
-	public void removeInstrument(Instrument instrument){
+	public void removeInstrument(Instrument instrument) {
 		
 		int confirm = JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to delete this garage?", "Please select", JOptionPane.YES_NO_OPTION);
 			
@@ -243,7 +241,14 @@ public class CRUDPanelManager {
 		}
 	}
 
-	public void saveChanges(){
-
+	
+	public void updateInstrument(Instrument instrument) {
+		
+		if(CRUDPanel.getCheckStatusComboBox().getSelectedItem() != null) {
+			instrument.setInstrumentName(CRUDPanel.getInstrumentNameTextField().getText());
+			instrument.setCheckDate(CRUDPanel.getCheckDate().getDate());
+			instrument.setStatusExpiryDate(CRUDPanel.getStatusExpiryDate().getDate());
+			instrument.setCheckStatus(CheckStatus.of(CRUDPanel.getCheckStatusComboBox().getSelectedItem().toString()));
+		}
 	}
 }

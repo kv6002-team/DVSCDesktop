@@ -40,11 +40,14 @@ public class CRUDPanel extends JPanel {
 	public JList<Instrument> lst_instruments = new JList<Instrument>();
 	public JButton btn_addInstrument = new JButton("Add Instrument");
 	public JTextField txt_serialNum = new JTextField();
-	public JDateChooser date_calibrationDate = new JDateChooser();
+	public JTextField txt_instrumentName = new JTextField();
+	public JDateChooser date_checkDate = new JDateChooser();
+	public JDateChooser date_statusExpiryDate = new JDateChooser();
 	public JComboBox<String> com_checkStatus = new JComboBox<String>();
 	public JButton btn_deleteInstrument = new JButton("Delete Instrument");
 	public JButton btn_addGarage = new JButton("Add Garage");
 	public JButton btn_saveChanges = new JButton("Save Changes");
+	public JButton btn_discardChanges = new JButton("Discard Changes");
 	
 	public static final String tabName = "Garages";
 	
@@ -54,9 +57,9 @@ public class CRUDPanel extends JPanel {
 	public CRUDPanel() {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{138, 260, 0};
+		gridBagLayout.columnWidths = new int[]{138, 260, 260, 0};
 		gridBagLayout.rowHeights = new int[]{27, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
@@ -103,6 +106,7 @@ public class CRUDPanel extends JPanel {
 		JPanel pnl_garageInfo = new JPanel();
 		pnl_garageInfo.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		GridBagConstraints gbc_pnl_garageInfo = new GridBagConstraints();
+		gbc_pnl_garageInfo.gridwidth = 2;
 		gbc_pnl_garageInfo.insets = new Insets(5, 5, 5, 5);
 		gbc_pnl_garageInfo.weighty = 1.0;
 		gbc_pnl_garageInfo.weightx = 2.0;
@@ -111,16 +115,15 @@ public class CRUDPanel extends JPanel {
 		gbc_pnl_garageInfo.gridy = 0;
 		add(pnl_garageInfo, gbc_pnl_garageInfo);
 		GridBagLayout gbl_pnl_garageInfo = new GridBagLayout();
-		gbl_pnl_garageInfo.columnWidths = new int[]{-15, 0, 145, 31, 230, 0, 35, 100, 0, 209, 0, 24, 0};
-		gbl_pnl_garageInfo.rowHeights = new int[]{72, 62, 60, 81, 0, 0, 0, 0};
-		gbl_pnl_garageInfo.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 9.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_pnl_garageInfo.rowWeights = new double[]{1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnl_garageInfo.columnWidths = new int[]{-15, 0, 145, 31, 230, 0, 35, 100, 0, 209, 0, 0};
+		gbl_pnl_garageInfo.rowHeights = new int[]{46, 62, 60, 64, 0, 0, 0, 0, 0};
+		gbl_pnl_garageInfo.columnWeights = new double[]{1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 9.0, 0.0, Double.MIN_VALUE};
+		gbl_pnl_garageInfo.rowWeights = new double[]{1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnl_garageInfo.setLayout(gbl_pnl_garageInfo);
 		
 		JLabel lbl_garageInfo = new JLabel("Garage Information");
 		GridBagConstraints gbc_lbl_garageInfo = new GridBagConstraints();
 		gbc_lbl_garageInfo.gridwidth = 10;
-		gbc_lbl_garageInfo.insets = new Insets(0, 0, 5, 5);
 		gbc_lbl_garageInfo.gridx = 1;
 		gbc_lbl_garageInfo.gridy = 0;
 		pnl_garageInfo.add(lbl_garageInfo, gbc_lbl_garageInfo);
@@ -192,7 +195,7 @@ public class CRUDPanel extends JPanel {
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
 		GridBagConstraints gbc_horizontalStrut_1 = new GridBagConstraints();
-		gbc_horizontalStrut_1.insets = new Insets(0, 0, 5, 5);
+		gbc_horizontalStrut_1.insets = new Insets(0, 0, 5, 0);
 		gbc_horizontalStrut_1.gridx = 10;
 		gbc_horizontalStrut_1.gridy = 1;
 		pnl_garageInfo.add(horizontalStrut_1, gbc_horizontalStrut_1);
@@ -260,7 +263,7 @@ public class CRUDPanel extends JPanel {
 		GridBagConstraints gbc_pnl_instrumentList = new GridBagConstraints();
 		gbc_pnl_instrumentList.weighty = 1.0;
 		gbc_pnl_instrumentList.weightx = 1.0;
-		gbc_pnl_instrumentList.gridheight = 2;
+		gbc_pnl_instrumentList.gridheight = 3;
 		gbc_pnl_instrumentList.gridwidth = 2;
 		gbc_pnl_instrumentList.insets = new Insets(0, 0, 5, 5);
 		gbc_pnl_instrumentList.fill = GridBagConstraints.BOTH;
@@ -307,7 +310,7 @@ public class CRUDPanel extends JPanel {
 		GridBagConstraints gbc_pnl_instrumentInfo = new GridBagConstraints();
 		gbc_pnl_instrumentInfo.weighty = 5.0;
 		gbc_pnl_instrumentInfo.weightx = 2.0;
-		gbc_pnl_instrumentInfo.gridheight = 2;
+		gbc_pnl_instrumentInfo.gridheight = 3;
 		gbc_pnl_instrumentInfo.gridwidth = 6;
 		gbc_pnl_instrumentInfo.insets = new Insets(0, 0, 5, 5);
 		gbc_pnl_instrumentInfo.fill = GridBagConstraints.BOTH;
@@ -315,99 +318,144 @@ public class CRUDPanel extends JPanel {
 		gbc_pnl_instrumentInfo.gridy = 4;
 		pnl_garageInfo.add(pnl_instrumentInfo, gbc_pnl_instrumentInfo);
 		GridBagLayout gbl_pnl_instrumentInfo = new GridBagLayout();
-		gbl_pnl_instrumentInfo.columnWidths = new int[]{0, 291, 249, 0, 0};
-		gbl_pnl_instrumentInfo.rowHeights = new int[]{27, 0, 42, 0, 30, 0};
+		gbl_pnl_instrumentInfo.columnWidths = new int[]{0, 254, 229, 0, 0};
+		gbl_pnl_instrumentInfo.rowHeights = new int[]{27, 22, 36, 35, 36, 37, 38, 19, 30, 0};
 		gbl_pnl_instrumentInfo.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_pnl_instrumentInfo.rowWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_pnl_instrumentInfo.rowWeights = new double[]{1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnl_instrumentInfo.setLayout(gbl_pnl_instrumentInfo);
 		
 		JLabel lbl_instrumentInfo = new JLabel("Instrument Information");
 		lbl_instrumentInfo.setFont(new Font("Tahoma", Font.BOLD, 22));
 		GridBagConstraints gbc_lbl_instrumentInfo = new GridBagConstraints();
-		gbc_lbl_instrumentInfo.gridwidth = 2;
-		gbc_lbl_instrumentInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl_instrumentInfo.fill = GridBagConstraints.VERTICAL;
+		gbc_lbl_instrumentInfo.gridwidth = 4;
+		gbc_lbl_instrumentInfo.insets = new Insets(10, 0, 5, 0);
 		gbc_lbl_instrumentInfo.weighty = 1.0;
 		gbc_lbl_instrumentInfo.weightx = 1.0;
-		gbc_lbl_instrumentInfo.gridx = 1;
+		gbc_lbl_instrumentInfo.gridx = 0;
 		gbc_lbl_instrumentInfo.gridy = 0;
 		pnl_instrumentInfo.add(lbl_instrumentInfo, gbc_lbl_instrumentInfo);
+		
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		GridBagConstraints gbc_verticalStrut_1 = new GridBagConstraints();
+		gbc_verticalStrut_1.gridwidth = 2;
+		gbc_verticalStrut_1.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalStrut_1.gridx = 1;
+		gbc_verticalStrut_1.gridy = 1;
+		pnl_instrumentInfo.add(verticalStrut_1, gbc_verticalStrut_1);
 		
 		Component horizontalStrut_5 = Box.createHorizontalStrut(20);
 		GridBagConstraints gbc_horizontalStrut_5 = new GridBagConstraints();
 		gbc_horizontalStrut_5.insets = new Insets(0, 0, 5, 5);
 		gbc_horizontalStrut_5.gridx = 0;
-		gbc_horizontalStrut_5.gridy = 1;
+		gbc_horizontalStrut_5.gridy = 2;
 		pnl_instrumentInfo.add(horizontalStrut_5, gbc_horizontalStrut_5);
 		
 		JLabel lbl_serialNum = new JLabel("Serial Number");
 		GridBagConstraints gbc_lbl_serialNum = new GridBagConstraints();
 		gbc_lbl_serialNum.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lbl_serialNum.weighty = 1.0;
-		gbc_lbl_serialNum.weightx = 1.0;
 		gbc_lbl_serialNum.insets = new Insets(0, 0, 5, 5);
 		gbc_lbl_serialNum.gridx = 1;
-		gbc_lbl_serialNum.gridy = 1;
+		gbc_lbl_serialNum.gridy = 2;
 		pnl_instrumentInfo.add(lbl_serialNum, gbc_lbl_serialNum);
+		txt_serialNum.setMargin(new Insets(3, 3, 3, 3));
 		
+		txt_serialNum.setEditable(false);
 		GridBagConstraints gbc_txt_serialNum = new GridBagConstraints();
 		gbc_txt_serialNum.insets = new Insets(0, 0, 5, 5);
-		gbc_txt_serialNum.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txt_serialNum.fill = GridBagConstraints.BOTH;
 		gbc_txt_serialNum.gridx = 2;
-		gbc_txt_serialNum.gridy = 1;
+		gbc_txt_serialNum.gridy = 2;
 		pnl_instrumentInfo.add(txt_serialNum, gbc_txt_serialNum);
 		txt_serialNum.setColumns(10);
 		
-		Component horizontalStrut_6 = Box.createHorizontalStrut(20);
-		GridBagConstraints gbc_horizontalStrut_6 = new GridBagConstraints();
-		gbc_horizontalStrut_6.insets = new Insets(0, 0, 5, 0);
-		gbc_horizontalStrut_6.gridx = 3;
-		gbc_horizontalStrut_6.gridy = 1;
-		pnl_instrumentInfo.add(horizontalStrut_6, gbc_horizontalStrut_6);
+		JLabel lbl_instrumentName = new JLabel("Instrument Name");
+		GridBagConstraints gbc_lbl_instrumentName = new GridBagConstraints();
+		gbc_lbl_instrumentName.weighty = 1.0;
+		gbc_lbl_instrumentName.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lbl_instrumentName.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl_instrumentName.gridx = 1;
+		gbc_lbl_instrumentName.gridy = 3;
+		pnl_instrumentInfo.add(lbl_instrumentName, gbc_lbl_instrumentName);
 		
-		JLabel lbl_calibrationDate = new JLabel("Calibration Date");
-		GridBagConstraints gbc_lbl_calibrationDate = new GridBagConstraints();
-		gbc_lbl_calibrationDate.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lbl_calibrationDate.weighty = 1.0;
-		gbc_lbl_calibrationDate.weightx = 1.0;
-		gbc_lbl_calibrationDate.insets = new Insets(0, 0, 5, 5);
-		gbc_lbl_calibrationDate.gridx = 1;
-		gbc_lbl_calibrationDate.gridy = 2;
-		pnl_instrumentInfo.add(lbl_calibrationDate, gbc_lbl_calibrationDate);
+		GridBagConstraints gbc_txt_instrumentName = new GridBagConstraints();
+		gbc_txt_instrumentName.insets = new Insets(0, 0, 5, 5);
+		gbc_txt_instrumentName.fill = GridBagConstraints.BOTH;
+		gbc_txt_instrumentName.gridx = 2;
+		gbc_txt_instrumentName.gridy = 3;
+		txt_instrumentName.setMargin(new Insets(3, 3, 3, 3));
+		pnl_instrumentInfo.add(txt_instrumentName, gbc_txt_instrumentName);
+		txt_instrumentName.setColumns(10);
 		
-		GridBagConstraints gbc_date_calibrationDate = new GridBagConstraints();
-		gbc_date_calibrationDate.insets = new Insets(0, 0, 5, 5);
-		gbc_date_calibrationDate.fill = GridBagConstraints.HORIZONTAL;
-		gbc_date_calibrationDate.gridx = 2;
-		gbc_date_calibrationDate.gridy = 2;
-		pnl_instrumentInfo.add(date_calibrationDate, gbc_date_calibrationDate);
+		JLabel lbl_checkDate = new JLabel("Check Date");
+		GridBagConstraints gbc_lbl_checkDate = new GridBagConstraints();
+		gbc_lbl_checkDate.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lbl_checkDate.weighty = 1.0;
+		gbc_lbl_checkDate.weightx = 1.0;
+		gbc_lbl_checkDate.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl_checkDate.gridx = 1;
+		gbc_lbl_checkDate.gridy = 4;
+		pnl_instrumentInfo.add(lbl_checkDate, gbc_lbl_checkDate);
+		
+		GridBagConstraints gbc_date_checkDate = new GridBagConstraints();
+		gbc_date_checkDate.insets = new Insets(0, 0, 5, 5);
+		gbc_date_checkDate.fill = GridBagConstraints.BOTH;
+		gbc_date_checkDate.gridx = 2;
+		gbc_date_checkDate.gridy = 4;
+		pnl_instrumentInfo.add(date_checkDate, gbc_date_checkDate);
+		
+		JLabel lbl_statusExpiryDate = new JLabel("Status Expiry Date");
+		GridBagConstraints gbc_lbl_statusExpiryDate = new GridBagConstraints();
+		gbc_lbl_statusExpiryDate.weighty = 1.0;
+		gbc_lbl_statusExpiryDate.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lbl_statusExpiryDate.insets = new Insets(0, 0, 5, 5);
+		gbc_lbl_statusExpiryDate.gridx = 1;
+		gbc_lbl_statusExpiryDate.gridy = 5;
+		pnl_instrumentInfo.add(lbl_statusExpiryDate, gbc_lbl_statusExpiryDate);
+		
+		GridBagConstraints gbc_date_statusExpiryDate = new GridBagConstraints();
+		gbc_date_statusExpiryDate.insets = new Insets(0, 0, 5, 5);
+		gbc_date_statusExpiryDate.fill = GridBagConstraints.BOTH;
+		gbc_date_statusExpiryDate.gridx = 2;
+		gbc_date_statusExpiryDate.gridy = 5;
+		pnl_instrumentInfo.add(date_statusExpiryDate, gbc_date_statusExpiryDate);
 		
 		JLabel lbl_checkStatus = new JLabel("Check Status");
 		GridBagConstraints gbc_lbl_checkStatus = new GridBagConstraints();
+		gbc_lbl_checkStatus.weighty = 1.0;
 		gbc_lbl_checkStatus.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lbl_checkStatus.insets = new Insets(0, 0, 5, 5);
 		gbc_lbl_checkStatus.gridx = 1;
-		gbc_lbl_checkStatus.gridy = 3;
+		gbc_lbl_checkStatus.gridy = 6;
 		pnl_instrumentInfo.add(lbl_checkStatus, gbc_lbl_checkStatus);
 		
 		GridBagConstraints gbc_com_checkStatus = new GridBagConstraints();
 		gbc_com_checkStatus.insets = new Insets(0, 0, 5, 5);
-		gbc_com_checkStatus.fill = GridBagConstraints.HORIZONTAL;
+		gbc_com_checkStatus.fill = GridBagConstraints.BOTH;
 		gbc_com_checkStatus.gridx = 2;
-		gbc_com_checkStatus.gridy = 3;
+		gbc_com_checkStatus.gridy = 6;
 		pnl_instrumentInfo.add(com_checkStatus, gbc_com_checkStatus);
 		
+		Component verticalStrut_3 = Box.createVerticalStrut(20);
+		GridBagConstraints gbc_verticalStrut_3 = new GridBagConstraints();
+		gbc_verticalStrut_3.insets = new Insets(0, 0, 5, 5);
+		gbc_verticalStrut_3.gridx = 2;
+		gbc_verticalStrut_3.gridy = 7;
+		pnl_instrumentInfo.add(verticalStrut_3, gbc_verticalStrut_3);
+		
 		GridBagConstraints gbc_btn_deleteInstrument = new GridBagConstraints();
-		gbc_btn_deleteInstrument.gridwidth = 2;
-		gbc_btn_deleteInstrument.insets = new Insets(0, 0, 0, 5);
-		gbc_btn_deleteInstrument.gridx = 1;
-		gbc_btn_deleteInstrument.gridy = 4;
+		gbc_btn_deleteInstrument.insets = new Insets(0, 0, 10, 0);
+		gbc_btn_deleteInstrument.gridwidth = 4;
+		gbc_btn_deleteInstrument.gridx = 0;
+		gbc_btn_deleteInstrument.gridy = 8;
 		pnl_instrumentInfo.add(btn_deleteInstrument, gbc_btn_deleteInstrument);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
 		GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
 		gbc_verticalStrut.insets = new Insets(0, 0, 0, 5);
 		gbc_verticalStrut.gridx = 7;
-		gbc_verticalStrut.gridy = 6;
+		gbc_verticalStrut.gridy = 7;
 		pnl_garageInfo.add(verticalStrut, gbc_verticalStrut);
 		
 		GridBagConstraints gbc_btn_addGarage = new GridBagConstraints();
@@ -423,6 +471,12 @@ public class CRUDPanel extends JPanel {
 		gbc_btn_saveChanges.gridx = 1;
 		gbc_btn_saveChanges.gridy = 1;
 		add(btn_saveChanges, gbc_btn_saveChanges);
+		
+		GridBagConstraints gbc_btn_discardChanges = new GridBagConstraints();
+		gbc_btn_discardChanges.insets = new Insets(0, 0, 5, 0);
+		gbc_btn_discardChanges.gridx = 2;
+		gbc_btn_discardChanges.gridy = 1;
+		add(btn_discardChanges, gbc_btn_discardChanges);
 
 	}
 
@@ -470,12 +524,28 @@ public class CRUDPanel extends JPanel {
 		return txt_serialNum;
 	}
 	
-	public JDateChooser getCalibrationDate() {
-		return date_calibrationDate;
+	public JTextField getInstrumentNameTextField() {
+		return txt_instrumentName;
+	}
+	
+	public JDateChooser getCheckDate() {
+		return date_checkDate;
+	}
+	
+	public JDateChooser getStatusExpiryDate() {
+		return date_statusExpiryDate;
 	}
 	
 	public JComboBox<String> getCheckStatusComboBox() {
 		return com_checkStatus;
+	}
+	
+	public JButton getSaveChangesButton() {
+		return btn_saveChanges;
+	}
+	
+	public JButton getDiscardChangesButton() {
+		return btn_discardChanges;
 	}
 	
 	public void setGarageList(DefaultListModel<Garage> list) {
