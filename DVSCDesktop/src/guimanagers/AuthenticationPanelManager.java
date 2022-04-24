@@ -55,12 +55,17 @@ public class AuthenticationPanelManager {
 	private void addResetEventListener() {
 		authenticationPanel.getResetButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 AlertDialog x = new AlertDialog();
-				 if(AuthenticationManager.resetPassword(Sanitiser.trim(authenticationPanel.getUsernameField()))) {
-					 x.run("An email containing a password reset link has been sent to the inbox of the account associated with this user.");
-				 }else {
-					 x.run("An Error occured while trying to send a password reset email, please contact a system administrator");
-				 }
+				AlertDialog x = new AlertDialog();
+				if(authenticationPanel.getUsernameField().length() > 0) {
+					 if(AuthenticationManager.resetPassword(Sanitiser.trim(authenticationPanel.getUsernameField()))) {
+						 x.run("An email containing a password reset link has been sent to the inbox of the account associated with this user.");
+					 }else {
+						 x.run("An Error occured while trying to send a password reset email, please contact a system administrator");
+					 }
+				}else {
+					x.run("Provide a username to send a password reset email to!");
+				}
+
 			}
 		});
 	}
