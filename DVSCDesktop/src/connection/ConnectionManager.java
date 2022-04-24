@@ -72,7 +72,6 @@ public class ConnectionManager {
 					Console.log("RESP | " + output);
 					Console.log("AUTH | " + httpPost.getHeader("Authorization"));
 				}
-				if(response.getCode() == 401) System.exit(0);
 				Response res = new Response(output, response.getCode(),this.url + endpoint, queryList);
 				EntityUtils.consume(entity);
 				return res;

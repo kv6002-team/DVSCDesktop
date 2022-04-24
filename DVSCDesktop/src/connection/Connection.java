@@ -11,6 +11,7 @@ import domain.Garage;
 import domain.GarageInfo;
 import domain.Instrument;
 import domain.Instrument.CheckStatus;
+import gui.AlertDialog;
 import logging.Logger;
 import security.JWT;
 import security.SecurityManager;
@@ -49,11 +50,15 @@ public class Connection {
 			pl.add("types", "garage-consultant");
 			Response response = connectionManager.sendPostRequest("auth", pl, ConnectionManager.AUTH_TYPE.BASIC, authString);
 			JSONObject resObj = response.getObject();
-			if(resObj.getString("token_type").equals("bearer")) {
-				JWT.getInstance().setToken(resObj.getString("token"));
-				flag = true;
+			if(response.getResponseCode() == 200) {
+				if(resObj.getString("token_type").equals("bearer")) {
+					JWT.getInstance().setToken(resObj.getString("token"));
+					flag = true;
+				}	
+			}else {
+				AlertDialog x = new AlertDialog();
+				x.run("Authentication Error: Invalid credentials. Please try logging in again!");
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
