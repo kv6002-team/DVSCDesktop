@@ -20,7 +20,7 @@ public class Wrapper extends JPanel {
 	private JTabbedPane tab_MainTabPane = new JTabbedPane(JTabbedPane.TOP);
 	
 	CRUDPanelManager CRUDPanelManager = new CRUDPanelManager(this);
-	EmailPanelManager emailpanelmanager = new EmailPanelManager();
+	EmailPanelManager emailpanelmanager = new EmailPanelManager(this);
 	/**
 	 * Create the panel.
 	 */

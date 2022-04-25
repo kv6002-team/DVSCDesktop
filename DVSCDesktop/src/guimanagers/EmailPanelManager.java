@@ -4,9 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import connection.Connection;
 import domain.Garage;
 import gui.EmailPanel;
+import gui.Wrapper;
 
 /**
  * 
@@ -17,7 +21,7 @@ import gui.EmailPanel;
 public class EmailPanelManager {
 	private EmailPanel EmailPanel = new EmailPanel();
 	private Connection connection = new Connection(); 
-	
+
 	public EmailPanel getEmailPanel() {
 		return EmailPanel;
 	}
@@ -55,10 +59,16 @@ public class EmailPanelManager {
 		connection.sendEmailList(emailIDs);
 	}
 	
-	public EmailPanelManager() {
+	public EmailPanelManager(Wrapper wrapper) {
 		
 		ArrayList<Garage> allGarages = connection.getAllGarages();
 
+		wrapper.getTabbedPane().addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				getGarageList(allGarages);
+			}
+		});
+		
 		EmailPanel.getMoveAll().addActionListener(new ActionListener() {
 			//Moves all elements within the Garage Emails list, places them within the Approved Emails list
 			//Also removes all moved elements from the Garage Emails List once finished
