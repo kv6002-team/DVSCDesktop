@@ -1,5 +1,6 @@
 package guimanagers;
 
+import gui.AlertDialog;
 import gui.CRUDPanel;
 import gui.Wrapper;
 import utils.Console;
@@ -90,24 +91,24 @@ public class CRUDPanelManager {
 					checkStatusModel.addElement(CheckStatus.checkStatusToString(status));
 			 	}
 				
-				if(CRUDPanel.getInstrumentList().getSelectedValue() != null || CRUDPanel.getInstrumentList().getSelectedIndex() != -1) {
+				if(lastInstrument != null) {
 					updateInstrument(lastInstrument);
 				}
 					
 				if(CRUDPanel.getInstrumentList().getSelectedValue() != null) { 
-					CRUDPanel.getSerialNumTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getSerialNum());
-					CRUDPanel.getInstrumentNameTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getInstrumentName());
-					CRUDPanel.getCheckDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getCheckDate());
-					CRUDPanel.getStatusExpiryDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
-					CRUDPanel.setCheckboxList(checkStatusModel);
-					CRUDPanel.getCheckStatusComboBox().setSelectedItem(
-							CheckStatus.checkStatusToString(
-									CRUDPanel
-									.getInstrumentList()
-									.getSelectedValue()
-									.getCheckStatus()
-							)
-						);
+						CRUDPanel.getSerialNumTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getSerialNum());
+						CRUDPanel.getInstrumentNameTextField().setText(CRUDPanel.getInstrumentList().getSelectedValue().getInstrumentName());
+						CRUDPanel.getCheckDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getCheckDate());
+						CRUDPanel.getStatusExpiryDate().setDate(CRUDPanel.getInstrumentList().getSelectedValue().getStatusExpiryDate());
+						CRUDPanel.setCheckboxList(checkStatusModel);
+						CRUDPanel.getCheckStatusComboBox().setSelectedItem(
+								CheckStatus.checkStatusToString(
+										CRUDPanel
+										.getInstrumentList()
+										.getSelectedValue()
+										.getCheckStatus()
+								)
+							);
 				}
 				
 				lastInstrument = CRUDPanel.getInstrumentList().getSelectedValue();
@@ -146,12 +147,22 @@ public class CRUDPanelManager {
 			}
 		});
 	
+		// Listener for the mouse click on the discard changes button.
 		CRUDPanel.getDiscardChangesButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				discardChanges();
 			}
 		});
+		
+		// Listener for the mouse click on the save changes button.
+		CRUDPanel.getSaveChangesButton().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				saveChanges();
+			}
+		});
+		
 	}
 		
 	public CRUDPanel getCRUDPanel(){
@@ -221,11 +232,13 @@ public class CRUDPanelManager {
 	
 	
 	public void populateInstrumentList(ArrayList<Instrument> instruments){
-		DefaultListModel<Instrument> list = new DefaultListModel<Instrument>();
-		for(int i=0; i<instruments.size(); i++) {
-			list.addElement(instruments.get(i));
+		if(!(instruments == null)) {
+			DefaultListModel<Instrument> list = new DefaultListModel<Instrument>();
+			for(int i=0; i<instruments.size(); i++) {
+				list.addElement(instruments.get(i));
+			}
+			CRUDPanel.setInstrumentList(list);
 		}
-		CRUDPanel.setInstrumentList(list);
 	}
 
 	public void addInstrument() {
@@ -238,47 +251,196 @@ public class CRUDPanelManager {
 	public void removeInstrument(Instrument instrument) {
 		
 		int confirm = JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to delete this garage?", "Please select", JOptionPane.YES_NO_OPTION);
-			
+		
 		if(confirm == JOptionPane.YES_OPTION) {	
 			boolean removed = connection.removeInstrument(instrument.getInstrumentID());
 			
 			if(removed) {
 				
+				
+				CRUDPanel.getInstrumentList().clearSelection();
+				
 				CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().remove(instrument);
 				
 				DefaultListModel<Instrument> instrumentsList = (DefaultListModel<Instrument>) CRUDPanel.getInstrumentList().getModel();
-				CRUDPanel.getInstrumentList().clearSelection();
 				instrumentsList.removeElement(instrument);
 				CRUDPanel.setInstrumentList(instrumentsList);
 			}
 		}
 	}
 
-	
 	public void updateInstrument(Instrument instrument) {
 		
 		if(CRUDPanel.getCheckStatusComboBox().getSelectedItem() != null) {
-			int i = CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().indexOf(instrument);
+			if(!(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo() == null)) {
+				int i = CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().indexOf(instrument);
 			
-			instrument.setInstrumentName(CRUDPanel.getInstrumentNameTextField().getText());
-			instrument.setCheckDate(CRUDPanel.getCheckDate().getDate());
-			instrument.setStatusExpiryDate(CRUDPanel.getStatusExpiryDate().getDate());
-			instrument.setCheckStatus(CheckStatus.of(CRUDPanel.getCheckStatusComboBox().getSelectedItem().toString()));
-			
-			CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().set(i, instrument);
-			
+				if(i < 0) {
+					i = 0;
+				}
+				
+				instrument.setInstrumentName(CRUDPanel.getInstrumentNameTextField().getText());
+				instrument.setCheckDate(CRUDPanel.getCheckDate().getDate());
+				instrument.setStatusExpiryDate(CRUDPanel.getStatusExpiryDate().getDate());
+				instrument.setCheckStatus(CheckStatus.of(CRUDPanel.getCheckStatusComboBox().getSelectedItem().toString()));
+				
+				CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().set(i, instrument);		
+			}		
 		}
 	}
 
 	public void discardChanges() {
-		//CRUDPanel.getInstrumentList().clearSelection();
 		resetInstrumentFields();
-		GarageInfo tempGarageInfo = connection.getGarage(CRUDPanel.getGaragesList().getSelectedValue().getGarageID());
-//		System.out.println(CRUDPanel.getGaragesList().getSelectedValue().getOGGarageInfo());
-//		System.out.println(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo());
-//		
+		GarageInfo tempGarageInfo = connection.getGarage(CRUDPanel.getGaragesList().getSelectedValue().getGarageID());	
 		CRUDPanel.getGaragesList().getSelectedValue().setGarageInfo(tempGarageInfo);
 		populateInstrumentList(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList());
 		populateGarageFields();
 	}
+	
+	public void saveChanges() {
+		if(CRUDPanel.getInstrumentList().getSelectedValue() != null || CRUDPanel.getInstrumentList().getSelectedIndex() != -1) {
+			if(validateGarageInputs() && validateInstrumentInputs()) {
+				CRUDPanel.getGaragesList().getSelectedValue().setGarageName(CRUDPanel.getGarageNameTextField().getText());
+				CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().setOwnerName(CRUDPanel.getGarageOwnerTextField().getText());
+				CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().setEmailAddress(CRUDPanel.getGarageEmailTextField().getText());
+				CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().setTelephoneNum(CRUDPanel.getGarageNumberTextField().getText());
+				CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().setPaidUntil(CRUDPanel.getGaragePaidUntil().getDate());
+				
+				connection.saveChanges(CRUDPanel.getGaragesList().getSelectedValue());
+			}
+		}
+		else if(validateGarageInputs()) {
+			CRUDPanel.getGaragesList().getSelectedValue().setGarageName(CRUDPanel.getGarageNameTextField().getText());
+			CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().setOwnerName(CRUDPanel.getGarageOwnerTextField().getText());
+			CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().setEmailAddress(CRUDPanel.getGarageEmailTextField().getText());
+			CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().setTelephoneNum(CRUDPanel.getGarageNumberTextField().getText());				CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().setPaidUntil(CRUDPanel.getGaragePaidUntil().getDate());
+			CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo().setPaidUntil(CRUDPanel.getGaragePaidUntil().getDate());
+
+			connection.saveChanges(CRUDPanel.getGaragesList().getSelectedValue());
+		}
+	}
+	
+	boolean validateGarageInputs() {
+		boolean valid = true;
+		
+		boolean missingFields = false;
+		boolean invalidEmail = false;
+		boolean invalidNum = false;
+		boolean invalidDate = false;
+		
+		if(
+				CRUDPanel.getGarageOwnerTextField().getText().equals("") ||
+				CRUDPanel.getGarageNameTextField().getText().equals("") ||
+				CRUDPanel.getGarageEmailTextField().getText().equals("") ||
+				CRUDPanel.getGarageNumberTextField().getText().equals("") ||
+				CRUDPanel.getGaragePaidUntil().getDate() == null
+		){
+			missingFields = true;
+		}
+		
+		if(!CRUDPanel.getGarageEmailTextField().getText().matches("^(?=.{1,128}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@(?=.{1,128})[A-Za-z0-9]{1,}(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
+			invalidEmail = true;
+		}
+		
+		if(!CRUDPanel.getGarageNumberTextField().getText().matches("[0-9]+")) {
+			invalidNum = true;
+		}
+		
+		if(CRUDPanel.getGaragePaidUntil().getDate() != null) {
+			if(CRUDPanel.getGaragePaidUntil().getDate().before(new Date()) ) {
+				invalidDate = true;
+			}
+		}
+		
+		String errorMsg = "";
+		
+		if(missingFields) {
+			errorMsg += "Missing Fields\n";
+			
+			AlertDialog x = new AlertDialog();
+			x.run(errorMsg);
+			
+			valid = false;
+		}
+		else { 
+			if(invalidEmail || invalidNum || invalidDate) {
+				if(invalidEmail) {
+					errorMsg += "Invalid Email\n";
+				}
+				if(invalidNum) {
+					errorMsg += "Invalid Contact Number\n";
+				}
+				if(invalidDate) {
+					errorMsg += "Invalid Date\n";
+				}
+				
+				AlertDialog x = new AlertDialog();
+				x.run(errorMsg);
+				
+				valid = false;	
+			}else {
+				valid = true;
+			}	
+		}
+		return valid;
+	}
+	
+	boolean validateInstrumentInputs() {
+		boolean valid = true;
+		
+		boolean missingFields = false;
+		boolean invalidSerialNumber = false;
+		boolean invalidStatusExpiryDate = false;
+		
+		if(
+				CRUDPanel.getInstrumentNameTextField().getText().equals("") ||
+				CRUDPanel.getSerialNumTextField().getText().equals("") ||
+				CRUDPanel.getStatusExpiryDate().getDate() == null
+		){
+			missingFields = true;
+		}
+		
+		if(!CRUDPanel.getSerialNumTextField().getText().matches("[A-Za-z0-9]+")) {
+			invalidSerialNumber = true;
+		}
+				
+		if(
+				CRUDPanel.getStatusExpiryDate().getDate() != null &&
+				CRUDPanel.getStatusExpiryDate().getDate().before(new Date())
+		) {
+			invalidStatusExpiryDate = true;
+		}
+
+		
+		String errorMsg = "";
+		
+		if(missingFields) {
+			errorMsg += "Missing Fields\n";
+			
+			AlertDialog x = new AlertDialog();
+			x.run(errorMsg);
+			
+			valid = false;
+		}
+		else { 
+			if(invalidSerialNumber || invalidStatusExpiryDate) {
+				if(invalidSerialNumber) {
+					errorMsg += "Invalid Serial Number\n";
+				}
+
+				if(invalidStatusExpiryDate) {
+					errorMsg += "Invalid Status Expiry Date\n";
+				}
+				
+				AlertDialog x = new AlertDialog();
+				x.run(errorMsg);
+				
+				valid = false;	
+			}else {
+				valid = true;
+			}	
+		}
+		return valid;
+	}
 }
+
