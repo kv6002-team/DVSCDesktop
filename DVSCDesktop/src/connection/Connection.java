@@ -216,6 +216,40 @@ public class Connection {
 		return false;
 	}
 	
+	public boolean saveChanges(Garage garage) {
+		JSONObject garageJSON = new JSONObject();
+		garageJSON.put("vts", garage.getGarageInfo().getVts());
+		garageJSON.put("name", garage.getGarageName());
+		garageJSON.put("ownerName", garage.getGarageInfo().getOwnerName());
+		garageJSON.put("emailAddress", garage.getGarageInfo().getEmailAddress());
+		garageJSON.put("telephoneNumber", garage.getGarageInfo().getTelephoneNum());
+		JSONArray instrumentsJSON = new JSONArray();
+		for(Instrument instrument : garage.getGarageInfo().getInstrumentList()) {
+			JSONObject instrumentJSON = new JSONObject();
+			instrumentJSON.put("id", instrument.getInstrumentID());
+			instrumentJSON.put("name", instrument.getInstrumentName());
+			instrumentJSON.put("officialCheckExpiryDate", instrument.getStatusExpiryDate());
+			instrumentJSON.put("ourCheckStatus", instrument.getCheckStatus());
+			instrumentJSON.put("ourCheckDate", instrument.getCheckDate());
+			
+			instrumentsJSON.put(instrumentJSON);
+		}		
+		garageJSON.put("instruments", instrumentsJSON);
+		
+		ParameterList pl = new ParameterList();
+		pl.add("garage", garageJSON.toString());
+		
+		try {
+			Response response = connectionManager.sendPatchRequest("garages/"+String.valueOf(garage.getGarageID()), pl, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
+			if(response.getResponseCode() == 204) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public Response sendEmailList(ArrayList<Integer> emailList) {
 		ParameterList pl = new ParameterList();
 		pl.add("garages", Arrays.toString(emailList.toArray()));
