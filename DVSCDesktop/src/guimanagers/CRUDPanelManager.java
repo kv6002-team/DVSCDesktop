@@ -159,6 +159,10 @@ public class CRUDPanelManager {
 		CRUDPanel.getSaveChangesButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				if(CRUDPanel.getInstrumentList().getSelectedValue() != null || CRUDPanel.getInstrumentList().getSelectedIndex() != -1) {
+					updateInstrument(CRUDPanel.getInstrumentList().getSelectedValue());
+				}
 				saveChanges();
 			}
 		});
@@ -176,8 +180,7 @@ public class CRUDPanelManager {
 		}
 		CRUDPanel.setGarageList(list);	
 	}
-	
-	
+		
 	public void resetGarageFields() {
 		CRUDPanel.getGarageNameTextField().setText("");
 		CRUDPanel.getGarageOwnerTextField().setText("");
@@ -185,8 +188,7 @@ public class CRUDPanelManager {
 		CRUDPanel.getGarageNumberTextField().setText("");
 		CRUDPanel.getGaragePaidUntil().setDate(null);	
 	}
-	
-	
+		
 	public void populateGarageFields() {
 		if(CRUDPanel.getGaragesList().getSelectedValue() != null) {
 			CRUDPanel.getGarageNameTextField().setText(CRUDPanel.getGaragesList().getSelectedValue().getGarageName());
@@ -197,7 +199,6 @@ public class CRUDPanelManager {
 		}
 	}
 	
-
 	public void addGarage() {
 		JFrame garageFormFrame = new JFrame();
 		garageFormFrame.add(garageFormPanelManager.getGarageFormPanel());
@@ -229,8 +230,7 @@ public class CRUDPanelManager {
 		CRUDPanel.getStatusExpiryDate().setDate(null);
 		CRUDPanel.getCheckStatusComboBox().removeAllItems();
 	}
-	
-	
+		
 	public void populateInstrumentList(ArrayList<Instrument> instruments){
 		if(!(instruments == null)) {
 			DefaultListModel<Instrument> list = new DefaultListModel<Instrument>();
@@ -298,6 +298,7 @@ public class CRUDPanelManager {
 	}
 	
 	public void saveChanges() {
+		
 		if(CRUDPanel.getInstrumentList().getSelectedValue() != null || CRUDPanel.getInstrumentList().getSelectedIndex() != -1) {
 			if(validateGarageInputs() && validateInstrumentInputs()) {
 				CRUDPanel.getGaragesList().getSelectedValue().setGarageName(CRUDPanel.getGarageNameTextField().getText());
