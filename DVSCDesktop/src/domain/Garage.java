@@ -13,6 +13,8 @@ public class Garage {
 	
 	private GarageInfo gi;
 	private String garageName;
+	private GarageInfo ogGarageInfo;
+	private String ogGarageName;
 	private int ID;
 	
 	private Connection connection = new Connection();
@@ -20,6 +22,7 @@ public class Garage {
 	public Garage(String garageName, int ID){
 		this.garageName = garageName;
 		this.ID = ID;
+		this.ogGarageName = garageName;
 	}
 	
 	public Garage(String vts, String ownerName, String garageName, String emailAddress, String telephoneNum, Date paidUntil) {
@@ -32,6 +35,10 @@ public class Garage {
 		return garageName;
 	}
 	
+	public String getOGGarageName() {
+		return ogGarageName;
+	}
+	
 	public Integer getGarageID(){
 		return ID;
 	}
@@ -39,17 +46,33 @@ public class Garage {
 	public GarageInfo getGarageInfo(){
 		return gi;
 	}
+	
+	public GarageInfo getOGGarageInfo() {
+		return ogGarageInfo;
+	}
 
-	public void setGarageID(int ID){
+	public void setGarageID(int ID) {
 		this.ID = ID;
 	}
 	
-	public void setGarageName(String garageName){
+	public void setGarageName(String garageName) { 
 		this.garageName = garageName;
 	}
 	
-	public void addGarageInfo(){
+	public void addGarageInfo() {
 		this.gi = connection.getGarage(this.ID);
+		this.ogGarageInfo = new GarageInfo(
+				gi.getVts(),
+				gi.getOwnerName(),
+				gi.getEmailAddress(),
+				gi.getTelephoneNum(),
+				gi.getPaidUntil(),
+				gi.getInstrumentList()
+				);
+	}
+	
+	public void setGarageInfo(GarageInfo gi) {
+		this.gi = gi; 
 	}
 	
 	@Override

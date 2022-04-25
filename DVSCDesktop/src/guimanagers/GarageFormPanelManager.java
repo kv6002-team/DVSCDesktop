@@ -47,6 +47,8 @@ public class GarageFormPanelManager{
 						garagesList.addElement(newGarage);
 						CRUDPanelManager.getCRUDPanel().getGaragesList().setModel(garagesList);
 						
+						clearInputs();
+						
 						JOptionPane.showMessageDialog(new JFrame(), "Garage Created");
 						((Window) garageFormPanel.getTopLevelAncestor()).dispose();
 					}
@@ -122,6 +124,15 @@ public class GarageFormPanelManager{
 			}	
 		}
 		return valid;
+	}
+	
+	void clearInputs() {
+		garageFormPanel.getVTS().setText("");
+		garageFormPanel.getOwnerName().setText("");
+		garageFormPanel.getGarageName().setText("");
+		garageFormPanel.getContactEmail().setText("");
+		garageFormPanel.getContactNum().setText("");
+		garageFormPanel.getPaidUntil().setDate(null);
 	}
 	
 	GarageFormPanel getGarageFormPanel() {

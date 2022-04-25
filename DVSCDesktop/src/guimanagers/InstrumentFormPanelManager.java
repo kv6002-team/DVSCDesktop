@@ -54,20 +54,16 @@ public class InstrumentFormPanelManager{
 						
 						newInstrument.setInstrumentID(id);	
 						
-						System.out.println("-----");
-						System.out.println(newInstrument.getInstrumentID());
-						System.out.println("-----");
-						
-						
 						DefaultListModel<Instrument> instrumentsList = (DefaultListModel<Instrument>) CRUDPanelManager.getCRUDPanel().getInstrumentList().getModel();
 						instrumentsList.addElement(newInstrument);
 						CRUDPanelManager.getCRUDPanel().setInstrumentList(instrumentsList);
 						
 						JOptionPane.showMessageDialog(new JFrame(), "Instrument Created");
+						
+						clearInputs();
+						
 						((Window) instrumentFormPanel.getTopLevelAncestor()).dispose();
 					}
-										
-					
 				}
 			}
 		});
@@ -141,6 +137,13 @@ public class InstrumentFormPanelManager{
 			}	
 		}
 		return valid;
+	}
+	
+	void clearInputs() {
+		instrumentFormPanel.getInstrumentName().setText("");
+		instrumentFormPanel.getSerialNumber().setText("");
+		instrumentFormPanel.getCheckDate().setDate(null);
+		instrumentFormPanel.getStatusExpiryDate().setDate(null);
 	}
 	
 	InstrumentFormPanel getInstrumentFormPanel() {
