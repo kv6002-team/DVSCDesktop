@@ -20,6 +20,7 @@ import javax.swing.Box;
  *
  */
 
+@SuppressWarnings("serial")
 public class EmailPanel extends JPanel {
 	
 	public JList<Garage> lst_GarageEmails = new JList<Garage>();

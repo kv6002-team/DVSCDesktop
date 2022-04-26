@@ -5,8 +5,6 @@ import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 
 import guimanagers.CRUDPanelManager;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 import guimanagers.EmailPanelManager;
 
 /**

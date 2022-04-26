@@ -3,7 +3,6 @@ package guimanagers;
 import gui.AlertDialog;
 import gui.CRUDPanel;
 import gui.Wrapper;
-import utils.Console;
 import domain.Garage;
 import domain.GarageInfo;
 import domain.Instrument;
