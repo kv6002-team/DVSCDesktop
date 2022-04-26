@@ -26,7 +26,7 @@ import utils.Console;
  *
  */
 public class ConnectionManager {
-	private static final boolean DEV_MODE = false;
+	private static final boolean DEV_MODE = true;
 	private String url;
 	
 	public ConnectionManager(String url){
