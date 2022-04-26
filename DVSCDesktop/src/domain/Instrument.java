@@ -22,7 +22,9 @@ public class Instrument {
 		public static CheckStatus of(String value) {
 			switch (value) {
 			case "checked_satisfactory" : return CHECKED_SATISFACTORY;
+			case "checked and satisfactory" : return CHECKED_SATISFACTORY;
 			case "checked_unsatisfactory" : return CHECKED_UNSATISFACTORY;
+			case "checked and unsatisfactory" : return CHECKED_UNSATISFACTORY;
 			case "unchecked" : return UNCHECKED;
 			default : throw new IllegalArgumentException("Invalid CheckStatus value");
 			}

@@ -41,7 +41,11 @@ public class EmailPanelManager {
 		//Function to extract each Approved Garage's ID and send it to the
 		//"sendEmailList" in Connection.Java
 		ArrayList<Integer> idList = new ArrayList<Integer>();
-		int totalElements = EmailPanel.getApprovedEmails().getModel().getSize();
+		int totalElements = 
+				EmailPanel
+				.getApprovedEmails()
+				.getModel()
+				.getSize();
 		for (int i = 0; i < totalElements; i++) {
 			idList.add(
 				EmailPanel
@@ -192,18 +196,10 @@ public class EmailPanelManager {
 		});
 		
 		EmailPanel.getApprove().addActionListener(new ActionListener() {
-			//Creates JFrame, displays two options to either approve or reject the currently selected list elements within the 
-			//Approved Email List
 			public void actionPerformed(ActionEvent e) {
 				//Call function to send selected emails to backend for processing
-				//And sending to Email API
+				//And sending to Email API			
 				sendListToServer();
-			}
-		});
-		
-		EmailPanel.getTempApproval().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getGarageList(allGarages);
 			}
 		});
 	}

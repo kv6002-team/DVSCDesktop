@@ -4,8 +4,6 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.ArrayList;
-
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -13,12 +11,8 @@ import javax.swing.DefaultListModel;
 import java.awt.GridLayout;
 import domain.Garage;
 import javax.swing.JTabbedPane;
-import javax.swing.ListModel;
-
 import java.awt.Component;
 import javax.swing.Box;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * 
@@ -35,9 +29,12 @@ public class EmailPanel extends JPanel {
 	public JButton btn_RemoveSelected = new JButton("Remove selected");
 	public JButton btn_RemoveAll = new JButton("Remove All");
 	public JButton btn_Approve = new JButton("Approve");
-	public JButton btn_tempApprove = new JButton("Test");
 	
 	public static final String tabName = "Emails";
+	
+	/**
+	 * Getters for email panel elements
+	 */
 	
 	public JList<Garage> getGarageEmails() {
 		return lst_GarageEmails;
@@ -49,6 +46,7 @@ public class EmailPanel extends JPanel {
 	
 	public void setListOfGarages(DefaultListModel<Garage> garages) {
 		lst_GarageEmails.setModel(garages);
+		//Sets garage emails list model to contain garages
 	}
 	
 	public JButton getMoveAll() {
@@ -69,10 +67,6 @@ public class EmailPanel extends JPanel {
 	
 	public JButton getApprove() {
 		return btn_Approve;
-	}
-	
-	public JButton getTempApproval() {
-		return btn_tempApprove;
 	}
 	
 	/**
@@ -124,12 +118,6 @@ public class EmailPanel extends JPanel {
 		gbc_scrl_GarageEmails.gridy = 0;
 		pnl_GarageEmails.add(scrl_GarageEmails, gbc_scrl_GarageEmails);
 		
-		//DefaultListModel<Garage> sampleData = new DefaultListModel<Garage>(); 
-		//sampleData.addElement(new Garage("Garage One", 1));
-		//sampleData.addElement(new Garage("Garage Two", 2));
-		//sampleData.addElement(new Garage("Garage Three", 3));
-		//lst_GarageEmails.setModel(sampleData);
-		
 		scrl_GarageEmails.setViewportView(lst_GarageEmails);
 		
 		JPanel pnl_ButtonPannel = new JPanel();
@@ -175,11 +163,6 @@ public class EmailPanel extends JPanel {
 		gbc_btn_RemoveAll.gridx = 0;
 		gbc_btn_RemoveAll.gridy = 8;
 		pnl_ButtonPannel.add(btn_RemoveAll, gbc_btn_RemoveAll);
-		
-		GridBagConstraints gbc_btn_tempApprove = new GridBagConstraints();
-		gbc_btn_tempApprove.gridx = 0;
-		gbc_btn_tempApprove.gridy = 10;
-		pnl_ButtonPannel.add(btn_tempApprove, gbc_btn_tempApprove);
 		
 		JPanel pnl_EmailRecpients = new JPanel();
 		GridBagConstraints gbc_pnl_EmailRecpients = new GridBagConstraints();
