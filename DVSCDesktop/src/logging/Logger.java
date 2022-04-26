@@ -1,7 +1,11 @@
 package logging;
 
 import connection.Connection;
-
+/**
+ * Logger class for providing types and levels and then runs the log method in connection
+ * @author Scrub
+ *
+ */
 public class Logger {
 	private static Connection con = new Connection();
 	public static enum TYPE {

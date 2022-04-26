@@ -15,9 +15,8 @@ import gui.AlertDialog;
 import logging.Logger;
 import security.JWT;
 import security.SecurityManager;
-import utils.Console;
 /**
- * 
+ * Connection class provides abstraction methods using the ConnectionManager to communicate with the server
  * @author Scrub
  *
  */
@@ -41,7 +40,13 @@ public class Connection {
 		}
 		return flag;
 	}
-	
+	/**
+	 * Takes a username and password then parses and encodes them into b64 and sends it as an authorisation header.
+	 * Sets the JWT token singleton and returns true if login is valid
+	 * @param username
+	 * @param password
+	 * @return boolean
+	 */
 	public boolean authenticate(String username, String password) {
 		boolean flag = false;
 		String authString = SecurityManager.encode(username + ":" + password);
@@ -65,6 +70,11 @@ public class Connection {
 		return flag;
 	}
 	
+	/**
+	 * Sends a password reset request to the server with the username provided
+	 * @param username
+	 * @return boolean
+	 */
 	public boolean reset(String username) {
 		ParameterList pList = new ParameterList();
 		pList.add("username",username);
@@ -78,6 +88,13 @@ public class Connection {
 		return flag;
 	}
 	
+	/**
+	 * Allows the app to log app events to the server
+	 * @param type
+	 * @param level
+	 * @param message
+	 * @return boolean
+	 */
 	public boolean log (Logger.TYPE type, Logger.LEVEL level, String message) {
 		ParameterList pList = new ParameterList();
 		pList.add("type", type.toString());
@@ -92,6 +109,10 @@ public class Connection {
 		return false;
 	}
 	
+	/**
+	 * Gets a list of all garage IDs and Names
+	 * @return ArrayList<Garage>
+	 */
 	public ArrayList<Garage> getAllGarages() {
 		ArrayList<Garage> allGarages = new ArrayList<Garage>();
 		try {
@@ -112,6 +133,11 @@ public class Connection {
 		return allGarages;		
 	}
 	
+	/**
+	 * Gets a garages info based on the ID provided
+	 * @param id
+	 * @return
+	 */
 	public GarageInfo getGarage(int id) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		

@@ -2,7 +2,11 @@ package connection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+/**
+ * Object for holding and passing around a response from the server
+ * @author Scrub
+ *
+ */
 public class Response {
 	String response;
 	int responseCode;

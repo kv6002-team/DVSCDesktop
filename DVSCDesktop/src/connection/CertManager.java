@@ -7,7 +7,11 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 
-
+/**
+ * Creates a TrustManager for handling x509 public certs from TLS
+ * @author Scrub
+ *
+ */
 public class CertManager {
 	
 	public static TrustManager[] getTrustManager() {

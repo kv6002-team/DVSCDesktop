@@ -1,6 +1,6 @@
 package security;
 /**
- * 
+ * JWT Singleton for storing a JWT Token provided by the serber
  * @author Scrub
  *
  */
