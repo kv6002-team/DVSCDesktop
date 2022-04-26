@@ -3,6 +3,7 @@ package domain;
 import java.util.Date;
 
 /**
+ * Instrument Domain Class.
  * 
  * @author Callum
  *
@@ -19,6 +20,7 @@ public class Instrument {
 			this.value = value;
 		}
 		
+		// Method to get CheckStatus from String.
 		public static CheckStatus of(String value) {
 			switch (value) {
 			case "checked_satisfactory" : return CHECKED_SATISFACTORY;
@@ -30,6 +32,7 @@ public class Instrument {
 			}
 		}
 		
+		// Method to convert CheckStatus to String.
 		public static String checkStatusToString(CheckStatus status) {
 			switch(status) {
 			case CHECKED_SATISFACTORY : return "checked and satisfactory";
@@ -40,15 +43,14 @@ public class Instrument {
 		}
 	};
 	
-	
-	
 	private int ID;
 	private String instrumentName;
 	private String serialNum;
 	private Date checkDate;
 	private Date statusExpiryDate;
 	private CheckStatus status;
-		
+	
+	// Constructor for Instrument with ID.
 	public Instrument(int ID, String instrumentName, String serialNum, Date checkDate, Date expiryDate, CheckStatus status){
 		this.ID = ID;
 		this.instrumentName = instrumentName;
@@ -58,6 +60,7 @@ public class Instrument {
 		this.status = status;
 	}
 	
+	// Constructor for Instrument without ID.
 	public Instrument(String instrumentName, String serialNum, Date checkDate, Date expiryDate, CheckStatus status) {
 		this.instrumentName = instrumentName;
 		this.serialNum = serialNum;
@@ -65,6 +68,9 @@ public class Instrument {
 		this.statusExpiryDate = expiryDate;
 		this.status = status;
 	}
+	
+	/* Instrument Getters and Setters
+	 * -------------------------------------------------- */
 	
 	public int getInstrumentID() {
 		return this.ID;

@@ -136,7 +136,7 @@ public class Connection {
 	/**
 	 * Gets a garages info based on the ID provided
 	 * @param id
-	 * @return
+	 * @return GarageInfo 
 	 */
 	public GarageInfo getGarage(int id) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -176,6 +176,11 @@ public class Connection {
 		return gi;	
 	}
 	
+	/**
+	 * Adds a Garage to the Server
+	 * @param garage
+	 * @return int ID of the Garage
+	 */
 	public int addGarage(Garage garage) {
 		ParameterList pl = new ParameterList();
 		pl.add("vts", garage.getGarageInfo().getVts());
@@ -200,6 +205,11 @@ public class Connection {
 		return -1;	
 	}
 	
+	/**
+	 * Removes a Garage from the Server
+	 * @param id
+	 * @return boolean successful request
+	 */
 	public boolean removeGarage(int id) {
 		try {	
 			Response response = connectionManager.sendDeleteRequest("garages/"+String.valueOf(id), null, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
@@ -212,6 +222,12 @@ public class Connection {
 		return false;
 	}
 	
+	/**
+	 * Adds an Instrument to a Garage on the Server
+	 * @param garage
+	 * @param instrument
+	 * @return int ID of the Instrument
+	 */
 	public int addInstrument(Garage garage, Instrument instrument) {
 		ParameterList pl = new ParameterList();
 		pl.add("garageID", garage.getGarageID().toString());
@@ -235,6 +251,11 @@ public class Connection {
 		return -1;
 	}
 	
+	/**
+	 * Removes an Instrument from a Garage on the Server
+	 * @param id
+	 * @return
+	 */
 	public boolean removeInstrument(int id) {
 		try {
 			Response response = connectionManager.sendDeleteRequest("instruments/"+String.valueOf(id), null, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
@@ -247,6 +268,11 @@ public class Connection {
 		return false;
 	}
 	
+	/**
+	 * Saves Changes made in Application to the Server
+	 * @param garage
+	 * @return
+	 */
 	public boolean saveChanges(Garage garage) {
 		JSONObject garageJSON = new JSONObject();
 		garageJSON.put("vts", garage.getGarageInfo().getVts());
@@ -282,6 +308,11 @@ public class Connection {
 		return false;
 	}
 	
+	/**
+	 * Sends list of Garage IDs to the server to send monthly report emails to.
+	 * @param emailList
+	 * @return
+	 */
 	public Response sendEmailList(ArrayList<Integer> emailList) {
 		ParameterList pl = new ParameterList();
 		pl.add("garages", Arrays.toString(emailList.toArray()));

@@ -13,6 +13,12 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 
+/**
+ * InstrumentFormPanel UI Class. 
+ * 
+ * @author callu
+ *
+ */
 @SuppressWarnings("serial")
 public class InstrumentFormPanel extends JPanel {
 	private JTextField txt_serialNumber;
@@ -165,6 +171,9 @@ public class InstrumentFormPanel extends JPanel {
 		pnl_addGarage.add(btn_confirm, gbc_btn_confirm);
 
 	}
+	
+	/* InstrumentFormPanel Getters
+	 * -------------------------------------------------- */
 	
 	public JTextField getInstrumentName() {
 		return this.txt_instrumentName;
