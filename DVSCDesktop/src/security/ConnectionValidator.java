@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 /**
- * 
+ * Checks to make sure a HTTPS Connection can be made to a URL
  * @author Scrub
  *
  */

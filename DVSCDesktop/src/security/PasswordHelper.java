@@ -7,7 +7,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 /**
- * 
+ * Provides functions for parsing and encrypting a password
  * @author Scrub
  *
  */

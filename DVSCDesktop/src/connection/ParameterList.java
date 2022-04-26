@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
+ * Provides a method for storing KV pairs for sending to the server
  * @author Scrub
  *
  */

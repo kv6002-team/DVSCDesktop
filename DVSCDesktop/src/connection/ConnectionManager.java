@@ -20,6 +20,11 @@ import org.apache.hc.core5.http.message.BasicNameValuePair;
 
 import utils.Console;
 
+/**
+ * 
+ * @author Scrub
+ *
+ */
 public class ConnectionManager {
 	private static final boolean DEV_MODE = true;
 	private String url;
@@ -28,6 +33,9 @@ public class ConnectionManager {
 		this.url = url;
 	}
 	
+	/**
+	 * Authentication enum for what type of authentication the HTTPS request should use
+	 */
 	public static enum AUTH_TYPE{
 		JWT("bearer"),
 		BASIC("basic"),
@@ -39,7 +47,11 @@ public class ConnectionManager {
 			this.type = type;
 		}
 	}
-	
+	/**
+	 * Converts parameterlist object to BasicNameValuePair object for use in the request to properly encode the data
+	 * @param pl
+	 * @return UrlEncodedFormEntity
+	 */
 	@SuppressWarnings("unchecked")
 	private UrlEncodedFormEntity parseParameterList(ParameterList pl){
 		List<NameValuePair> parameterList = new ArrayList<>();
@@ -48,7 +60,17 @@ public class ConnectionManager {
 		});
 		return new UrlEncodedFormEntity(parameterList);
 	} 
-	
+	/**
+	 * Sends a post request to an endpoint, if there is data to send then querylist is used as a parameterlist
+	 * If the request requires authorisation then the method will require the AUTH_TYPE enum and then the next param is the string that will be sent as the auth header
+	 * Returns a response object which holds data, response code and response message
+	 * @param endpoint
+	 * @param queryList
+	 * @param authType
+	 * @param authorisationString
+	 * @return Response
+	 * @throws Exception
+	 */
 	public Response sendPostRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception{
 		if(queryList == null) queryList = new ParameterList();
 		try(CloseableHttpClient httpClient = HttpClients.createDefault()){
@@ -79,7 +101,16 @@ public class ConnectionManager {
 			
 		}
 	}
-	
+
+	/**
+	 * Sends a get request to an endpoint, if there is data to send then querylist is used as a parameterlist
+	 * If the request requires authorisation then the method will require the AUTH_TYPE enum and then the next param is the string that will be sent as the auth header
+	 * Returns a response object which holds data, response code and response message
+	 * @param endpoint
+	 * @param queryList
+	 * @return Response
+	 * @throws Exception
+	 */
 	public Response sendGetRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
 		try(CloseableHttpClient httpClient = HttpClients.createDefault()){
 			if(queryList == null) queryList = new ParameterList();
@@ -104,7 +135,17 @@ public class ConnectionManager {
 			}
 		}
 	}
-	
+	/**
+	 * Sends a delete request to an endpoint, if there is data to send then querylist is used as a parameterlist
+	 * If the request requires authorisation then the method will require the AUTH_TYPE enum and then the next param is the string that will be sent as the auth header
+	 * Returns a response object which holds data, response code and response message
+	 * @param endpoint
+	 * @param queryList
+	 * @param authType
+	 * @param authorisationString
+	 * @return Response
+	 * @throws Exception
+	 */
 	public Response sendDeleteRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
 		if(queryList == null) queryList = new ParameterList();
 		try(CloseableHttpClient httpClient = HttpClients.createDefault()){
@@ -133,7 +174,17 @@ public class ConnectionManager {
 			}
 		}
 	}
-	
+	/**
+	 * Sends a patch request to an endpoint, if there is data to send then querylist is used as a parameterlist
+	 * If the request requires authorisation then the method will require the AUTH_TYPE enum and then the next param is the string that will be sent as the auth header
+	 * Returns a response object which holds data, response code and response message
+	 * @param endpoint
+	 * @param queryList
+	 * @param authType
+	 * @param authorisationString
+	 * @return Response
+	 * @throws Exception
+	 */
 	public Response sendPatchRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception{
 		if(queryList == null) queryList = new ParameterList();
 		try(CloseableHttpClient httpClient = HttpClients.createDefault()){
@@ -162,7 +213,17 @@ public class ConnectionManager {
 			}
 		}	
 	}
-	
+	/**
+	 * Sends a put request to an endpoint, if there is data to send then querylist is used as a parameterlist
+	 * If the request requires authorisation then the method will require the AUTH_TYPE enum and then the next param is the string that will be sent as the auth header
+	 * Returns a response object which holds data, response code and response message
+	 * @param endpoint
+	 * @param queryList
+	 * @param authType
+	 * @param authorisationString
+	 * @return Response
+	 * @throws Exception
+	 */
 	public Response sendPutRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception{
 		if(queryList == null) queryList = new ParameterList();
 		try(CloseableHttpClient httpClient = HttpClients.createDefault()){

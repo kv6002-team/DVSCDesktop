@@ -5,7 +5,7 @@ import connection.ParameterList;
 import gui.AlertDialog;
 
 /**
- * 
+ * Provides methods for authenticating a user when logging in and resetting passwords
  * @author Scrub
  *
  */
