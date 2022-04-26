@@ -240,6 +240,12 @@ public class ConnectionManager {
 					entity = response.getEntity();
 					output = new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
 				} 
+				/*
+				 *  /\_/\
+				 * ( o.o )
+ 				 *  > ^ <
+ 				 *   Cat
+				 */
 				if(DEV_MODE) {
 					Console.log("DEL  | " + "https://" + this.url + "/api/" + endpoint);
 					Console.log("ARGS | " + queryList.generateString());
@@ -253,3 +259,4 @@ public class ConnectionManager {
 		}	
 	}
 }
+

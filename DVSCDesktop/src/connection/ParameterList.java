@@ -71,6 +71,7 @@ public class ParameterList {
 		output = String.join("&", outputArray);
 		return (outputArray.size() > 0) ? "?" + output : "";
 	}
+	@SuppressWarnings("rawtypes")
 	public Map getList() {
 		return parameterList;
 	}

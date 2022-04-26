@@ -3,7 +3,6 @@ package guimanagers;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.Instant;
 import java.util.Date;
 
 import javax.swing.DefaultListModel;
@@ -11,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import connection.Connection;
-import domain.Garage;
 import domain.Instrument;
 import domain.Instrument.CheckStatus;
 import gui.AlertDialog;

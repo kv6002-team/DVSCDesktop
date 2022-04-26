@@ -12,9 +12,8 @@ import javax.swing.Box;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
+@SuppressWarnings("serial")
 public class InstrumentFormPanel extends JPanel {
 	private JTextField txt_serialNumber;
 	private JDateChooser date_checkDate = new JDateChooser();

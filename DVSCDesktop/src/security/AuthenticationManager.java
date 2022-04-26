@@ -1,7 +1,5 @@
 package security;
 import connection.Connection;
-import connection.ConnectionManager;
-import connection.ParameterList;
 import gui.AlertDialog;
 
 /**

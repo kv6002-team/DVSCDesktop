@@ -24,11 +24,11 @@ import com.toedter.calendar.JDateChooser;
 
 import domain.Garage;
 import domain.Instrument;
-import domain.Instrument.CheckStatus;
 
 import java.awt.Dimension;
 import javax.swing.JComboBox;
 
+@SuppressWarnings("serial")
 public class CRUDPanel extends JPanel {
 
 	public JList<Garage> lst_garages = new JList<Garage>();
