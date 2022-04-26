@@ -15,6 +15,7 @@ import gui.AlertDialog;
 import logging.Logger;
 import security.JWT;
 import security.SecurityManager;
+import utils.Console;
 /**
  * Connection class provides abstraction methods using the ConnectionManager to communicate with the server
  * @author Scrub

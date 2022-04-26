@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -59,6 +61,7 @@ public class EmailPanelManager {
 	}
 	
 	private void sendListToServer() {
+		//Sending the list of garage ID's to the connection "sendEmailList" function
 		ArrayList<Integer> emailIDs = getGarageIDs();
 		connection.sendEmailList(emailIDs);
 	}
@@ -68,6 +71,7 @@ public class EmailPanelManager {
 		ArrayList<Garage> allGarages = connection.getAllGarages();
 
 		wrapper.getTabbedPane().addChangeListener(new ChangeListener() {
+			//Generate the list of garage emails upon the tab being selected
 			public void stateChanged(ChangeEvent e) {
 				getGarageList(allGarages);
 			}
@@ -198,8 +202,26 @@ public class EmailPanelManager {
 		EmailPanel.getApprove().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Call function to send selected emails to backend for processing
-				//And sending to Email API			
-				sendListToServer();
+				//And sending to Email API so long as at least one email has been selected
+				//Else make a pop up window informing the user
+				JFrame jFrame = new JFrame();
+				int totalElements = 
+						EmailPanel
+						.getApprovedEmails()
+						.getModel()
+						.getSize();
+				if (totalElements > 0) {
+					sendListToServer();
+					((DefaultListModel<Garage>)
+							EmailPanel
+							.getApprovedEmails()
+							.getModel())
+							.clear();
+			        JOptionPane.showMessageDialog(jFrame, "Emails approved");
+				}
+				else {
+					JOptionPane.showMessageDialog(jFrame, "No Emails have been selected");
+				}
 			}
 		});
 	}
