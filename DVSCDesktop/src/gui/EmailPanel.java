@@ -4,8 +4,6 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.ArrayList;
-
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -13,12 +11,8 @@ import javax.swing.DefaultListModel;
 import java.awt.GridLayout;
 import domain.Garage;
 import javax.swing.JTabbedPane;
-import javax.swing.ListModel;
-
 import java.awt.Component;
 import javax.swing.Box;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * 
@@ -123,12 +117,6 @@ public class EmailPanel extends JPanel {
 		gbc_scrl_GarageEmails.gridx = 0;
 		gbc_scrl_GarageEmails.gridy = 0;
 		pnl_GarageEmails.add(scrl_GarageEmails, gbc_scrl_GarageEmails);
-		
-		//DefaultListModel<Garage> sampleData = new DefaultListModel<Garage>(); 
-		//sampleData.addElement(new Garage("Garage One", 1));
-		//sampleData.addElement(new Garage("Garage Two", 2));
-		//sampleData.addElement(new Garage("Garage Three", 3));
-		//lst_GarageEmails.setModel(sampleData);
 		
 		scrl_GarageEmails.setViewportView(lst_GarageEmails);
 		
