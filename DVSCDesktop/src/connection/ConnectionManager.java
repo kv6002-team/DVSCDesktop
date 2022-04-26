@@ -80,11 +80,11 @@ public class ConnectionManager {
 		}
 	}
 	
-	public Response sendGetRequest(String endpoint, ParameterList queryList) throws Exception {
+	public Response sendGetRequest(String endpoint, ParameterList queryList, AUTH_TYPE authType, String authorisationString) throws Exception {
 		try(CloseableHttpClient httpClient = HttpClients.createDefault()){
 			if(queryList == null) queryList = new ParameterList();
 			HttpGet httpGet = new HttpGet("https://" + this.url + "/api/" + endpoint + queryList.generateString());
-			
+			if(authType != AUTH_TYPE.NONE) httpGet.setHeader("Authorization",authType.type + " " + authorisationString);
 			try(CloseableHttpResponse response = httpClient.execute(httpGet)){
 				HttpEntity entity = null;
 				String output = "";
