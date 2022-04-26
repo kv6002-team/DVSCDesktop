@@ -6,6 +6,8 @@ import java.util.Date;
 import connection.Connection;
 
 /**
+ * Garage Domain Class
+ * 
  * @author Callum
  */
 
@@ -19,18 +21,23 @@ public class Garage {
 	
 	private Connection connection = new Connection();
 	
+	// Constructor for basic Garage
 	public Garage(String garageName, int ID){
 		this.garageName = garageName;
 		this.ID = ID;
 		this.ogGarageName = garageName;
 	}
 	
+	// Constructor for full Garage.
 	public Garage(String vts, String ownerName, String garageName, String emailAddress, String telephoneNum, Date paidUntil) {
 		ArrayList<Instrument> instrumentList = null;
 		this.garageName = garageName;
 		this.gi = new GarageInfo(vts, ownerName, emailAddress, telephoneNum, paidUntil, instrumentList);
 	}
 
+	/* Garage Getters and Setters
+	 * -------------------------------------------------- */
+	
 	public String getGarageName() {
 		return garageName;
 	}

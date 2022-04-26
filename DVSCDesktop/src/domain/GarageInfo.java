@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.ArrayList;
 
 /**
+ * GarageInfo Domain Class
  * 
  * @author Callum
  *
@@ -18,6 +19,7 @@ public class GarageInfo {
 	private Date paidUntil;
 	private ArrayList<Instrument> instrumentList = new ArrayList<Instrument>();
 	
+	// Constructor for GarageInfo
 	public GarageInfo(String vts, String ownerName, String emailAddress, String telephoneNum, Date paidUntil, ArrayList<Instrument> instrumentList){
 		this.vts = vts;
 		this.ownerName = ownerName;
@@ -26,6 +28,9 @@ public class GarageInfo {
 		this.paidUntil = paidUntil;
 		this.instrumentList = instrumentList;
 	}
+	
+	/* GarageInfo Getters and Setters
+	 * -------------------------------------------------- */
 	
 	public String getVts(){
 		return this.vts;

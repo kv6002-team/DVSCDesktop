@@ -13,7 +13,12 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 
-
+/**
+ * GarageFormPanel UI Class 
+ * 
+ * @author callu
+ *
+ */
 @SuppressWarnings("serial")
 public class GarageFormPanel extends JPanel {
 	private JTextField txt_garageName;
@@ -211,6 +216,9 @@ public class GarageFormPanel extends JPanel {
 
 	}
 
+	/* GarageFormPanel Getters 
+	 * -------------------- */
+	
 	public JTextField getVTS() {
 		return this.txt_vts;
 	}

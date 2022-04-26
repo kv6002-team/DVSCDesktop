@@ -28,9 +28,16 @@ import domain.Instrument;
 import java.awt.Dimension;
 import javax.swing.JComboBox;
 
+/**
+ * CRUDPanel UI Class
+ * 
+ * @author Callum
+ *
+ */
+
 @SuppressWarnings("serial")
 public class CRUDPanel extends JPanel {
-
+	
 	public JList<Garage> lst_garages = new JList<Garage>();
 	public JTextField txt_garageName = new JTextField();
 	public JLabel lbl_ownerName = new JLabel("Owner Name");
@@ -491,7 +498,10 @@ public class CRUDPanel extends JPanel {
 		add(btn_discardChanges, gbc_btn_discardChanges);
 
 	}
-
+	
+	/* CRUDPanel Getters and Setters
+	 * -------------------------------------------------- */
+	
 	public JList<Garage> getGaragesList() {
 		return lst_garages;
 	}

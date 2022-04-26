@@ -14,6 +14,12 @@ import domain.Garage;
 import gui.AlertDialog;
 import gui.GarageFormPanel;
 
+/**
+ * Manager Class for the GarageFormPanel UI Class
+ * 
+ * @author Callum
+ *
+ */
 public class GarageFormPanelManager{
 	
 	GarageFormPanel garageFormPanel = new GarageFormPanel();;
@@ -21,12 +27,18 @@ public class GarageFormPanelManager{
 	
 	public GarageFormPanelManager(CRUDPanelManager CRUDPanelManager) {
 		
+		/**
+		 * Mouse Listener for click on Confirm button.
+		 */
 		garageFormPanel.getConfirmButton().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				// Validate form inputs
 				boolean valid = validateInputs();
 				
+				// If inputs are valid
 				if(valid) {
+					// Creates new Garage Object using input fields.
 					Garage newGarage = new Garage(
 							garageFormPanel.getVTS().getText(),
 							garageFormPanel.getOwnerName().getText(),
@@ -35,8 +47,14 @@ public class GarageFormPanelManager{
 							garageFormPanel.getContactNum().getText(),
 							garageFormPanel.getPaidUntil().getDate()
 							);
+					
+					// Sends the new Garage off to the server, returning a Garage ID
 					int id = connection.addGarage(newGarage);
 					
+					/* Check to see if the sending Garage failed.
+					 * if fails, create AlertDialog informing user
+					 * otherwise, add new garage to garagesList ListModel.
+					 */
 					if(id == -1) {
 						AlertDialog x = new AlertDialog();
 						x.run("Garage Creation Failed. Please try again.");
@@ -59,6 +77,11 @@ public class GarageFormPanelManager{
 		});
 	}
 	
+	/**
+	 * Validates the input fields of the Garage Form.
+	 * 
+	 * @return validity of the form inputs (True / False)
+	 */
 	boolean validateInputs() {
 		
 		boolean valid = true;
@@ -68,6 +91,7 @@ public class GarageFormPanelManager{
 		boolean invalidNum = false;
 		boolean invalidDate = false;
 		
+		// Check if any of the fields are empty, setting a flag to true.
 		if(
 				garageFormPanel.getVTS().getText().equals("") ||
 				garageFormPanel.getOwnerName().getText().equals("") ||
@@ -79,14 +103,30 @@ public class GarageFormPanelManager{
 			missingFields = true;
 		}
 		
-		if(!garageFormPanel.getContactEmail().getText().matches("^(?=.{1,128}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@(?=.{1,128})[A-Za-z0-9]{1,}(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
+		/* Check if email address does not meet the 
+		 * expected format, setting flag to true. */
+		if(!garageFormPanel.getContactEmail().getText()
+				.matches(
+						"^"
+						+ "(?=.{1,128}@)"
+						+ "[A-Za-z0-9_-]+"
+						+ "(\\.[A-Za-z0-9_-]+)*"
+						+ "@(?=.{1,128})"
+						+ "[A-Za-z0-9]"
+						+ "(\\.[A-Za-z0-9-]+)*"
+						+ "(\\.[A-Za-z]{2,})"
+						+ "$"
+						)
+				) {
 			invalidEmail = true;
 		}
 		
+		// Checks if the phone number isn't numeric. setting a flag to true.
 		if(!garageFormPanel.getContactNum().getText().matches("[0-9]+")) {
 			invalidNum = true;
 		}
 		
+		// Checks if the paidUntil date is not in the past, setting a flag to true.
 		if(garageFormPanel.getPaidUntil().getDate() != null) {
 			if(garageFormPanel.getPaidUntil().getDate().before(new Date()) ) {
 				invalidDate = true;
@@ -94,7 +134,9 @@ public class GarageFormPanelManager{
 		}
 		
 		String errorMsg = "";
-		
+		/* Depending on the flags which are true,
+		 * append an error message to display to the user
+		 * within an new AlertDialog box */
 		if(missingFields) {
 			errorMsg += "Missing Fields\n";
 			
@@ -126,6 +168,9 @@ public class GarageFormPanelManager{
 		return valid;
 	}
 	
+	/**
+	 * Clears the form input fields.
+	 */
 	void clearInputs() {
 		garageFormPanel.getVTS().setText("");
 		garageFormPanel.getOwnerName().setText("");
@@ -135,10 +180,10 @@ public class GarageFormPanelManager{
 		garageFormPanel.getPaidUntil().setDate(null);
 	}
 	
+	/* GarageFormPanelManager Getters
+	 * -------------------------------------------------- */
+	
 	GarageFormPanel getGarageFormPanel() {
 		return this.garageFormPanel;
 	}
-	
-	
-	
 }
