@@ -202,13 +202,6 @@ public class EmailPanelManager {
 				sendListToServer();
 			}
 		});
-		
-		EmailPanel.getTempApproval().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				getGarageList(allGarages);
-			}
-		});
 	}
 		
 }
