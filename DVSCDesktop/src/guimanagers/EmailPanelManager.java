@@ -18,6 +18,9 @@ import gui.Wrapper;
  * 
  * @author Liam
  *
+ *^ _ ^
+*( o.o )
+ *> ^ <  => Meow
  */
 
 public class EmailPanelManager {
@@ -217,7 +220,7 @@ public class EmailPanelManager {
 							.getApprovedEmails()
 							.getModel())
 							.clear();
-			        JOptionPane.showMessageDialog(jFrame, "Emails approved");
+			        JOptionPane.showMessageDialog(jFrame, totalElements + " Emails approved");
 				}
 				else {
 					JOptionPane.showMessageDialog(jFrame, "No Emails have been selected");
