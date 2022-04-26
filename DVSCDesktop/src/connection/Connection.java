@@ -95,7 +95,7 @@ public class Connection {
 	public ArrayList<Garage> getAllGarages() {
 		ArrayList<Garage> allGarages = new ArrayList<Garage>();
 		try {
-			Response response = connectionManager.sendGetRequest("garages", null);
+			Response response = connectionManager.sendGetRequest("garages", null, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
 			if(response.getResponseCode() == 200) {
 				JSONArray arr = response.getArray();
 				for(int i=0; i<arr.length(); i++) {
@@ -118,7 +118,7 @@ public class Connection {
 		GarageInfo gi = null;
 		ArrayList<Instrument> instruments = new ArrayList<Instrument>();
 		try{
-			Response response = connectionManager.sendGetRequest("garages/"+id, null);
+			Response response = connectionManager.sendGetRequest("garages/"+id, null, ConnectionManager.AUTH_TYPE.JWT, JWT.getInstance().getToken());
 			if(response.getResponseCode() == 200) {
 				JSONObject obj = response.getObject();
 				
@@ -228,13 +228,14 @@ public class Connection {
 		garageJSON.put("ownerName", garage.getGarageInfo().getOwnerName());
 		garageJSON.put("emailAddress", garage.getGarageInfo().getEmailAddress());
 		garageJSON.put("telephoneNumber", garage.getGarageInfo().getTelephoneNum());
+		garageJSON.put("paidUntil", garage.getGarageInfo().getPaidUntil());
 		JSONArray instrumentsJSON = new JSONArray();
 		for(Instrument instrument : garage.getGarageInfo().getInstrumentList()) {
 			JSONObject instrumentJSON = new JSONObject();
 			instrumentJSON.put("id", instrument.getInstrumentID());
 			instrumentJSON.put("name", instrument.getInstrumentName());
 			instrumentJSON.put("officialCheckExpiryDate", instrument.getStatusExpiryDate());
-			instrumentJSON.put("ourCheckStatus", instrument.getCheckStatus());
+			instrumentJSON.put("ourCheckStatus", instrument.getCheckStatus().toString().toLowerCase());
 			instrumentJSON.put("ourCheckDate", instrument.getCheckDate());
 			
 			instrumentsJSON.put(instrumentJSON);
