@@ -66,6 +66,8 @@ public class InstrumentFormPanelManager{
 						
 						newInstrument.setInstrumentID(id);	
 						
+						CRUDPanelManager.getCRUDPanel().getGaragesList().getSelectedValue().getGarageInfo().getInstrumentList().add(newInstrument);
+						
 						DefaultListModel<Instrument> instrumentsList = (DefaultListModel<Instrument>) CRUDPanelManager.getCRUDPanel().getInstrumentList().getModel();
 						instrumentsList.addElement(newInstrument);
 						CRUDPanelManager.getCRUDPanel().setInstrumentList(instrumentsList);
@@ -92,7 +94,6 @@ public class InstrumentFormPanelManager{
 		
 		boolean missingFields = false;
 		boolean invalidSerialNumber = false;
-		boolean invalidCheckDate = false;
 		boolean invalidStatusExpiryDate = false;
 		
 		// Check if any of the fields are empty, setting a flag to true.
@@ -118,7 +119,6 @@ public class InstrumentFormPanelManager{
 			invalidStatusExpiryDate = true;
 		}
 
-		
 		String errorMsg = "";
 		/* Depending on the flags which are true,
 		 * append an error message to display to the user
@@ -132,13 +132,11 @@ public class InstrumentFormPanelManager{
 			valid = false;
 		}
 		else { 
-			if(invalidSerialNumber || invalidCheckDate || invalidStatusExpiryDate) {
+			if(invalidSerialNumber || invalidStatusExpiryDate) {
 				if(invalidSerialNumber) {
 					errorMsg += "Invalid Serial Number\n";
 				}
-				if(invalidCheckDate) {
-					errorMsg += "Invalid Check Date\n";
-				}
+				
 				if(invalidStatusExpiryDate) {
 					errorMsg += "Invalid Status Expiry Date\n";
 				}

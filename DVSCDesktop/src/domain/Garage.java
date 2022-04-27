@@ -30,9 +30,8 @@ public class Garage {
 	
 	// Constructor for full Garage.
 	public Garage(String vts, String ownerName, String garageName, String emailAddress, String telephoneNum, Date paidUntil) {
-		ArrayList<Instrument> instrumentList = null;
 		this.garageName = garageName;
-		this.gi = new GarageInfo(vts, ownerName, emailAddress, telephoneNum, paidUntil, instrumentList);
+		this.gi = new GarageInfo(vts, ownerName, emailAddress, telephoneNum, paidUntil, new ArrayList<Instrument>());
 	}
 
 	/* Garage Getters and Setters
