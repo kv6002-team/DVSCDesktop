@@ -110,9 +110,7 @@ public class CRUDPanelManager {
 				System.out.println(CRUDPanel.getInstrumentList().getSelectedValue());
 				System.out.println(lastInstrument);
 				if(lastInstrument != null) {
-					if(validateInstrumentInputs()) {
 						updateInstrument(lastInstrument);
-					}
 				}
 				
 				/* If there is a currently selected instrument 
@@ -447,7 +445,6 @@ public class CRUDPanelManager {
 	public void updateInstrument(Instrument instrument) {
 		// If combo box is not null, and garage info is not null
 		if(CRUDPanel.getCheckStatusComboBox().getSelectedItem() != null) {
-			//if(CRUDPanel.getGaragesList().getSelectedValue().getGarageInfo() != null) {
 				// Get the index of the instrument to be updated,
 				int i = lastGarage.getGarageInfo().getInstrumentList().indexOf(instrument);
 				
@@ -462,8 +459,7 @@ public class CRUDPanelManager {
 				instrument.setCheckStatus(CheckStatus.of(CRUDPanel.getCheckStatusComboBox().getSelectedItem().toString()));
 				
 				// Update the provided Instrument of the previously selected Garage
-				lastGarage.getGarageInfo().getInstrumentList().set(i, instrument);		
-			//}		
+				lastGarage.getGarageInfo().getInstrumentList().set(i, instrument);				
 		}
 	}
 	
@@ -615,6 +611,7 @@ public class CRUDPanelManager {
 						+ "@"
 						+ "(?=.{1,128})"
 						+ "[A-Za-z0-9]"
+						+ "[A-Za-z0-9-]*"
 						+ "(\\.[A-Za-z0-9-]+)*"
 						+ "(\\.[A-Za-z]{2,})"
 						+ "$"
