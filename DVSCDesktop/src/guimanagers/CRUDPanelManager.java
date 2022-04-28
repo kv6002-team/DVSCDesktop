@@ -391,10 +391,16 @@ public class CRUDPanelManager {
 	 * manager.
 	 */
 	public void addInstrument() {
-		JFrame instrumentFormFrame = new JFrame();
-		instrumentFormFrame.add(instrumentFormPanelManager.getInstrumentFormPanel());
-		instrumentFormFrame.setBounds(100, 100, 640, 360);
-		instrumentFormFrame.setVisible(true);
+		if(!(CRUDPanel.getGaragesList().getSelectedIndex() == -1)) {
+			JFrame instrumentFormFrame = new JFrame();
+			instrumentFormFrame.add(instrumentFormPanelManager.getInstrumentFormPanel());
+			instrumentFormFrame.setBounds(100, 100, 640, 360);
+			instrumentFormFrame.setVisible(true);
+		}
+		else {
+			AlertDialog x = new AlertDialog();
+			x.run("To add an instrument, you must first select a garage.");
+		}
 	}
 	
 	/**
@@ -404,37 +410,43 @@ public class CRUDPanelManager {
 	 * @param instrument
 	 */
 	public void removeInstrument(Instrument instrument) {
-		
-		// Create a new option pane to ask user if they want to remove the Instrument
-		int confirm = JOptionPane.showConfirmDialog(
-				new JFrame(),
-				"Are you sure you want to delete this instrument?",
-				"Please select", JOptionPane.YES_NO_OPTION);
-		
-		// if they choose yes remove, otherwise do nothing.
-		if(confirm == JOptionPane.YES_OPTION) {	
-			// Remove the Instrument from the server
-			boolean removed = connection.removeInstrument(instrument.getInstrumentID());
+		if(!(CRUDPanel.getInstrumentList().getSelectedIndex() == -1)) {
+			// Create a new option pane to ask user if they want to remove the Instrument
+			int confirm = JOptionPane.showConfirmDialog(
+					new JFrame(),
+					"Are you sure you want to delete this instrument?",
+					"Please select", JOptionPane.YES_NO_OPTION);
 			
-			/* If successfully removed from the server,
-			 * remove locally from instrument list */
-			if(removed) {
-				CRUDPanel.getInstrumentList().clearSelection();
+			// if they choose yes remove, otherwise do nothing.
+			if(confirm == JOptionPane.YES_OPTION) {	
+				// Remove the Instrument from the server
+				boolean removed = connection.removeInstrument(instrument.getInstrumentID());
 				
-				CRUDPanel.getGaragesList().getSelectedValue()
-				.getGarageInfo()
-				.getInstrumentList()
-				.remove(instrument);
-				
-				DefaultListModel<Instrument> instrumentsList = 
-						(DefaultListModel<Instrument>) CRUDPanel
-						.getInstrumentList()
-						.getModel();
-				
-				instrumentsList.removeElement(instrument);
-				CRUDPanel.setInstrumentList(instrumentsList);
+				/* If successfully removed from the server,
+				 * remove locally from instrument list */
+				if(removed) {
+					CRUDPanel.getInstrumentList().clearSelection();
+					
+					CRUDPanel.getGaragesList().getSelectedValue()
+					.getGarageInfo()
+					.getInstrumentList()
+					.remove(instrument);
+					
+					DefaultListModel<Instrument> instrumentsList = 
+							(DefaultListModel<Instrument>) CRUDPanel
+							.getInstrumentList()
+							.getModel();
+					
+					instrumentsList.removeElement(instrument);
+					CRUDPanel.setInstrumentList(instrumentsList);
+				}
 			}
 		}
+		else {
+			AlertDialog x = new AlertDialog();
+			x.run("To delete an instrument, you must first select an instrument.");
+		}
+		
 	}
 
 	/**
