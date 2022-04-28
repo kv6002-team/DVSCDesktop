@@ -408,7 +408,7 @@ public class CRUDPanelManager {
 		// Create a new option pane to ask user if they want to remove the Instrument
 		int confirm = JOptionPane.showConfirmDialog(
 				new JFrame(),
-				"Are you sure you want to delete this garage?",
+				"Are you sure you want to delete this instrument?",
 				"Please select", JOptionPane.YES_NO_OPTION);
 		
 		// if they choose yes remove, otherwise do nothing.
